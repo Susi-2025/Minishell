@@ -1,0 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
+/*   Updated: 2025/08/16 12:39:00 by vinguyen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+# include <fcntl.h> 
+# include <sys/wait.h>
+# include <errno.h>
+# include <string.h>
+# include <stdio.h>
+# include "./libft/libft.h"
+/*
+typedef struct s_stack
+{
+	int		pipefd[2];
+	pid_t	pid[2];
+	int		fd[2];
+}	t_stack;
+*/
+/*
+void	first_child_run(t_stack *pipex, char **av, char **envp);
+void	second_child_run(t_stack *pipex, char **av, char **envp);
+void	run_command(t_stack *pipex, char *command, char **envp);
+char	*get_path(char **envp, char *cmd);
+
+void	err_exit(char *msg, int exit_code);
+void	err_fork_dup2(t_stack *pipex, char *msg, int exit_code);
+void	err_open_file(t_stack *pipex, char *av, int exit_code);
+void	print_error(char *str, char *msg);
+
+void	handle_no_file(t_stack *pipex, char **cmd_argvs);
+void	handle_envp_error(t_stack *pipex, char **cmd_argvs, int exit_code);
+void	handle_command_error(t_stack *pipex, int exit_code);
+void	handle_cmd_path_err(t_stack *pipex, char *msg, int exit_code);
+void	handle_exec_error(t_stack *pipex, char *cmd_path, char **cmd_argvs);
+void	close_stack(t_stack *pipex);
+*/
+#endif
