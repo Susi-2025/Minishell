@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/17 13:01:29 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/17 13:13:34 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ static	int	exec_env(t_shell *shell);
 
 int exec_built_in(t_shell *shell)
 {
-	if (!shell || !shell->cmd_args || !shell->cmd_args[0])
-		return (1);
+	printf("Exec env \n");
+	// if (!shell || !shell->cmd_args || !shell->cmd_args[0])
+	// 	return (1);
 	//if (ft_strcmp(shell->cmd_args[0], "pwd") == 0)
-	return (exec_pwd(shell));
+	// return (exec_pwd(shell));
 	// else if (ft_strcmp(shell->cmd_args[0], "env") == 0)
 	return (exec_env(shell));
+	return (exec_pwd(shell));
 		
 	// else if (ft_strcmp(shell->cmd_args[0], "cd") == 0)
 	// 	exec_cd(shell);
@@ -44,15 +46,15 @@ int exec_built_in(t_shell *shell)
 
 static	int	exec_pwd(t_shell *shell)
 {
-	char	*pwd;
+	char	*out;
 
-	pwd = find_var(shell->envp, "PWD");
-	if (pwd)
-		printf("%s\n", pwd + 4);
+	out = find_var(shell->envp, "PWD=");
+	if (out)
+		printf("%s\n", out + 4);
 	else
 	{
 		perror("pwd");
-		error_command(shell);
+		//error_command(shell);
 		return (1);
 	}
 	return (0);
@@ -64,7 +66,7 @@ static	int	exec_env(t_shell *shell)
 
 	if (!shell->envp)
 	{
-		error_envp(shell);
+		//error_envp(shell);
 		return (1);
 	}
 	i = 0;

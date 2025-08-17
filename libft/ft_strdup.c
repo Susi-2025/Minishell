@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 19:25:02 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/07/24 20:45:43 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/17 13:05:36 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strdup(const char *s)

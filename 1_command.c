@@ -6,12 +6,13 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/17 13:00:11 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/17 13:08:39 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 static	int	check_built_in(char *cmd)
 {
 	if (!cmd)
@@ -32,9 +33,11 @@ static	int	check_built_in(char *cmd)
 		return (1);
 	return (0);
 }
+*/
 
 int	exec_command(t_shell *shell)
 {
+	printf("Exec command \n");
 	//if (check_built_in(shell->cmd_args[0]) == 1)
-		exec_built_in(shell);
+	return(exec_built_in(shell));
 }
