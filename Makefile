@@ -12,42 +12,33 @@
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -Iinclude
+LDLIBS = -lreadline
 
-SRC_DIR = .
-OBJ_DIR = ./object
+SRC_DIRS = src/parsing src/utils
+OBJ_DIR = object
 
-LIBFT_DIR = ./libft
-LIBFT_LIB = $(LIBFT_DIR)/libft.a
-
-SRC =	0_minishell.c \
+SRC =	$(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 		
-OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))
+OBJ =$(patsubst src/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
-all:$(LIBFT_LIB) $(NAME)
+all: $(NAME)
 
-$(OBJ_DIR)/%.o: %.c
-	mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/%.o: src/%.c
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-.SECONDARY: $(OBJ) $(LIBFT_OBJ)
-
-#Build library
-$(LIBFT_LIB):
-	@$(MAKE) -C $(LIBFT_DIR)
 
 #Build final executable
-$(NAME): $(OBJ) $(LIBFT_LIB)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME)
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDLIBS)
 
 #cleaning
 clean:
 	rm -rf $(OBJ_DIR)
-	@$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean
 	rm -f $(NAME)
-	@$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
