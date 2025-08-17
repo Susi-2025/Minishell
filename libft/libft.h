@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 13:04:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/17 13:06:20 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/17 15:25:48 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,6 @@ void	ft_free_triptr(char ***str);
 int		check_format(va_list args, const char *string, int i);
 int		check_string(va_list args, const char *string, int i);
 int		ft_printf(const char *string, ...);
+char	**ft_matrix_dup(char **matrix, int row);
+
 #endif
