@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/17 15:18:32 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/17 18:19:14 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,16 @@ void	close_stack(t_stack *pipex);
 // command
 int	exec_command(t_shell *shell);
 int exec_built_in(t_shell *shell);
+int	exec_export_only(t_shell *shell);
 
 // command utilities
 char	*find_var(char **envp, char *str);
 void	sort_2d_array(char **strs);
 int	ft_len_2d(char **strs);
+
+// handle_error
+void	free_shell(t_shell *shell);
+int	error_malloc(t_shell *shell, int code);
+int error_msg(t_shell *shell, int code, char *str);
 
 #endif

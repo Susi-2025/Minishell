@@ -6,11 +6,13 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/17 15:28:50 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/17 18:38:03 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static	int ft_cmp_strs(char *s1, char *s2);
 
 char	*find_var(char **envp, char *str)
 {
@@ -45,7 +47,8 @@ void	sort_2d_array(char **strs)
 		j = i + 1;
 		while (j < len)
 		{
-			if (ft_strcmp(strs[i], strs[j]) > 0)
+			// if (ft_strcmp(strs[i], strs[j]) > 0)
+			if(ft_cmp_strs(strs[i], strs[j]) > 0)
 			{
 				temp = strs[i];
 				strs[i] = strs[j];
@@ -65,6 +68,25 @@ int	ft_len_2d(char **strs)
 	while (strs[len])
 		len++;
 	return (len);
+}
+
+static	int ft_cmp_strs(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while(s1[i] && s2[i] && s1[i] != '=' && s2[i] != '=')
+	{
+		if (s1[i] != s2[i])
+			return((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	if ((s1[i] == '=' || s1[i] == '\0') && (s2[i] == '=' || s2[i] == '\0'))
+		return(ft_strcmp(s1, s2));
+	if (s1[i] == '=' || s1[i] == '\0')
+		return (-1);
+	else
+		return (1);
 }
 
 // int print_2d(char **strs)
