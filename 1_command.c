@@ -1,25 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   1_command.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
+/*   Updated: 2025/08/17 13:00:11 by vinguyen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_builtin(char *cmd)
+static	int	check_built_in(char *cmd)
 {
-	int	i;
-	
-	i = 0;
-	
-	if (ft_strnstr(cmd, "cd", 2)) // cmd == cde
+	if (!cmd)
+		return (0);
+	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
-	if (ft_strnstr(cmd, "env", 3))
+	if (ft_strcmp(cmd, "env") == 0)
 		return (1);
-	if (ft_strnstr(cmd, "pwd", 3))
+	if (ft_strcmp(cmd, "pwd") == 0) 
 		return (1);
-	if (ft_strnstr(cmd, "echo", 4))
+	if (ft_strcmp(cmd, "echo") == 0) 
 		return (1);
-	if (ft_strnstr(cmd, "exit", 4))
+	if (ft_strcmp(cmd, "exit") == 0) 
 		return (1);
-	if (ft_strnstr(cmd, "unset", 5))
+	if (ft_strcmp(cmd, "unset") == 0) 
 		return (1);
-	if (ft_strnstr(cmd, "export", 6))
+	if (ft_strcmp(cmd, "export") == 0) 
 		return (1);
 	return (0);
+}
+
+int	exec_command(t_shell *shell)
+{
+	//if (check_built_in(shell->cmd_args[0]) == 1)
+		exec_built_in(shell);
 }

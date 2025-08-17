@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   0_minishell.c                                      :+:      :+:    :+:   */
+/*   1z_command_utility.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/16 12:31:23 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/17 12:59:16 by vinguyen         ###   ########.fr       */
+/*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
+/*   Updated: 2025/08/17 12:52:28 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av, char **envp)
+char	*find_var(char **envp, char *str)
 {
-	t_shell shell;
-	
-	(void)av;
-	if (ac)
-		printf("Welcome to Minishell, we have %d arguments\n", ac);
-	shell.envp = envp;
-	exec_command(&shell);
-	// free_shell(&shell);
-	return (0);
+	int		i;
+
+	if (!envp || !str)
+		return (NULL) ;
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], str, ft_strlen(str)) == 0
+			&& envp[i][ft_strlen(str)] == '=')
+		{
+			return (envp[i]);
+			break;
+		}
+		i++;
+	}
+	return (NULL);
 }

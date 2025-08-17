@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   0_minishell.c                                      :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/16 12:31:23 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/17 12:59:16 by vinguyen         ###   ########.fr       */
+/*   Created: 2025/01/31 10:24:17 by vinguyen          #+#    #+#             */
+/*   Updated: 2025/01/31 10:28:41 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minishell.h"
-
-int main(int ac, char **av, char **envp)
+int	ft_strcmp(char *s1, char *s2)
 {
-	t_shell shell;
-	
-	(void)av;
-	if (ac)
-		printf("Welcome to Minishell, we have %d arguments\n", ac);
-	shell.envp = envp;
-	exec_command(&shell);
-	// free_shell(&shell);
-	return (0);
+	int	i;
+
+	i = 0;
+	while ((s1[i] == s2[i]) && s1[i] && s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }

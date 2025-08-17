@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/16 12:39:00 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/17 12:54:39 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ typedef struct s_stack
 	int		fd[2];
 }	t_stack;
 */
+typedef struct s_stack
+{
+	char	**cmd_args;
+	char	**envp;
+		
+}	t_shell;
 /*
 void	first_child_run(t_stack *pipex, char **av, char **envp);
 void	second_child_run(t_stack *pipex, char **av, char **envp);
@@ -45,4 +51,9 @@ void	handle_cmd_path_err(t_stack *pipex, char *msg, int exit_code);
 void	handle_exec_error(t_stack *pipex, char *cmd_path, char **cmd_argvs);
 void	close_stack(t_stack *pipex);
 */
+// command
+int	exec_command(t_shell *shell);
+int exec_built_in(t_shell *shell);
+char	*find_var(char **envp, char *str);
+
 #endif

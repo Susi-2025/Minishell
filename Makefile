@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/16 12:30:39 by vinguyen          #+#    #+#              #
-#    Updated: 2025/08/16 12:30:48 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/08/17 12:53:28 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,10 @@ LIBFT_DIR = ./libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
 SRC =	0_minishell.c \
-		
+		1_command.c \
+		1a_command_built_in.c \
+		1z_command_utility.c \
+
 OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))
 
 all:$(LIBFT_LIB) $(NAME)
