@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/18 10:53:49 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/18 15:56:25 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,16 @@ int	exec_command(t_shell *shell);
 int exec_built_in(t_shell *shell);
 int	exec_export_only(t_shell *shell);
 int exec_echo(t_shell *shell);
+int exec_cd(t_shell *shell);
+
+// int	exec_env(t_shell *shell);
+// int	exec_pwd(t_shell *shell);
 
 // command utilities
 char	*find_var(char **envp, char *str);
 void	sort_2d_array(char **strs);
 int	ft_len_2d(char **strs);
+int	update_env(t_shell *shell, char *key, char *value);
 
 // handle_error
 void	free_shell(t_shell *shell);

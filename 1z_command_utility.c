@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/17 18:38:03 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/18 15:23:38 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static	int ft_cmp_strs(char *s1, char *s2);
 char	*find_var(char **envp, char *str)
 {
 	int		i;
+	char	*sub;
 
 	if (!envp || !str)
 		return (NULL) ;
@@ -25,7 +26,9 @@ char	*find_var(char **envp, char *str)
 	{
 		if (ft_strncmp(envp[i], str, ft_strlen(str)) == 0)
 		{
-			return (envp[i]);
+			sub = ft_strchr(envp[i], '=');
+			if (sub && (sub + 1))
+				return (sub + 1);
 			break;
 		}
 		i++;
@@ -47,7 +50,6 @@ void	sort_2d_array(char **strs)
 		j = i + 1;
 		while (j < len)
 		{
-			// if (ft_strcmp(strs[i], strs[j]) > 0)
 			if(ft_cmp_strs(strs[i], strs[j]) > 0)
 			{
 				temp = strs[i];
@@ -88,16 +90,3 @@ static	int ft_cmp_strs(char *s1, char *s2)
 	else
 		return (1);
 }
-
-// int print_2d(char **strs)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (strs[i])
-// 	{
-// 		if (ft_strchr(strs[i], '='))
-// 			printf("%s\n", strs[i]);
-// 		i++;
-// 	}
-// }

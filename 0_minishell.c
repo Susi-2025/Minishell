@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 12:31:23 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/18 10:39:55 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/18 16:21:58 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int main(int ac, char **av, char **envp)
 	if (!shell.envp)
 		return(error_malloc(&shell, 1));
 	exec_command(&shell);
-	//free_shell(&shell);
+	// free_shell(&shell);
+	ft_free_triptr(&shell.envp);
+	if (shell.cmd_args)
+		free(shell.cmd_args);
 	return (0);
 }

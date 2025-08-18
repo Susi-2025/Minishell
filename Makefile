@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/16 12:30:39 by vinguyen          #+#    #+#              #
-#    Updated: 2025/08/18 10:54:34 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/08/18 15:19:11 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ SRC =	0_minishell.c \
 		1a_command_built_in.c \
 		1a_cmd_export.c \
 		1a_cmd_echo.c \
+		1a_cmd_cd.c \
+		1y_env_utility.c \
 		1z_command_utility.c \
 		9_utility.c \
 

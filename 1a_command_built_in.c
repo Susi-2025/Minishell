@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/18 11:02:44 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/18 16:27:53 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 static	int	exec_pwd(t_shell *shell);
 static	int	exec_env(t_shell *shell);
-// static	int exec_echo(t_shell *shell);
-// static	void	echo_stored_var(char **envp, char *string);
 
 //1. Command will return 0 for success and non-zero for fail.
 //2. "env": Add checking = to make sure only printout line which has =
-//3. "export"->separatre to new file
-//4. "echo"-> only print the character input, not yet the stored variable
+//3. "export, echo, cd"->separatre to new file
+
 
 int exec_built_in(t_shell *shell)
 {
@@ -35,14 +33,14 @@ int exec_built_in(t_shell *shell)
 	// 	return (exec_export_only(shell));
 	// else if (ft_strcmp(shell->cmd_args[0], "echo") == 0)
 	// return (exec_echo(shell));
-	// else if (ft_strcmp(shell->cmd_args[0], "unset") == 0)
-		return (exec_unset(shell));
+	// else if (ft_strcmp(shell->cmd_args[0], "cd") == 0)
+	// 	exec_cd(shell);
+		return (exec_cd(shell));
 		return (exec_echo(shell));
 		return (exec_export_only(shell));
 		return (exec_env(shell));
 		return (exec_pwd(shell));
-	// else if (ft_strcmp(shell->cmd_args[0], "cd") == 0)
-	// 	exec_cd(shell);
+
 	// if (ft_strcmp(shell->cmd_args[0], "exit") == 0)
 	// 	exec_exit(shell);
 	// if (ft_strcmp(shell->cmd_args[0], "unset") == 0)
@@ -51,18 +49,20 @@ int exec_built_in(t_shell *shell)
 }
 
 static	int	exec_pwd(t_shell *shell)
+// int	exec_pwd(t_shell *shell)
 {
 	char	*out;
 
 	out = find_var(shell->envp, "PWD=");
 	if (out)
-		printf("%s\n", out + 4);
+		printf("%s\n", out);
 	else
 		return(error_msg(shell, 1, "pwd"));
 	return (0);
 }
 
 static	int	exec_env(t_shell *shell)
+// int	exec_env(t_shell *shell)
 {
 	int	i;
 
@@ -77,38 +77,3 @@ static	int	exec_env(t_shell *shell)
 	}
 	return (0);
 }
-
-// static	int exec_echo(t_shell *shell)
-// {
-// 	int	i;
-		
-// 	if (!shell)
-// 		return(error_msg(shell, 1, "shell"));
-// 	i = 1;
-// 	while(shell->cmd_args[i])
-// 	{
-// 		if(shell->cmd_args[i][0] == '$')
-// 			echo_stored_var(shell->envp, &(shell->cmd_args[i][1]));
-// 		else
-// 			printf("%s", shell->cmd_args[i]);
-// 		if (i < (ft_len_2d(shell->cmd_args) - 1))
-// 			printf(" ");
-// 		i++;
-// 	}
-// 	printf("\n");
-// 	return (0);
-// }
-
-// static	void	echo_stored_var(char **envp, char *string)
-// {
-// 	char	*temp;
-// 	char	*sub_temp;
-	
-// 	temp = find_var(envp, string);
-// 	if (temp != NULL)
-// 	{
-// 		sub_temp = ft_strchr(temp, '=');
-// 		if (sub_temp && (sub_temp + 1))
-// 			printf("%s", sub_temp + 1);
-// 	}
-// }
