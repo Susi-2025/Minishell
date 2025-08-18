@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 12:31:23 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/17 18:22:13 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/18 10:39:55 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ int main(int ac, char **av, char **envp)
 		printf("Welcome to Minishell, we have %d arguments\n", ac);
 	len = ft_len_2d(envp);
 	shell.envp = ft_matrix_dup(envp, len);
+	shell.cmd_args = malloc(sizeof(char *) * 6);
+	shell.cmd_args[0] = "echo";
+	shell.cmd_args[1] = "PWD";
+	shell.cmd_args[2] = "$PWD";
+	shell.cmd_args[3] = "abcde";
+	shell.cmd_args[4] = "$PWD23";
+	shell.cmd_args[5] = NULL;
 	if (!shell.envp)
 		return(error_malloc(&shell, 1));
 	exec_command(&shell);
