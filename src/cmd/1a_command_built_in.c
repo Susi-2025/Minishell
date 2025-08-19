@@ -15,6 +15,7 @@
 static	int	exec_pwd(t_shell *shell);
 static	int	exec_env(t_shell *shell);
 static	int	exec_unset(t_shell *shell);
+static	int	exec_exit(t_shell *shell, char *s);
 
 //1. Command will return 0 for success and non-zero for fail.
 //2. "env": Add checking = to make sure only printout line which has =
@@ -36,9 +37,12 @@ int exec_built_in(t_shell *shell)
 	// return (exec_echo(shell));
 	// else if (shell->simple_cmds[0]->args[0], "cd") == 0)
 	// 	exec_cd(shell);
-	// if (shell->simple_cmds[0]->args[0], "unset") == 0)
+	// else if (shell->simple_cmds[0]->args[0], "unset") == 0)
 	// 	exec_unset(shell);
-	return (exec_unset(shell));
+	// else if (shell->simple_cmds[0]->args[0], "exit") == 0)
+	// 	exec_exit(shell);
+	return (exec_exit(shell, shell->simple_cmds[0]->args[1]));//not yet testing
+	return (exec_unset(shell));// partly ok
 	return (exec_cd(shell)); // ok
 	return (exec_echo(shell)); //ok
 	return (exec_export_only(shell));//work-but no same as bash, need to change
@@ -96,4 +100,24 @@ static	int	exec_unset(t_shell *shell)
 	printf("\n");
 	exec_env(shell);
 	return (res);
+}
+
+//not good
+static	int	exec_exit(t_shell *shell, char *s)
+{
+	int	status;
+
+	printf("exit\n");
+	if (s && ft_is_numeric(s))
+		status = ft_atoi(s);
+	else if (s)
+	{
+		printf("bash: exit: %s: numeric argument required\n", s);
+		status = 2;
+	}
+	else
+		status = 0;
+	free_shell(shell);
+	exit(status);
+	return (0);
 }
