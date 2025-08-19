@@ -38,7 +38,7 @@ static	int	init_shell(t_shell *shell, char **envp)
 		return (error_malloc(shell, 1));
 	}
 	shell->simple_cmds[0]->args[0] = strdup("echo");
-	shell->simple_cmds[0]->args[1] = strdup("PWD");
+	shell->simple_cmds[0]->args[1] = strdup("USER");
 	shell->simple_cmds[0]->args[2] = strdup("$PWD");
 	shell->simple_cmds[0]->args[3] = strdup("abcde");
 	shell->simple_cmds[0]->args[4] = strdup("$PWD23");

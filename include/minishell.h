@@ -54,6 +54,7 @@ int	exec_export_only(t_shell *shell);
 int exec_echo(t_shell *shell);
 int exec_cd(t_shell *shell);
 
+// int	exec_unset(t_shell *shell);
 // int	exec_env(t_shell *shell);
 // int	exec_pwd(t_shell *shell);
 
@@ -62,6 +63,7 @@ char	*find_var(char **envp, char *str);
 void	sort_2d_array(char **strs);
 int	ft_len_2d(char **strs);
 int	update_env(t_shell *shell, char *key, char *value);
+int	reduce_env(t_shell *shell, char *str);
 
 // handle_error
 void	free_shell(t_shell *shell);
