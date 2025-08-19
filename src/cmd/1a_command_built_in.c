@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/18 16:27:53 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/19 16:03:03 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ int exec_built_in(t_shell *shell)
 	// return (exec_echo(shell));
 	// else if (ft_strcmp(shell->cmd_args[0], "cd") == 0)
 	// 	exec_cd(shell);
-		return (exec_cd(shell));
-		return (exec_echo(shell));
-		return (exec_export_only(shell));
-		return (exec_env(shell));
-		return (exec_pwd(shell));
-
+	return (exec_cd(shell)); // ok
+	return (exec_echo(shell)); //ok
+	return (exec_export_only(shell));//work-but no same as bash, need to change
+	return (exec_env(shell));// ok
+	return (exec_pwd(shell));//ok
 	// if (ft_strcmp(shell->cmd_args[0], "exit") == 0)
 	// 	exec_exit(shell);
 	// if (ft_strcmp(shell->cmd_args[0], "unset") == 0)

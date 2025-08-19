@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/18 16:30:39 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/19 16:02:21 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	update_env(t_shell *shell, char *key, char *value)
 		}
 		i++;
 	}
+	printf("Update fail\n");
 	return (1);
 }
 

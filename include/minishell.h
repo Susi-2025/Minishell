@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/18 15:56:25 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/19 13:42:08 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <errno.h>
 # include <string.h>
 # include <stdio.h>
-# include "./libft/libft.h"
+# include "../libft/libft.h"
 /*
 typedef struct s_stack
 {
@@ -27,30 +27,26 @@ typedef struct s_stack
 	int		fd[2];
 }	t_stack;
 */
+typedef struct s_simple_cmd
+{
+	int     args_capacity;
+	int     args_count;
+	char    **args;
+} t_simple_cmd;
+
 typedef struct s_stack
 {
-	char	**cmd_args;
-	char	**envp;
-		
-}	t_shell;
-/*
-void	first_child_run(t_stack *pipex, char **av, char **envp);
-void	second_child_run(t_stack *pipex, char **av, char **envp);
-void	run_command(t_stack *pipex, char *command, char **envp);
-char	*get_path(char **envp, char *cmd);
+	int cmds_capacity;
+	int cmds_count;
+	t_simple_cmd **simple_cmds;
+	char	*out_file;
+	char	*in_file;
+	char	*err_file;
+	char	*here_doc;
+	char	*file_append;
+	char	**envp; //vietadd		
+}	t_shell; //change the name from t_cmd to t_shell;
 
-void	err_exit(char *msg, int exit_code);
-void	err_fork_dup2(t_stack *pipex, char *msg, int exit_code);
-void	err_open_file(t_stack *pipex, char *av, int exit_code);
-void	print_error(char *str, char *msg);
-
-void	handle_no_file(t_stack *pipex, char **cmd_argvs);
-void	handle_envp_error(t_stack *pipex, char **cmd_argvs, int exit_code);
-void	handle_command_error(t_stack *pipex, int exit_code);
-void	handle_cmd_path_err(t_stack *pipex, char *msg, int exit_code);
-void	handle_exec_error(t_stack *pipex, char *cmd_path, char **cmd_argvs);
-void	close_stack(t_stack *pipex);
-*/
 // command
 int	exec_command(t_shell *shell);
 int exec_built_in(t_shell *shell);

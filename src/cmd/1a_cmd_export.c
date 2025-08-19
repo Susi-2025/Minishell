@@ -1,39 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1a_cmd_echo.c                                      :+:      :+:    :+:   */
+/*   1a_cmd_export.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/18 13:55:18 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/19 15:55:17 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int exec_echo(t_shell *shell)
+//"export"
+//a. When no option, it will sort the envp and printout.
+//b. When have option: name "viet"
+//    export name;-> this will assign variable to envp.
+
+int	exec_export_only(t_shell *shell)
 {
 	int	i;
-	char	*temp;
-		
-	if (!shell)
-		return(error_msg(shell, 1, "shell"));
-	i = 1;
-	while(shell->cmd_args[i])
+	char	**temp;
+	printf("Export execute");
+	if (!shell->envp)
+		return(error_msg(shell, 1, "envp"));
+	i  = 0;
+	temp = ft_matrix_dup(shell->envp, ft_len_2d(shell->envp));
+	if (!temp)
+		return(error_malloc(shell, 1));
+	sort_2d_array(temp);
+	while (temp[i])
 	{
-		if(shell->cmd_args[i][0] == '$')
-		{
-			temp = find_var(shell->envp, &(shell->cmd_args[i][1]));
-			if (temp != NULL)
-				printf("%s", temp);
-		}
-		else
-			printf("%s", shell->cmd_args[i]);
-		if (i < (ft_len_2d(shell->cmd_args) - 1))
-			printf(" ");
+		if (ft_strchr(temp[i], '=') && temp[i][0] != '_')
+			printf("%s\n", temp[i]);
 		i++;
 	}
-	printf("\n");
+	ft_free_triptr(&temp);
 	return (0);
 }

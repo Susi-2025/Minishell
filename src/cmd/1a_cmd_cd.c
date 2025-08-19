@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/18 15:56:38 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/08/19 16:02:34 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int exec_cd(t_shell *shell)
 	printf("Exec cd\n");
 	if (!shell)
 		return(error_msg(shell, 1, "shell"));
-	//if (shell->cmd_args[1] == NULL)
+	//if (shell->simple_cmds[0]->args[1]== NULL )
 	if (cd_only(shell) != 0)
-		return ((error_msg(shell, 1, "cd")));
+		return ((error_msg(shell, 1, "cd error")));
 	// exec_env(shell);
 	// exec_pwd(shell);
 	return (0);

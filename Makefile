@@ -6,37 +6,43 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/16 12:30:39 by vinguyen          #+#    #+#              #
-#    Updated: 2025/08/18 15:19:11 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/08/19 13:16:58 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -Iinclude
 
-SRC_DIR = .
-OBJ_DIR = ./object
+SRC_DIRS = src/cmd src/utils
+OBJ_DIR = object
 
 LIBFT_DIR = ./libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-SRC =	0_minishell.c \
-		1_command.c \
-		1a_command_built_in.c \
-		1a_cmd_export.c \
-		1a_cmd_echo.c \
-		1a_cmd_cd.c \
-		1y_env_utility.c \
-		1z_command_utility.c \
-		9_utility.c \
+SRC =	$(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+# SRC =	0_minishell.c \
+# 		1_command.c \
+# 		1a_command_built_in.c \
+# 		1a_cmd_export.c \
+# 		1a_cmd_echo.c \
+# 		1a_cmd_cd.c \
+# 		1y_env_utility.c \
+# 		1z_command_utility.c \
+# 		9_utility.c \
 
-OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))
+# OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
+OBJ =$(patsubst src/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
 all:$(LIBFT_LIB) $(NAME)
 
-$(OBJ_DIR)/%.o: %.c
-	mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+# $(OBJ_DIR)/%.o: $(SRC_DIRS:%=%/%.c) | $(OBJ_DIR)
+# 	mkdir -p $(OBJ_DIR)
+# 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: src/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 .SECONDARY: $(OBJ) $(LIBFT_OBJ)
 
