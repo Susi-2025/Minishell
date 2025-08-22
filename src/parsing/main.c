@@ -6,12 +6,12 @@
 /*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/17 18:10:33 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/08/22 11:14:14 by cdohanic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
 
-t_cmd	*ft_prepare_command(char *line)
+t_cmd	*ft_prepare_command(char *line, char *env[])
 {
 	int		token_count;
 	t_token	*tokens;
@@ -20,18 +20,31 @@ t_cmd	*ft_prepare_command(char *line)
 	tokens = tokenize(line, &token_count);
 	if	(!tokens)
 		return (NULL);
-	cmds = parse_tokens(tokens, token_count);
+	cmds = parse_tokens(tokens, token_count, env);
 	free_tokens(tokens, token_count);
 	return (cmds);
 }
 
-int	main(void)
+// to do next time:
+//DONE	-expand variables: retrieve from env the value of a variable or from local set 
+//DONE	-variable expansion delimiters (az AZ 09)
+// -go through the code. Find memory leaks/ vulnerabilities/ possible improvements
+// CHECKED: expand_var, expand_end;
+// 		- parse_word and rest linked to it
+//		- parse_redir
+//		- parse_tokenization
+// -handle quotes: tokenize as word, parse the token
+//	QUOTES: they create a single string with whatever is between them
+//			- | << >> lose meaning. There is only 1 string between quotes
+int	main(int argc, char *argv[], char *env[])
 {
 	char 	*rl;
 	t_cmd 	*cmds;
 	int		i;
 	int		j;
 
+	(void)argc;
+	(void)argv;
 	while (1)
 	{
 		rl = readline("Prompt: ");
@@ -40,7 +53,7 @@ int	main(void)
 		if (*rl)
 			add_history(rl);
 
-		cmds = ft_prepare_command(rl);
+		cmds = ft_prepare_command(rl, env);
 		if (cmds)
 		{
 		//	printf("Input: %s\n", rl);
@@ -50,13 +63,15 @@ int	main(void)
 				printf("Output file: %s\n", cmds->out_file);
 			if (cmds->file_append)
 				printf("Append file: %s\n", cmds->file_append);
+			if (cmds->here_doc)
+				printf("Here_Doc: %s\n", cmds->here_doc);
 			
 			printf("Commands found: %d\n", cmds->cmds_count);
 			i = 0;
 			while (i < cmds->cmds_count)
 			{
 				j = 0;
-				printf("Command %d: ", i);
+				printf("Command %d: ", i + 1);
 				while (j < cmds->simple_cmds[i]->args_count)
 				{
 					printf("%s ", cmds->simple_cmds[i]->args[j]);
@@ -69,6 +84,7 @@ int	main(void)
 		}
 		free(rl);
 	}
+	rl_clear_history(); 
 	return (0);
 }
 
@@ -114,7 +130,7 @@ char	*extract_word(char *line, int *pos)
 	}
 	if (len == 0)
 		return (NULL);
-	word = malloc(len + 1);
+	word = malloc(len + 1);**args
 	if (!word)
 		return (NULL);
 
