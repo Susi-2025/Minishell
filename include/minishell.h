@@ -47,6 +47,7 @@ typedef enum {
 	REDIR_OUT,
 	REDIR_APPEND,
 	HERE_DOC,
+	ERROR_TOKEN,
 	TOKEN_EOF,
 }	t_token_type;
 
@@ -71,4 +72,5 @@ int		ft_isalnum(int c);
 int		count_strings(char const *str, char delimiter);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strchr(const char *s, int c);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 #endif

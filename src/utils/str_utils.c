@@ -14,7 +14,9 @@
 int	is_space(char c)
 {
 	int		i;
-	char	spaces[] = {' ', '\t', '\r', '\n', '\v', '\0'};
+	char	*spaces;
+
+	spaces = " \t\r\n\v";
 	i = 0;
 	while (spaces[i])
 	{
@@ -25,10 +27,12 @@ int	is_space(char c)
 	return (0);
 }
 
-int is_delimiter(char c)
+int	is_delimiter(char c)
 {
 	int		i;
-	char	delimiters[] = {'|', '<', '>', '\0'};
+	char	*delimiters;
+
+	delimiters = "|<>";
 	i = 0;
 	while (delimiters[i])
 	{
@@ -57,7 +61,7 @@ int	ft_strlcpy(char *dst, const char *src, int size)
 	if (size > 0)
 	{
 		while (i < size - 1 && src[i] != '\0')
-		{	
+		{
 			dst[i] = src[i];
 			i++;
 		}
@@ -119,4 +123,30 @@ int	ft_strchr(const char *s, int c)
 		return (1);
 	else
 		return (0);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*out;
+	size_t	i;
+	size_t	s_len;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	s_len = ft_strlen(s);
+	if (start > s_len)
+		return (ft_strdup(""));
+	if (len > (s_len - start))
+		len = s_len - start;
+	out = (char *)malloc(len + 1);
+	if (!out)
+		return (NULL);
+	while (i < len)
+	{
+		out[i] = s[start + i];
+		i++;
+	}
+	out[i] = '\0';
+	return (out);
 }

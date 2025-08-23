@@ -11,48 +11,60 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static void	redir_token(t_token *tokens, int *i, int *count, char *l)
+static void	error_token(t_token *token)
 {
-	if (l[*i] == '<')
+	token->type = ERROR_TOKEN;
+	token->value = NULL;
+}
+
+static void	handle_redir_in(t_token *token, int *i, char *l)
+{
+	if (l[*i + 1] == '<')
 	{
-		if (l[*i + 1] == '<')
-		{
-			tokens[*count].type = HERE_DOC;
-			tokens[*count].value = ft_strdup("<<");
-			(*i) += 2;
-		}
-		else
-		{
-			tokens[*count].type = REDIR_IN;
-			tokens[*count].value = ft_strdup("<");
-			(*i)++;
-		}
+		token->type = HERE_DOC;
+		token->value = ft_strdup("<<");
+		(*i) += 2;
 	}
-	else if (l[*i] == '>')
+	else
 	{
-		if (l[*i + 1] == '>')
-		{
-			tokens[*count].type = REDIR_APPEND;
-			tokens[*count].value = ft_strdup(">>");
-			(*i) += 2;
-		}
-		else
-		{
-			tokens[*count].type = REDIR_OUT;
-			tokens[*count].value = ft_strdup(">");
-			(*i)++;
-		}
+		token->type = REDIR_IN;
+		token->value = ft_strdup("<");
+		(*i)++;
+	}	
+}
+
+static void	handle_redir_out(t_token *token, int *i, char *l)
+{
+	if (l[*i + 1] == '>')
+	{
+		token->type = REDIR_APPEND;
+		token->value = ft_strdup(">>");
+		(*i) += 2;
+	}
+	else
+	{
+		token->type = REDIR_OUT;
+		token->value = ft_strdup(">");
+		(*i)++;
 	}
 }
 
-static void	pipe_token(t_token *tokens, int *count, int *i)
+static void	redir_token(t_token *token, int *i, char *l)
 {
-	tokens[*count].type = PIPE;
-	tokens[*count].value = ft_strdup("|");
+	if (l[*i] == '<')
+		handle_redir_in(token, i, l);
+	else if (l[*i] == '>')
+		handle_redir_out(token, i, l);
+}
+
+static void	pipe_token(t_token *token, int *i)
+{
+	token->type = PIPE;
+	token->value = ft_strdup("|");
 	(*i)++;
 }
 
-static void	word_token(t_token *tokens, char *l, int *count, int *i)
+static void	word_token(t_token *token, char *l, int *i)
 {
 	int	start;
 	int	len;
@@ -63,13 +75,14 @@ static void	word_token(t_token *tokens, char *l, int *count, int *i)
 	len = *i - start;
 	if (len > 0)
 	{
-		tokens[*count].value = malloc(len + 1);
-		if (tokens[*count].value)
-			ft_strlcpy(tokens[*count].value, l + start, len + 1);
-		if (ft_strchr(tokens[*count].value, '$'))
-			tokens[*count].type = VAR_WORD;
+		token->value = malloc(len + 1);
+		if (token->value == NULL)
+			return (error_token(token));
+		ft_strlcpy(token->value, l + start, len + 1);
+		if (ft_strchr(token->value, '$'))
+			token->type = VAR_WORD;
 		else
-			tokens[*count].type = WORD;
+			token->type = WORD;
 	}
 }
 
@@ -79,7 +92,7 @@ static void	eof_token(t_token *tokens, int *count)
 	tokens[*count].value = NULL;
 }
 
-static void	quote_word_token(t_token *tokens, int *count, int *i, char *l)
+static void	quote_word_token(t_token *token, int *i, char *l)
 {
 	int		start;
 	int		len;
@@ -91,22 +104,38 @@ static void	quote_word_token(t_token *tokens, int *count, int *i, char *l)
 	while (l[*i] && l[*i] != c)
 		(*i)++;
 	if (l[*i] == '\0')
-	{
-		tokens[*count].value = NULL;
-		return ;
-	}
+		return (error_token(token), (void)0);
 	len = *i - start;
-	if (len > 0)
-	{
-		if (c == '\'')
-			tokens[*count].type = SQUOTE_WORD;
-		else
-			tokens[*count].type = DQUOTE_WORD;
-		tokens[*count].value = malloc(len + 1);
-		if (tokens[*count].value)
-			ft_strlcpy(tokens[*count].value, l + start, len + 1);
-	}
+	token->value = malloc(len + 1);
+	if (token->value == NULL)
+		return (error_token(token), (void)0);
+	ft_strlcpy(token->value, l + start, len + 1);
+	if (c == '\'')
+		token->type = SQUOTE_WORD;
+	else
+		token->type = DQUOTE_WORD;
 	(*i)++;
+}
+
+static int	skip_whitespace(char *l, int i)
+{
+	while (l[i] && is_space(l[i]))
+		i++;
+	return (i);
+}
+
+static	void	process_next_token(t_token *token, char *l, int *i)
+{
+	if (l[*i] == '"' || l[*i] == '\'')
+		quote_word_token(token, i, l);
+	else if (l[*i] == '<' || l[*i] == '>')
+		redir_token(token, i, l);
+	else if (l[*i] == '|')
+		pipe_token(token, i);
+	else
+		word_token(token, l, i);
+	if (token->value == NULL && token->type != ERROR_TOKEN)
+		error_token(token);
 }
 
 t_token	*tokenize(char *l, int *token_count)
@@ -122,31 +151,15 @@ t_token	*tokenize(char *l, int *token_count)
 		return (NULL);
 	while (l[i])
 	{
-		while (l[i] && is_space(l[i]))
-			i++;
+		i = skip_whitespace(l, i);
 		if (!l[i])
 			break ;
-
-		if (l[i] == '"' || l[i] == '\'')
-			quote_word_token(tokens, &count, &i, l);
-		if (l[i] == '<' || l[i] == '>')
-			redir_token(tokens, &i, &count, l);
-		else if (l[i] == '|')
-			pipe_token(tokens, &count, &i);
-		else
-			word_token(tokens, l, &count, &i);
-		if (tokens[count].value == NULL && tokens[count].type != TOKEN_EOF)
+		process_next_token(&tokens[count], l, &i);
+		if (tokens[count].type == ERROR_TOKEN)
 			return (free_tokens(tokens, count), NULL);
-		// if (tokens[count].type == VAR_WORD)
-		// 	printf("VAR_WORD: %s\n", tokens[count].value);
-		// else if (tokens[count].type == DQUOTE_WORD)
-		// 	printf("DQUOTE_WORD: %s\n", tokens[count].value);	
-		// else if (tokens[count].type == SQUOTE_WORD)
-		// 	printf("SQUOTE_WORD: %s\n", tokens[count].value);	
 		count++;
 	}
 	eof_token(tokens, &count);
 	*token_count = count;
 	return (tokens);
 }
-

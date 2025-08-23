@@ -74,7 +74,7 @@ int	main(int argc, char *argv[], char *env[])
 				printf("Command %d: ", i + 1);
 				while (j < cmds->simple_cmds[i]->args_count)
 				{
-					printf("%s ", cmds->simple_cmds[i]->args[j]);
+					printf("arg[%d] %s ",j,  cmds->simple_cmds[i]->args[j]);
 					j++;
 				}
 				i++;
