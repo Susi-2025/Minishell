@@ -39,10 +39,14 @@ typedef struct s_cmd
 
 typedef enum {
 	WORD,
+	DQUOTE_WORD,
+	SQUOTE_WORD,
+	VAR_WORD,
 	PIPE,
 	REDIR_IN,
 	REDIR_OUT,
 	REDIR_APPEND,
+	HERE_DOC,
 	TOKEN_EOF,
 }	t_token_type;
 
@@ -57,7 +61,14 @@ int     ft_strlen(const char *s);
 int     ft_strlcpy(char *dst, const char *src, int size);
 char    *ft_strdup(const char *s);
 t_token	*tokenize(char *l, int *token_count);
-t_cmd	*parse_tokens(t_token *tokens, int token_count);
+t_cmd	*parse_tokens(t_token *tokens, int token_count, char *env[]);
 void	free_cmd(t_cmd *cmds);
 void	free_tokens(t_token *tokens, int count);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	**ft_split(char const *str, char c);
+void	free_split(char **split);
+int		ft_isalnum(int c);
+int		count_strings(char const *str, char delimiter);
+char	*ft_strjoin(char const *s1, char const *s2);
+int		ft_strchr(const char *s, int c);
 #endif
