@@ -24,7 +24,7 @@ void	handle_redir_in(t_token *token, int *i, char *l)
 		token->type = REDIR_IN;
 		token->value = ft_strdup("<");
 		(*i)++;
-	}	
+	}
 }
 
 void	handle_redir_out(t_token *token, int *i, char *l)

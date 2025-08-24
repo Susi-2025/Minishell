@@ -13,6 +13,7 @@
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 
+/* Needed in order to use t_token type*/
 # include "structs.h"
 
 /* Main tokenizer functions*/
