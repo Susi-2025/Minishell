@@ -15,7 +15,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -Iinclude
 LDLIBS = -lreadline
 
-SRC_DIRS = src/parsing src/utils
+SRC_DIRS = src/parser src/utils src/tokenizer
 OBJ_DIR = object
 
 SRC =	$(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))

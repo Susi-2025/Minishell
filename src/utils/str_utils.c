@@ -150,3 +150,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	out[i] = '\0';
 	return (out);
 }
+
+int	skip_whitespace(char *l, int i)
+{
+	while (l[i] && is_space(l[i]))
+		i++;
+	return (i);
+}
