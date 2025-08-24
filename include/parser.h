@@ -26,9 +26,4 @@ int	    parse_word(char *word, t_simple_cmd **current_cmd, t_cmd *cmds);
 char	*parse_dquote(char *line, char *env[]);
 int     handle_var_expansion(char *value, t_simple_cmd **current_cmd, t_cmd *cmds, char *env[]);
 
-/* Expansion utility*/
-int     len_until_delim(char *word);
-char	*find_env_value(char *variable, char *env[], int var_len);
-int 	find_dollar_pos(char *str);
-
 #endif

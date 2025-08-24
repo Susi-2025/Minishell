@@ -34,4 +34,9 @@ char	**ft_split(char const *str, char c);
 void	free_split(char **split);
 int		count_strings(char const *str, char delimiter);
 
+/*Parser utilities*/
+int     len_until_delim(char *word);
+char	*find_env_value(char *variable, char *env[], int var_len);
+int 	find_dollar_pos(char *str);
+
 #endif
