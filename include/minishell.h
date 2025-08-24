@@ -24,5 +24,6 @@
 # include "structs.h"
 # include "utils.h"
 # include "parser.h"
+# include "pipex.h"
 
 #endif

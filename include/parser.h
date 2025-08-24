@@ -27,4 +27,3 @@ char	*parse_dquote(char *line, char *env[]);
 int     handle_var_expansion(char *value, t_simple_cmd **current_cmd, t_cmd *cmds, char *env[]);
 
 #endif
-    

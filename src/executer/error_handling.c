@@ -9,7 +9,7 @@
 /*   Updated: 2025/07/03 13:59:56 by cdohanic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipex.h"
+#include "minishell.h"
 
 void	free_strings(char **str)
 {
