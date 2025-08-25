@@ -66,6 +66,7 @@ int	main(int argc, char *argv[], char *env[])
 {
 	char 	*rl;
 	t_cmd 	*cmds;
+	int		cmd_exit_code;
 	// int		i;
 	// int		j;
 
@@ -87,9 +88,9 @@ int	main(int argc, char *argv[], char *env[])
 
 		g_interactive = 0;
 		cmds = ft_prepare_command(rl, env);
-		if (cmds && cmds->cmds_count > 0)
+		if (cmds)
 		{
-			ft_pipex(cmds, env);
+			cmd_exit_code = ft_pipex(cmds, env);
 			free_cmd(cmds);
 		}
 		// if (cmds)

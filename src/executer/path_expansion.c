@@ -20,30 +20,31 @@ char	*correct_path(char *cmd, char *env[])
 	//SEPARATE TOMMOROW
 	char	*temp;
 
-	temp = ft_strjoin("/", cmd);
-	if (!temp)
-		return (NULL);
-	free(cmd);
-	cmd = temp;
+
 	i = 0;
 	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
 		i++;
 	if (!env[i])
 		return (NULL);
+	temp = ft_strjoin("/", cmd);
+	if (!temp)
+		return (NULL);
 	paths = ft_split(env[i] + 5, ':');
 	if (!paths)
-		return (NULL);
+		return (free(temp), NULL);
 	i = -1;
 	while (paths[++i])
 	{
-		try_path = ft_strjoin(paths[i], cmd);
+		try_path = ft_strjoin(paths[i], temp);
 		if (access(try_path, F_OK) == 0)
 		{
+			free(temp);
 			free_strings(paths);
 			return (try_path);
 		}
 		free(try_path);
 	}
+	free(temp);
 	free_strings(paths);
 	return (NULL);
 }

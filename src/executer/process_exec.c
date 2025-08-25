@@ -14,6 +14,7 @@
 void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 {
 	char	**args;
+	char	*path;
 
 	//Eliminate this struct
 	(void)pipex;
@@ -23,12 +24,19 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		exit(127);
 	}
 	args = cmds->simple_cmds[i]->args;
-	args[0] = correct_path(args[0], env);
-	if (!args[0])
+	path = correct_path(args[0], env);
+	if (path != NULL)
 	{
-		error_string(args[0]);
-		exit(127);
+		free(args[0]);
+		args[0] = path;
 	}
+	// printf("args[0]: %s\n", args[0]);
+	// if (!args[0])
+	// {
+	// 	printf("we are here");
+	// 	error_string(args[0]);
+	// 	exit(127);
+	// }
 	execve(args[0], args, env);
 	if (errno == ENOENT)
 	{

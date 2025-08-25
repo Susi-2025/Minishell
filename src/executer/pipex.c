@@ -33,28 +33,57 @@ void	pipe_and_fork_logic(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		parent_process(pipex, i);
 }
 
+
+	// if (pipex.last_child_pid != -1)
+	// 	waitpid(pipex.last_child_pid, &pipex.last_status, 0);
+	// while (pipex->num_commands > 1 && (&pipex.status) > 0)
+	// 	;
+	// exit(WEXITSTATUS(pipex.last_status));
 int	wait_for_children(t_object *pipex)
 {
+
+	// // printf("DEBUG: About to enter while(wait...)\n");
+	// while (wait(&pipex->status) > 0)
+	// {
+	// 	// printf("DEBUG: wait() collected a child\n");
+	// }
+	// // printf("DEBUG: Finished waiting\n");
+	// int exit_code = WEXITSTATUS(pipex->last_status);
+	// // printf("DEBUG: Returning exit code: %d\n", exit_code);
+	// return (exit_code);
+
+
+    int status;
+    int exit_code = 0;
+    pid_t pid;
 	// printf("DEBUG: Before waiting, last_child_pid = %d\n", pipex->last_child_pid);
-	// printf("DEBUG: About to enter while(wait...)\n");
-	while (wait(&pipex->status) > 0)
-	{
-		// printf("DEBUG: wait() collected a child\n");
-	}
-	// printf("DEBUG: Finished waiting\n");
-	int exit_code = WEXITSTATUS(pipex->last_status);
-	// printf("DEBUG: Returning exit code: %d\n", exit_code);
-	return (exit_code);
+    while ((pid = wait(&status)) > 0)
+    {
+        if (pid == pipex->last_child_pid)
+		{
+			exit_code = WEXITSTATUS(status);
+			// printf("last pid: %d, exit status: %d\n", pipex->last_child_pid, exit_code);
+		}
+            exit_code = WEXITSTATUS(status);
+    }
+    return exit_code;
 }
 
+
+// TASKS
+// Analyze the code: get a good understanding of it
+// Remove redundant things: remove some stuff from s_object struct
+// understand error number output.. since you are in the same shell all the time.. you don t want to use exit? maybe?
+// add syntax checker in parsing
+// add builtins
+// add here_doc and append
 int	ft_pipex(t_cmd *cmds, char *env[])
 {
 	t_object	pipex;
 	int			i;
 
-	if (!cmds  || cmds->cmds_count < 1)
+	if (!cmds)
 		return (1);
-	
 	fd_init(&pipex.infile_fd, &pipex.outfile_fd, cmds->in_file, cmds->out_file);
 	fire_up_pipeinator(&pipex, cmds);
 	i = 0;
