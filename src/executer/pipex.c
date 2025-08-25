@@ -33,6 +33,20 @@ void	pipe_and_fork_logic(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		parent_process(pipex, i);
 }
 
+int	wait_for_children(t_object *pipex)
+{
+	// printf("DEBUG: Before waiting, last_child_pid = %d\n", pipex->last_child_pid);
+	// printf("DEBUG: About to enter while(wait...)\n");
+	while (wait(&pipex->status) > 0)
+	{
+		// printf("DEBUG: wait() collected a child\n");
+	}
+	// printf("DEBUG: Finished waiting\n");
+	int exit_code = WEXITSTATUS(pipex->last_status);
+	// printf("DEBUG: Returning exit code: %d\n", exit_code);
+	return (exit_code);
+}
+
 int	ft_pipex(t_cmd *cmds, char *env[])
 {
 	t_object	pipex;
@@ -40,6 +54,7 @@ int	ft_pipex(t_cmd *cmds, char *env[])
 
 	if (!cmds  || cmds->cmds_count < 1)
 		return (1);
+	
 	fd_init(&pipex.infile_fd, &pipex.outfile_fd, cmds->in_file, cmds->out_file);
 	fire_up_pipeinator(&pipex, cmds);
 	i = 0;
@@ -49,10 +64,12 @@ int	ft_pipex(t_cmd *cmds, char *env[])
 		i++;
 	}
 	last_close(&pipex);
-	if (pipex.last_child_pid != -1)
-		waitpid(pipex.last_child_pid, &pipex.last_status, 0);
-	while (wait(&pipex.status) > 0)
-		;
-	return (WEXITSTATUS(pipex.last_status));
+	// if (pipex.last_child_pid != -1)
+	// 	waitpid(pipex.last_child_pid, &pipex.last_status, 0);
+	// while (wait(&pipex.status) > 0)
+	// 	;
+	// return (WEXITSTATUS(pipex.last_status));
 	// exit(WEXITSTATUS(pipex.last_status));
+
+    return (wait_for_children(&pipex));
 }

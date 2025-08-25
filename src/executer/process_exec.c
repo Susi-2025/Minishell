@@ -13,7 +13,6 @@
 
 void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 {
-
 	char	**args;
 
 	//Eliminate this struct
@@ -23,7 +22,6 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		error_string("Invalid command index.");
 		exit(127);
 	}
-
 	args = cmds->simple_cmds[i]->args;
 	args[0] = correct_path(args[0], env);
 	if (!args[0])
@@ -31,10 +29,7 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		error_string(args[0]);
 		exit(127);
 	}
-
-
 	execve(args[0], args, env);
-
 	if (errno == ENOENT)
 	{
 		if (!path_exists(env))
@@ -54,10 +49,8 @@ void	reading_pipe(t_object *pipex, int i)
 		dup2(pipex->prev_pipe_in, STDIN_FILENO);
 		close(pipex->prev_pipe_in);
 	}
-	else
+	else if (pipex->infile_fd != -1)
 	{
-		if (pipex->infile_fd == -1)
-			exit(1);
 		dup2(pipex->infile_fd, STDIN_FILENO);
 		close(pipex->infile_fd);
 	}
@@ -67,10 +60,11 @@ void	writing_pipe(t_object *pipex, int i)
 {
 	if (i == pipex->num_commands - 1)
 	{
-		if (pipex->outfile_fd == -1)
-			exit(1);
-		dup2(pipex->outfile_fd, STDOUT_FILENO);
-		close(pipex->outfile_fd);
+		if (pipex->outfile_fd != -1)
+		{
+			dup2(pipex->outfile_fd, STDOUT_FILENO);
+			close(pipex->outfile_fd);
+		}
 	}
 	else
 	{

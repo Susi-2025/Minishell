@@ -19,22 +19,31 @@ void	fd_init(int *infile_fd, int *outfile_fd, char *in, char *out)
 		if (*outfile_fd == -1)
 			error_string(out);
 	}
+	else
+		*outfile_fd = -1;
 	if (in != NULL)
 	{	
 		*infile_fd = open(in, O_RDONLY);
 		if (*infile_fd == -1)
 			error_string(in);
 	}
+	else
+		*infile_fd = -1;
 }
 
 void	last_close(t_object *pipex)
 {
-	close(pipex->infile_fd);
-	close(pipex->outfile_fd);
-	close(pipex->pipefd[0]);
-	close(pipex->pipefd[1]);
+	if (pipex->infile_fd != -1)
+		close(pipex->infile_fd);
+	if (pipex->outfile_fd != -1)
+		close(pipex->outfile_fd);
 	if (pipex->num_commands > 1)
+	{
+		close(pipex->pipefd[0]);
+		close(pipex->pipefd[1]);
 		close(pipex->prev_pipe_in);
+	}
+
 }
 
 void	fire_up_pipeinator(t_object *pipex, t_cmd *cmds)
