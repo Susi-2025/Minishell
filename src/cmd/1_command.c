@@ -38,6 +38,6 @@ static	int	check_built_in(char *cmd)
 int	exec_command(t_shell *shell)
 {
 	printf("Exec command \n");
-	//if (check_built_in(shell->cmd_args[0]) == 1)
+	//if (check_built_in(shell->simple_cmds[0]->args[0]) == 1)
 	return(exec_built_in(shell));
 }

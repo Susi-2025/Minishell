@@ -102,7 +102,7 @@ static	int	exec_unset(t_shell *shell)
 	return (res);
 }
 
-//not good
+//not testing in minishell enviroment, only exit from terminal
 static	int	exec_exit(t_shell *shell, char *s)
 {
 	int	status;
