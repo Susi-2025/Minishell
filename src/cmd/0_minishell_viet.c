@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 12:31:23 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:50:00 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 18:31:03 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static	int	init_shell(t_cmd *shell, char **envp)
 	return (0);
 }
 
-int main(int ac, char **av, char **envp)
+int main_2(int ac, char **av, char **envp)
 {
 	//int	len;
 	t_cmd shell = {0};

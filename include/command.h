@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:48:19 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 18:25:49 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int exec_cd(t_cmd *shell);
 char	*find_var(char **envp, char *str);
 void	sort_2d_array(char **strs);
 int	ft_len_2d(char **strs);
+int ft_is_numeric(char *s);
 int	update_env(t_cmd *shell, char *key, char *value);
 int	reduce_env(t_cmd *shell, char *str);
 

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:50:49 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 18:28:06 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*find_var(char **envp, char *str)
 	{
 		if (ft_strncmp(envp[i], str, ft_strlen(str)) == 0)
 		{
-			sub = ft_strchr(envp[i], '=');
+			sub = ft_strchr_char(envp[i], '=');
 			//if (sub && (sub + 1))// why show error here
 			if (sub)
 				return (sub + 1);
@@ -90,4 +90,18 @@ static	int ft_cmp_strs(char *s1, char *s2)
 		return (-1);
 	else
 		return (1);
+}
+
+int ft_is_numeric(char *s)
+{
+	int i;
+	
+	i = 0;
+	while (s[i])
+	{
+		if (!(s[i] >= '0' && s[i] <= '9'))
+			return (1);
+		i++;
+	}
+	return (0);
 }

@@ -6,13 +6,14 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:50:12 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 17:09:22 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static	int	cd_only(t_cmd *shell);
+static	int	cd_absolute(t_cmd *shell);
 
 int exec_cd(t_cmd *shell)
 {
@@ -24,6 +25,8 @@ int exec_cd(t_cmd *shell)
 	//if (shell->simple_cmds[0]->args[1]== NULL )
 	if (cd_only(shell) != 0)
 		return ((error_msg(shell, 1, "cd error")));
+	if (cd_absolute(shell) != 0)
+		return (error_msg(shell, 1, "cd absolute wrong"));
 	// exec_env(shell);
 	// exec_pwd(shell);
 	return (0);
@@ -69,7 +72,7 @@ static	int	cd_absolute(t_cmd *shell)
 	oldcwd = getcwd(NULL, 0);
 	if (!oldcwd)
 		return (1);
-	if (chdir(nextcwd != 0))
+	if (chdir(nextcwd) != 0)
 	{
 		free(oldcwd);
 		return (1);

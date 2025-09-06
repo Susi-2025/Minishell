@@ -6,19 +6,19 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 18:02:33 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:01:22 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 17:11:15 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_viet.h"
+#include "minishell.h"
 
-int error_malloc(t_shell *shell, int code)
+int error_malloc(t_cmd *shell, int code)
 {
 	free_shell(shell);
 	return (code);
 }
 
-void	free_shell(t_shell *shell)
+void	free_shell(t_cmd *shell)
 {
 	//int	i;
 	
@@ -40,9 +40,8 @@ void	free_shell(t_shell *shell)
 		shell->simple_cmds = NULL;
 	}
 }
-	
 
-int error_msg(t_shell *shell, int code, char *str)
+int error_msg(t_cmd *shell, int code, char *str)
 {
 	printf("%s\n", str);
 	free_shell(shell);
