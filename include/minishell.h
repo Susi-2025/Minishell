@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 16:25:20 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/24 15:13:57 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:49:11 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,18 @@
 # include <signal.h>
 # include <sys/wait.h>
 
+# include <fcntl.h> 
+# include <errno.h>
+# include <string.h>
+# include <stddef.h>
+
+# include "../libft/libft.h"
+
 # include "tokenizer.h"
 # include "structs.h"
 # include "utils.h"
 # include "parser.h"
 # include "pipex.h"
+# include "command.h"
 
 #endif

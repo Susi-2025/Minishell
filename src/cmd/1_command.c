@@ -6,11 +6,11 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:00:48 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:50:07 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_viet.h"
+#include "minishell.h"
 
 /*
 static	int	check_built_in(char *cmd)
@@ -35,7 +35,7 @@ static	int	check_built_in(char *cmd)
 }
 */
 
-int	exec_command(t_shell *shell)
+int	exec_command(t_cmd *shell)
 {
 	printf("Exec command \n");
 	//if (check_built_in(shell->simple_cmds[0]->args[0]) == 1)

@@ -6,15 +6,15 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:01:12 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:50:42 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_viet.h"
+#include "minishell.h"
 
 static	void	ft_copy_str(char *origin, char *key, char *value);
 
-int	update_env(t_shell *shell, char *key, char *value)
+int	update_env(t_cmd *shell, char *key, char *value)
 {
 	int	i;
 	char	*new_str;
@@ -58,7 +58,7 @@ static	void	ft_copy_str(char *origin, char *key, char *value)
 	origin[j] = '\0';
 }
 
-int	reduce_env(t_shell *shell, char *str)
+int	reduce_env(t_cmd *shell, char *str)
 {
 	int i;
 	int len;

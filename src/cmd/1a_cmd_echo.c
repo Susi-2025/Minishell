@@ -6,13 +6,13 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:00:58 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:50:19 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_viet.h"
+#include "minishell.h"
 
-int exec_echo(t_shell *shell)
+int exec_echo(t_cmd *shell)
 {
 	int	i;
 	char	*temp;

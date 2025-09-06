@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   0_minishell.c                                      :+:      :+:    :+:   */
+/*   0_minishell_viet.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 12:31:23 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:00:43 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:50:00 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_viet.h"
+#include "minishell.h"
 
-static	int	init_shell(t_shell *shell, char **envp)
+static	int	init_shell(t_cmd *shell, char **envp)
 {
 	int	 len;
 	
@@ -49,7 +49,7 @@ static	int	init_shell(t_shell *shell, char **envp)
 int main(int ac, char **av, char **envp)
 {
 	//int	len;
-	t_shell shell = {0};
+	t_cmd shell = {0};
 	
 	(void)av;
 	if (ac)

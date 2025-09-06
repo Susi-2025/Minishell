@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:21:19 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/24 15:21:21 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:46:23 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
@@ -29,6 +30,7 @@ typedef struct s_cmd
 	char	*err_file;
 	char	*here_doc;
 	char	*file_append;
+	char	**envp; //vietadd	
 }	t_cmd;
 
 typedef enum {

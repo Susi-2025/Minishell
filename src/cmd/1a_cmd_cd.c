@@ -6,15 +6,15 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:00:52 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:50:12 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_viet.h"
+#include "minishell.h"
 
-static	int	cd_only(t_shell *shell);
+static	int	cd_only(t_cmd *shell);
 
-int exec_cd(t_shell *shell)
+int exec_cd(t_cmd *shell)
 {
 	//int	i;
 	// char *oldcwd;
@@ -29,7 +29,7 @@ int exec_cd(t_shell *shell)
 	return (0);
 }
 
-static	int	cd_only(t_shell *shell)
+static	int	cd_only(t_cmd *shell)
 {
 	char	*home;
 	char	*oldcwd;
@@ -55,7 +55,7 @@ static	int	cd_only(t_shell *shell)
 	return (0);
 }
 
-static	int	cd_absolute(t_shell *shell)
+static	int	cd_absolute(t_cmd *shell)
 {
 	char	*nextcwd;
 	char	*oldcwd;

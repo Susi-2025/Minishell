@@ -6,18 +6,18 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:01:02 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:50:28 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_viet.h"
+#include "minishell.h"
 
 //"export"
 //a. When no option, it will sort the envp and printout.
 //b. When have option: name "viet"
 //    export name;-> this will assign variable to envp.
 
-int	exec_export_only(t_shell *shell)
+int	exec_export_only(t_cmd *shell)
 {
 	int	i;
 	char	**temp;

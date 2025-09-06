@@ -6,23 +6,23 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:01:06 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:50:35 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_viet.h"
+#include "minishell.h"
 
-static	int	exec_pwd(t_shell *shell);
-static	int	exec_env(t_shell *shell);
-static	int	exec_unset(t_shell *shell);
-static	int	exec_exit(t_shell *shell, char *s);
+static	int	exec_pwd(t_cmd *shell);
+static	int	exec_env(t_cmd *shell);
+static	int	exec_unset(t_cmd *shell);
+static	int	exec_exit(t_cmd *shell, char *s);
 
 //1. Command will return 0 for success and non-zero for fail.
 //2. "env": Add checking = to make sure only printout line which has =
 //3. "export, echo, cd"->separatre to new file
 
 
-int exec_built_in(t_shell *shell)
+int exec_built_in(t_cmd *shell)
 {
 	printf("Exec built-in\n");
 	// if (!shell || !shell->cmd_args || !shell->simple_cmds[0]->args[0])
@@ -55,8 +55,8 @@ int exec_built_in(t_shell *shell)
 	return (0);
 }
 
-static	int	exec_pwd(t_shell *shell)
-// int	exec_pwd(t_shell *shell)
+static	int	exec_pwd(t_cmd *shell)
+// int	exec_pwd(t_cmd *shell)
 {
 	char	*out;
 
@@ -68,8 +68,8 @@ static	int	exec_pwd(t_shell *shell)
 	return (0);
 }
 
-static	int	exec_env(t_shell *shell)
-// int	exec_env(t_shell *shell)
+static	int	exec_env(t_cmd *shell)
+// int	exec_env(t_cmd *shell)
 {
 	int	i;
 
@@ -85,7 +85,7 @@ static	int	exec_env(t_shell *shell)
 	return (0);
 }
 // only works if cmd[0]->args[1] receive PATH-> not the expansion value
-static	int	exec_unset(t_shell *shell)
+static	int	exec_unset(t_cmd *shell)
 {
 	printf("Unset running\n");
 	printf("Before unset USER\n");
@@ -103,7 +103,7 @@ static	int	exec_unset(t_shell *shell)
 }
 
 //not testing in minishell enviroment, only exit from terminal
-static	int	exec_exit(t_shell *shell, char *s)
+static	int	exec_exit(t_cmd *shell, char *s)
 {
 	int	status;
 
