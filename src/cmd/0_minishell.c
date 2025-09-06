@@ -6,11 +6,11 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 12:31:23 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/19 15:59:11 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:00:43 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_viet.h"
 
 static	int	init_shell(t_shell *shell, char **envp)
 {

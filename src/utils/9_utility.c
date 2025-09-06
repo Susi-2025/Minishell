@@ -6,11 +6,11 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 18:02:33 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/08/19 14:14:23 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/06 16:01:22 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_viet.h"
 
 int error_malloc(t_shell *shell, int code)
 {
