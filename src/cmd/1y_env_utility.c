@@ -57,3 +57,40 @@ static	void	ft_copy_str(char *origin, char *key, char *value)
 		origin[j++] = value[k++];
 	origin[j] = '\0';
 }
+
+int	reduce_env(t_shell *shell, char *str)
+{
+	int i;
+	int len;
+
+	if (!shell || !str)
+		return (1);
+	i = 0;
+	len = ft_len_2d(shell->envp);
+	while (shell->envp[i])
+	{
+		if (ft_strncmp(shell->envp[i], str, ft_strlen(str)) == 0
+	&& shell->envp[i][ft_strlen(str)] == '=')
+		{
+			// printf("Variable is detect: %s\n", str);
+			free(shell->envp[i]);
+			while (i < len - 1)
+			{
+				// printf("Copy str: %d\n", i);
+				shell->envp[i] = shell->envp[i + 1];
+				i++;
+			}
+			shell->envp[i] = NULL;
+			// i = 0;
+			// printf("Check envp again\n");
+			// while (shell->envp[i])
+			// {
+			// 	printf("String at %i pos is: %s\n", i, shell->envp[i]);
+			// 	i++;
+			// }
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}

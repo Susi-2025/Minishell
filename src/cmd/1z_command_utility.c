@@ -27,7 +27,8 @@ char	*find_var(char **envp, char *str)
 		if (ft_strncmp(envp[i], str, ft_strlen(str)) == 0)
 		{
 			sub = ft_strchr(envp[i], '=');
-			if (sub && (sub + 1))
+			//if (sub && (sub + 1))// why show error here
+			if (sub)
 				return (sub + 1);
 			break;
 		}

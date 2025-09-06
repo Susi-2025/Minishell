@@ -37,7 +37,7 @@ static	int	cd_only(t_shell *shell)
 	printf("Exec cd only\n");
 	home = find_var(shell->envp, "HOME");
 	printf("%s\n", home);
-	if (!home)
+	if (!home)// what happen if home wrong
 		return (1);
 	oldcwd = getcwd(NULL, 0);
 	if (!oldcwd)
@@ -50,6 +50,33 @@ static	int	cd_only(t_shell *shell)
 	else
 		printf("Success change dir\n");
 	if (update_env(shell, "OLDPWD", oldcwd) != 0 || update_env(shell, "PWD", home) != 0)
+		return (1);
+	free(oldcwd);
+	return (0);
+}
+
+static	int	cd_absolute(t_shell *shell)
+{
+	char	*nextcwd;
+	char	*oldcwd;
+
+	printf("Exec cd absolute\n");
+
+	nextcwd = shell->simple_cmds[0]->args[1];
+	//printf("%s\n", home);
+	if (!nextcwd)
+		return (1);
+	oldcwd = getcwd(NULL, 0);
+	if (!oldcwd)
+		return (1);
+	if (chdir(nextcwd != 0))
+	{
+		free(oldcwd);
+		return (1);
+	}
+	else
+		printf("Success change absolute dir\n");
+	if (update_env(shell, "OLDPWD", oldcwd) != 0 || update_env(shell, "PWD", nextcwd) != 0)
 		return (1);
 	free(oldcwd);
 	return (0);
