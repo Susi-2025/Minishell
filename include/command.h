@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 18:25:49 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/07 10:44:12 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	ft_len_2d(char **strs);
 int ft_is_numeric(char *s);
 int	update_env(t_cmd *shell, char *key, char *value);
 int	reduce_env(t_cmd *shell, char *str);
+
+void	cmd_print(t_cmd *cmds);
 
 // handle_error
 void	free_shell(t_cmd *shell);

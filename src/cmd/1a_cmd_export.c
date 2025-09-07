@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:50:28 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/07 10:28:39 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@
 //b. When have option: name "viet"
 //    export name;-> this will assign variable to envp.
 
-int	exec_export_only(t_cmd *shell)
+int	exec_export_only(t_cmd *cmds)
 {
 	int	i;
 	char	**temp;
 	printf("Export execute");
-	if (!shell->envp)
-		return(error_msg(shell, 1, "envp"));
+	if (!cmds->envp)
+		return(error_msg(cmds, 1, "envp"));
 	i  = 0;
-	temp = ft_matrix_dup(shell->envp, ft_len_2d(shell->envp));
+	temp = ft_matrix_dup(cmds->envp, ft_len_2d(cmds->envp));
 	if (!temp)
-		return(error_malloc(shell, 1));
+		return(error_malloc(cmds, 1));
 	sort_2d_array(temp);
 	while (temp[i])
 	{

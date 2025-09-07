@@ -6,31 +6,31 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:50:19 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/07 10:28:31 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int exec_echo(t_cmd *shell)
+int exec_echo(t_cmd *cmds)
 {
 	int	i;
 	char	*temp;
 		
-	if (!shell)
-		return(error_msg(shell, 1, "shell"));
+	if (!cmds)
+		return(error_msg(cmds, 1, "cmds"));
 	i = 1;
-	while(shell->simple_cmds[0]->args[i])
+	while(cmds->simple_cmds[0]->args[i])
 	{
-		if(shell->simple_cmds[0]->args[i][0] == '$')
+		if(cmds->simple_cmds[0]->args[i][0] == '$')
 		{
-			temp = find_var(shell->envp, &(shell->simple_cmds[0]->args[i][1]));// cristian already handle this in the parsing
+			temp = find_var(cmds->envp, &(cmds->simple_cmds[0]->args[i][1]));// cristian already handle this in the parsing
 			if (temp != NULL)
 				printf("%s", temp);
 		}
 		else
-			printf("%s", shell->simple_cmds[0]->args[i]);
-		if (i < (ft_len_2d(shell->simple_cmds[0]->args) - 1))
+			printf("%s", cmds->simple_cmds[0]->args[i]);
+		if (i < (ft_len_2d(cmds->simple_cmds[0]->args) - 1))
 			printf(" ");
 		i++;
 	}

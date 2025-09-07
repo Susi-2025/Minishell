@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 16:50:42 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/07 10:29:04 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 static	void	ft_copy_str(char *origin, char *key, char *value);
 
-int	update_env(t_cmd *shell, char *key, char *value)
+int	update_env(t_cmd *cmds, char *key, char *value)
 {
 	int	i;
 	char	*new_str;
 	
-	if (!shell || !key || !value)
+	if (!cmds || !key || !value)
 		return (1);
 	i = 0;
-	while (shell->envp[i])
+	while (cmds->envp[i])
 	{
-		if (ft_strncmp(shell->envp[i], key, ft_strlen(key)) == 0)
+		if (ft_strncmp(cmds->envp[i], key, ft_strlen(key)) == 0)
 		{
 			new_str = malloc(sizeof(char) * (ft_strlen(key) + ft_strlen(value) + 2));
 			if (!new_str)
 				return (1); 
 			ft_copy_str(new_str, key, value);
-			free(shell->envp[i]);
-			shell->envp[i] = new_str;
+			free(cmds->envp[i]);
+			cmds->envp[i] = new_str;
 			return (0);
 		}
 		i++;
@@ -58,34 +58,34 @@ static	void	ft_copy_str(char *origin, char *key, char *value)
 	origin[j] = '\0';
 }
 
-int	reduce_env(t_cmd *shell, char *str)
+int	reduce_env(t_cmd *cmds, char *str)
 {
 	int i;
 	int len;
 
-	if (!shell || !str)
+	if (!cmds || !str)
 		return (1);
 	i = 0;
-	len = ft_len_2d(shell->envp);
-	while (shell->envp[i])
+	len = ft_len_2d(cmds->envp);
+	while (cmds->envp[i])
 	{
-		if (ft_strncmp(shell->envp[i], str, ft_strlen(str)) == 0
-	&& shell->envp[i][ft_strlen(str)] == '=')
+		if (ft_strncmp(cmds->envp[i], str, ft_strlen(str)) == 0
+	&& cmds->envp[i][ft_strlen(str)] == '=')
 		{
 			// printf("Variable is detect: %s\n", str);
-			free(shell->envp[i]);
+			free(cmds->envp[i]);
 			while (i < len - 1)
 			{
 				// printf("Copy str: %d\n", i);
-				shell->envp[i] = shell->envp[i + 1];
+				cmds->envp[i] = cmds->envp[i + 1];
 				i++;
 			}
-			shell->envp[i] = NULL;
+			cmds->envp[i] = NULL;
 			// i = 0;
 			// printf("Check envp again\n");
-			// while (shell->envp[i])
+			// while (cmds->envp[i])
 			// {
-			// 	printf("String at %i pos is: %s\n", i, shell->envp[i]);
+			// 	printf("String at %i pos is: %s\n", i, cmds->envp[i]);
 			// 	i++;
 			// }
 			return (0);

@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/22 11:14:14 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/07 10:06:01 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+
 
 volatile sig_atomic_t g_interactive = 1;
 
@@ -62,6 +62,40 @@ void	setup_signals(void)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
+// static	int	init_cmd(t_cmd *cmds, char **envp)
+// {
+// 	int	 len;
+	
+// 	len = ft_len_2d(envp);
+// 	cmds->envp = ft_matrix_dup(envp, len);
+// 	if (!cmds->envp)
+// 		return(error_malloc(cmds, 1));
+	
+// 	cmds->simple_cmds = malloc(sizeof(t_simple_cmd *) * 2); // only 1 cmd
+// 	if (!cmds->simple_cmds)
+//         return (error_malloc(cmds, 1));
+		
+// 	cmds->simple_cmds[0]= malloc(sizeof(t_simple_cmd));
+// 	if (!cmds->simple_cmds[0])
+//         return (error_malloc(cmds, 1));
+// 	cmds->simple_cmds[1] = NULL; // terminate
+	
+// 	// cmds->simple_cmds[0]->args_count = 5;
+//     // cmds->simple_cmds[0]->args_capacity = 6;
+// 	cmds->simple_cmds[0]->args = malloc(sizeof(char *) * 6);
+//     if (!cmds->simple_cmds[0]->args)
+//     {
+// 		return (error_malloc(cmds, 1));
+// 	}
+// 	cmds->simple_cmds[0]->args[0] = strdup("echo");
+// 	cmds->simple_cmds[0]->args[1] = strdup("USER");
+// 	cmds->simple_cmds[0]->args[2] = strdup("$PWD");
+// 	cmds->simple_cmds[0]->args[3] = strdup("abcde");
+// 	cmds->simple_cmds[0]->args[4] = strdup("$PWD23");
+// 	cmds->simple_cmds[0]->args[5] = NULL;
+// 	return (0);
+// }
+
 int	main(int argc, char *argv[], char *env[])
 {
 	char 	*rl;
@@ -90,6 +124,7 @@ int	main(int argc, char *argv[], char *env[])
 		cmds = ft_prepare_command(rl, env);
 		if (cmds)
 		{
+			cmd_print(cmds); // viet add for see contents of cmds
 			cmd_exit_code = ft_pipex(cmds, env);
 			free_cmd(cmds);
 		}
