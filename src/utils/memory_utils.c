@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_memory.c                                      :+:      :+:    :+:   */
+/*   memory_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 19:28:21 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/17 19:28:22 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/07 18:17:30 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_cmd(t_cmd *cmds)
+void	free_cmd(t_cmd *cmds)// I need to have free_envp here
 {
 	int	i;
 	int	j;
@@ -41,7 +41,7 @@ void	free_cmd(t_cmd *cmds)
     free(cmds->err_file);
     free(cmds->here_doc);
     free(cmds->file_append);
-    free(cmds);
+	free(cmds);
 }
 
 void	free_tokens(t_token *tokens, int count)

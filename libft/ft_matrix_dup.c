@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:08:00 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/07/23 11:13:17 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/07 17:56:47 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**ft_matrix_dup(char **matrix, int row)
 	i = 0;
 	while (i < row)
 	{
-		out[i] = ft_strdup(matrix[i]);
+		out[i] = ft_strdup_char(matrix[i]);
 		if (!out[i])
 		{
 			ft_free_triptr(&out);
@@ -31,5 +31,6 @@ char	**ft_matrix_dup(char **matrix, int row)
 		}
 		i++;
 	}
+	//out[row] = NULL;
 	return (out);
 }

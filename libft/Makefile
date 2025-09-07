@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 16:29:22 by vinguyen          #+#    #+#              #
-#    Updated: 2025/09/06 18:29:17 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/09/07 16:50:51 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,11 @@ SRCS = ft_bzero.c ft_calloc.c ft_free_triptr.c \
        ft_putnbr_fd.c ft_putstr_fd.c \
 	   ft_striteri.c ft_strlcat.c \
        ft_strmapi.c ft_strcmp.c ft_strnstr.c \
-       ft_strrchr.c ft_strtrim.c \
+       ft_strrchr.c \
 	   ft_tolower.c ft_toupper.c \
 	   ft_matrix_dup.c \
 	   ft_strchr_char.c \
+	   ft_strdup_char.c \
 	   # ft_isalnum.c \
 	   # ft_strlen.c \
 	   # ft_strlcpy.c \
@@ -38,7 +39,7 @@ SRCS = ft_bzero.c ft_calloc.c ft_free_triptr.c \
 	   # ft_substr.c \
 	   # ft_strjoin.c \
 	   # ft_split.c \
-	   
+	   # ft_strtrim.c \
 
 OBJ = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

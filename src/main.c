@@ -6,9 +6,11 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/07 10:06:01 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/07 18:17:34 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 
 volatile sig_atomic_t g_interactive = 1;
@@ -62,51 +64,22 @@ void	setup_signals(void)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
-// static	int	init_cmd(t_cmd *cmds, char **envp)
-// {
-// 	int	 len;
-	
-// 	len = ft_len_2d(envp);
-// 	cmds->envp = ft_matrix_dup(envp, len);
-// 	if (!cmds->envp)
-// 		return(error_malloc(cmds, 1));
-	
-// 	cmds->simple_cmds = malloc(sizeof(t_simple_cmd *) * 2); // only 1 cmd
-// 	if (!cmds->simple_cmds)
-//         return (error_malloc(cmds, 1));
-		
-// 	cmds->simple_cmds[0]= malloc(sizeof(t_simple_cmd));
-// 	if (!cmds->simple_cmds[0])
-//         return (error_malloc(cmds, 1));
-// 	cmds->simple_cmds[1] = NULL; // terminate
-	
-// 	// cmds->simple_cmds[0]->args_count = 5;
-//     // cmds->simple_cmds[0]->args_capacity = 6;
-// 	cmds->simple_cmds[0]->args = malloc(sizeof(char *) * 6);
-//     if (!cmds->simple_cmds[0]->args)
-//     {
-// 		return (error_malloc(cmds, 1));
-// 	}
-// 	cmds->simple_cmds[0]->args[0] = strdup("echo");
-// 	cmds->simple_cmds[0]->args[1] = strdup("USER");
-// 	cmds->simple_cmds[0]->args[2] = strdup("$PWD");
-// 	cmds->simple_cmds[0]->args[3] = strdup("abcde");
-// 	cmds->simple_cmds[0]->args[4] = strdup("$PWD23");
-// 	cmds->simple_cmds[0]->args[5] = NULL;
-// 	return (0);
-// }
-
 int	main(int argc, char *argv[], char *env[])
 {
 	char 	*rl;
 	t_cmd 	*cmds;
-	int		cmd_exit_code;
+	char	**temp_env;
+	//int		cmd_exit_code;
 	// int		i;
 	// int		j;
 
 	(void)argc;
 	(void)argv;
 	setup_signals();
+	
+	temp_env = ft_matrix_dup(env, ft_len_2d(env));
+	if (!temp_env)
+		return(1);
 	while (1)
 	{		
 		g_interactive = 1;
@@ -122,10 +95,12 @@ int	main(int argc, char *argv[], char *env[])
 
 		g_interactive = 0;
 		cmds = ft_prepare_command(rl, env);
+		cmds->envp = temp_env;
 		if (cmds)
 		{
 			cmd_print(cmds); // viet add for see contents of cmds
-			cmd_exit_code = ft_pipex(cmds, env);
+		//	exec_command(cmds);
+			//cmd_exit_code = ft_pipex(cmds, env);
 			free_cmd(cmds);
 		}
 		// if (cmds)
@@ -156,8 +131,10 @@ int	main(int argc, char *argv[], char *env[])
 		// 	}
 		// 	free_cmd(cmds);
 		// }
+		
 		free(rl);
 	}
-	rl_clear_history(); 
+	rl_clear_history();
+	ft_free_triptr(&temp_env);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/07 10:28:52 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/07 16:31:13 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ static	int	exec_exit(t_cmd *cmds, char *s);
 int exec_built_in(t_cmd *cmds)
 {
 	printf("Exec built-in\n");
-	// if (!cmds || !cmds->cmd_args || !cmds->simple_cmds[0]->args[0])
-	// 	return(error_msg(cmds, 1, "cmds"));;
-	// if (ft_strcmp(cmds->simple_cmds[0]->args[0], "pwd") == 0)
-	// 	return (exec_pwd(cmds));
-	// else if (ft_strcmp(cmds->simple_cmds[0]->args[0], "env") == 0)
-	// 	return (exec_env(cmds));
-	// else if (ft_strcmp(cmds->simple_cmds[0]->args[0], "export") == 0 && (!cmds->simple_cmds[0]->args[1])) 
-	// 	return (exec_export_only(cmds));
-	// else if (cmds->simple_cmds[0]->args[0], "echo") == 0)
-	// return (exec_echo(cmds));
-	// else if (cmds->simple_cmds[0]->args[0], "cd") == 0)
-	// 	exec_cd(cmds);
+	if (!cmds || !cmds->simple_cmds || !cmds->simple_cmds[0]->args[0])
+		return(error_msg(cmds, 1, "cmds"));;
+	if (ft_strcmp(cmds->simple_cmds[0]->args[0], "pwd") == 0)
+		return (exec_pwd(cmds));
+	else if (ft_strcmp(cmds->simple_cmds[0]->args[0], "env") == 0)
+		return (exec_env(cmds));
+	else if (ft_strcmp(cmds->simple_cmds[0]->args[0], "export") == 0 && (!cmds->simple_cmds[0]->args[1])) 
+		return (exec_export_only(cmds));
+	else if (ft_strcmp(cmds->simple_cmds[0]->args[0], "echo") == 0)
+		return (exec_echo(cmds));
+	else if (ft_strcmp(cmds->simple_cmds[0]->args[0], "cd") == 0)
+		return (exec_cd(cmds));
 	// else if (cmds->simple_cmds[0]->args[0], "unset") == 0)
 	// 	exec_unset(cmds);
 	// else if (cmds->simple_cmds[0]->args[0], "exit") == 0)
@@ -44,10 +44,10 @@ int exec_built_in(t_cmd *cmds)
 	return (exec_exit(cmds, cmds->simple_cmds[0]->args[1]));//not yet testing
 	return (exec_unset(cmds));// partly ok
 	return (exec_cd(cmds)); // ok
-	return (exec_echo(cmds)); //ok
-	return (exec_export_only(cmds));//work-but no same as bash, need to change
-	return (exec_env(cmds));// ok
-	return (exec_pwd(cmds));//ok
+	// return (exec_echo(cmds)); //ok
+	// return (exec_export_only(cmds));//work-but no same as bash, need to change
+	// return (exec_env(cmds));// ok
+	// return (exec_pwd(cmds));//ok
 	// if (ft_strcmp(cmds->cmd_args[0], "exit") == 0)
 	// 	exec_exit(cmds);
 	// if (cmds->simple_cmds[0]->args[0], "unset") == 0)
@@ -56,7 +56,6 @@ int exec_built_in(t_cmd *cmds)
 }
 
 static	int	exec_pwd(t_cmd *cmds)
-// int	exec_pwd(t_cmd *cmds)
 {
 	char	*out;
 
@@ -117,7 +116,8 @@ static	int	exec_exit(t_cmd *cmds, char *s)
 	}
 	else
 		status = 0;
-	free_shell(cmds);
+	//free_shell(cmds);
+	free_cmd(cmds);
 	exit(status);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 13:04:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/06 18:28:55 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/07 16:52:01 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,11 @@ int		check_string(va_list args, const char *string, int i);
 int		ft_printf(const char *string, ...);
 char	**ft_matrix_dup(char **matrix, int row);
 
+char	*ft_strdup_char(const char *s1);
 // int		ft_isalnum(int c);
 // size_t	ft_strlen(const char *s);
 // size_t	ft_strlcpy(char *dest, const char *src, size_t size);
-// char	*ft_strdup(const char *s1);
+
 // int		ft_strncmp(const char *s1, const char *s2, size_t n);
 // char	*ft_substr(char const *s, unsigned int start, size_t len);
 //char	**ft_split(char const *s, char c);
