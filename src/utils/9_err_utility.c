@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 18:02:33 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/07 15:50:56 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/08 11:24:48 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ int error_malloc(t_cmd *cmds, int code)
 // 	}
 // }
 
-int error_msg(t_cmd *cmds, int code, char *str)
+//int error_msg(t_cmd *cmds, int code, char *str)
+int error_msg(int code, char *str)
 {
 	printf("%s\n", str);
-	free_cmd(cmds);
+	//free_cmd(cmds);
 	//free_shell(cmds);
 	return (code);
 }

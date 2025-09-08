@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/08 10:23:11 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/08 11:08:19 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static	int	check_built_in(char *cmd)
 		return (1);
 	return (0);
 }
-
 
 int	exec_command(t_cmd *cmds, char **temp_env)
 {
