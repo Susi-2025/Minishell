@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/07 18:17:34 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/08 10:36:31 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,9 @@ int	main(int argc, char *argv[], char *env[])
 		cmds->envp = temp_env;
 		if (cmds)
 		{
+			printf("\n");
 			cmd_print(cmds); // viet add for see contents of cmds
-		//	exec_command(cmds);
+			exec_command(cmds, temp_env);
 			//cmd_exit_code = ft_pipex(cmds, env);
 			free_cmd(cmds);
 		}
@@ -131,7 +132,6 @@ int	main(int argc, char *argv[], char *env[])
 		// 	}
 		// 	free_cmd(cmds);
 		// }
-		
 		free(rl);
 	}
 	rl_clear_history();

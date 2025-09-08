@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/07 16:45:30 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/08 10:24:43 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 // command
 int	init_envp(t_cmd *cmds, char **envp);
-int	exec_command(t_cmd *shell);
+int	exec_command(t_cmd *cmds, char **temp_env);
 //int	exec_command(t_cmd *cmds, char **envp);
-int exec_built_in(t_cmd *shell);
+int exec_built_in(t_cmd *shell, char **temp_env);
 int	exec_export_only(t_cmd *shell);
 int exec_echo(t_cmd *shell);
 int exec_cd(t_cmd *shell);

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/07 16:45:21 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/08 10:23:11 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static	int	check_built_in(char *cmd)
 }
 
 
-int	exec_command(t_cmd *cmds)
+int	exec_command(t_cmd *cmds, char **temp_env)
 {
 	printf("Exec cmds \n");
 	if (check_built_in(cmds->simple_cmds[0]->args[0]) == 1)
-		return(exec_built_in(cmds));
+		return(exec_built_in(cmds, temp_env));
 	return (0);
 }

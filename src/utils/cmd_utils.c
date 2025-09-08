@@ -2,7 +2,7 @@
 #include "minishell.h"
 
 static	void	simple_cmd_print(t_simple_cmd *simple_cmd);
-// static	void	envp_print(char **envp);
+static	void	envp_print(char **envp);
 
 void	cmd_print(t_cmd *cmds)
 {
@@ -24,8 +24,8 @@ void	cmd_print(t_cmd *cmds)
 		i++;
 	}
 	// printf("Print envp\n");
-	// if (cmds->envp && cmds->envp[0])
-	// 	printf("%s\n",cmds->envp[0]);
+	if (!(cmds->envp && cmds->envp[0]))
+		envp_print(cmds->envp);
 	// else
 	// 	printf("ENV is NULL\n");
 }
@@ -49,21 +49,21 @@ static	void	simple_cmd_print(t_simple_cmd *simple_cmd)
 	}
 }
 
-// static	void	envp_print(char **envp)
-// {
-// 	int	i;
-// 	int	len;
+static	void	envp_print(char **envp)
+{
+	int	i;
+	int	len;
 
-// 	if (!envp)
-// 	{
-// 		printf("envp is NULL\n");
-// 		return ;
-// 	}
-// 	i = 0;
-// 	len = ft_len_2d(envp);
-// 	while (i< len)
-// 	{
-// 		printf("Value of envp at %d position is: %s\n", i, envp[i]);
-// 		i++;
-// 	}
-// }
+	if (!envp)
+	{
+		printf("envp is NULL\n");
+		return ;
+	}
+	i = 0;
+	len = ft_len_2d(envp);
+	while (i< len)
+	{
+		printf("Value of envp at %d position is: %s\n", i, envp[i]);
+		i++;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/07 16:31:13 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/08 10:24:12 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 static	int	exec_pwd(t_cmd *cmds);
 static	int	exec_env(t_cmd *cmds);
 static	int	exec_unset(t_cmd *cmds);
-static	int	exec_exit(t_cmd *cmds, char *s);
+static	int	exec_exit(t_cmd *cmds, char *s, char **temp_env);
 
 //1. Command will return 0 for success and non-zero for fail.
 //2. "env": Add checking = to make sure only printout line which has =
 //3. "export, echo, cd"->separatre to new file
 
 
-int exec_built_in(t_cmd *cmds)
+int exec_built_in(t_cmd *cmds, char **temp_env)
 {
 	printf("Exec built-in\n");
 	if (!cmds || !cmds->simple_cmds || !cmds->simple_cmds[0]->args[0])
@@ -37,14 +37,11 @@ int exec_built_in(t_cmd *cmds)
 		return (exec_echo(cmds));
 	else if (ft_strcmp(cmds->simple_cmds[0]->args[0], "cd") == 0)
 		return (exec_cd(cmds));
-	// else if (cmds->simple_cmds[0]->args[0], "unset") == 0)
-	// 	exec_unset(cmds);
-	// else if (cmds->simple_cmds[0]->args[0], "exit") == 0)
-	// 	exec_exit(cmds);
-	return (exec_exit(cmds, cmds->simple_cmds[0]->args[1]));//not yet testing
-	return (exec_unset(cmds));// partly ok
-	return (exec_cd(cmds)); // ok
-	// return (exec_echo(cmds)); //ok
+	else if (ft_strcmp(cmds->simple_cmds[0]->args[0], "unset") == 0)
+		return (exec_unset(cmds));
+	else if (ft_strcmp(cmds->simple_cmds[0]->args[0], "exit") == 0)
+		return (exec_exit(cmds, cmds->simple_cmds[0]->args[1], temp_env));
+	//return (exec_unset(cmds));// partly ok
 	// return (exec_export_only(cmds));//work-but no same as bash, need to change
 	// return (exec_env(cmds));// ok
 	// return (exec_pwd(cmds));//ok
@@ -68,7 +65,6 @@ static	int	exec_pwd(t_cmd *cmds)
 }
 
 static	int	exec_env(t_cmd *cmds)
-// int	exec_env(t_cmd *cmds)
 {
 	int	i;
 
@@ -83,26 +79,23 @@ static	int	exec_env(t_cmd *cmds)
 	}
 	return (0);
 }
-// only works if cmd[0]->args[1] receive PATH-> not the expansion value
+
 static	int	exec_unset(t_cmd *cmds)
 {
-	printf("Unset running\n");
-	printf("Before unset USER\n");
-	exec_env(cmds);
-	printf("\n");
-	// if (!cmds->envp || !cmds->simple_cmds[0]->args[1])
-	// 	return (1);
-	// else
-	// return(reduce_env(cmds, cmds->simple_cmds[0]->args[1]));
-	int res = reduce_env(cmds, cmds->simple_cmds[0]->args[1]);
-	printf("After unset USER\n");
-	printf("\n");
-	exec_env(cmds);
-	return (res);
+	if (!cmds->envp || !cmds->simple_cmds[0]->args[1])
+	{
+		printf("Error: %s\n", cmds->simple_cmds[0]->args[1]);
+		return (1);
+	}
+	else
+	{
+		printf("Reduce env\n");
+		return(reduce_env(cmds, cmds->simple_cmds[0]->args[1]));
+	}
 }
 
 //not testing in minishell enviroment, only exit from terminal
-static	int	exec_exit(t_cmd *cmds, char *s)
+static	int	exec_exit(t_cmd *cmds, char *s, char **temp_env)
 {
 	int	status;
 
@@ -118,6 +111,7 @@ static	int	exec_exit(t_cmd *cmds, char *s)
 		status = 0;
 	//free_shell(cmds);
 	free_cmd(cmds);
+	ft_free_triptr(&temp_env);
 	exit(status);
 	return (0);
 }

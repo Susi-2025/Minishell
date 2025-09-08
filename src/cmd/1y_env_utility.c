@@ -6,13 +6,14 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/07 10:29:04 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/08 10:17:14 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static	void	ft_copy_str(char *origin, char *key, char *value);
+static	int	detect_var(char *origin, char *expan);
 
 int	update_env(t_cmd *cmds, char *key, char *value)
 {
@@ -69,28 +70,30 @@ int	reduce_env(t_cmd *cmds, char *str)
 	len = ft_len_2d(cmds->envp);
 	while (cmds->envp[i])
 	{
-		if (ft_strncmp(cmds->envp[i], str, ft_strlen(str)) == 0
-	&& cmds->envp[i][ft_strlen(str)] == '=')
+		if (detect_var(cmds->envp[i], str)== 0)
 		{
-			// printf("Variable is detect: %s\n", str);
 			free(cmds->envp[i]);
 			while (i < len - 1)
 			{
-				// printf("Copy str: %d\n", i);
 				cmds->envp[i] = cmds->envp[i + 1];
 				i++;
 			}
 			cmds->envp[i] = NULL;
-			// i = 0;
-			// printf("Check envp again\n");
-			// while (cmds->envp[i])
-			// {
-			// 	printf("String at %i pos is: %s\n", i, cmds->envp[i]);
-			// 	i++;
-			// }
 			return (0);
 		}
 		i++;
 	}
+	return (1);
+}
+
+static	int	detect_var(char *origin, char *expan)
+{
+	int	i;
+
+	i = 0;
+	while (origin[i] != '=')
+		i++;
+	if (ft_strncmp(&origin[i + 1], expan, ft_strlen(expan)) == 0)
+		return (0);
 	return (1);
 }
