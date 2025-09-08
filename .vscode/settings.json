@@ -59,6 +59,7 @@
   "files.associations": {
     "minishell.h": "c",
     "format": "c",
-    "libft.h": "c"
+    "libft.h": "c",
+    "cstdlib": "c"
   }
 }

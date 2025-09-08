@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/08 10:36:31 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:54:19 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	main(int argc, char *argv[], char *env[])
 	char 	*rl;
 	t_cmd 	*cmds;
 	char	**temp_env;
-	//int		cmd_exit_code;
+	// int		cmd_exit_code;
 	// int		i;
 	// int		j;
 
@@ -100,9 +100,11 @@ int	main(int argc, char *argv[], char *env[])
 		{
 			printf("\n");
 			cmd_print(cmds); // viet add for see contents of cmds
-			exec_command(cmds, temp_env);
-			//cmd_exit_code = ft_pipex(cmds, env);
-			free_cmd(cmds);
+			if (cmds->cmds_count == 1)
+				execution_single(cmds, temp_env);
+			//cmd_exit_code = ft_pipex(cmds, temp_env);
+			if (cmds)
+				free_cmd(cmds);
 		}
 		// if (cmds)
 		// {
@@ -135,6 +137,7 @@ int	main(int argc, char *argv[], char *env[])
 		free(rl);
 	}
 	rl_clear_history();
-	ft_free_triptr(&temp_env);
+	if (temp_env)
+		ft_free_triptr(&temp_env);
 	return (0);
 }

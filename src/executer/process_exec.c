@@ -3,51 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:31:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/07/03 14:19:05 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/08 15:21:13 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 {
 	char	**args;
 	char	*path;
+	int		args_count;
 
 	//Eliminate this struct
 	(void)pipex;
+	
 	if (i >= cmds->cmds_count || !cmds->simple_cmds[i])
 	{
 		error_string("Invalid command index.");
 		exit(127);
 	}
 	args = cmds->simple_cmds[i]->args;
-	path = correct_path(args[0], env);
-	if (path != NULL)
+	args_count = cmds->simple_cmds[i]->args_count;
+	if (check_built_in(args[0]) == 1)
 	{
-		free(args[0]);
-		args[0] = path;
-	}
-	// printf("args[0]: %s\n", args[0]);
-	// if (!args[0])
-	// {
-	// 	printf("we are here");
-	// 	error_string(args[0]);
-	// 	exit(127);
-	// }
-	execve(args[0], args, env);
-	if (errno == ENOENT)
-	{
-		if (!path_exists(env))
-			error_string(args[0]);
-		else
-			failed_exec(args[0]);
+		exec_built_in(cmds, args, env, args_count);
+		exit (127);
 	}
 	else
-		error_string(args[0]);
-	exit(127);
+	{
+		path = correct_path(args[0], env);
+		if (path != NULL)
+		{
+			free(args[0]);
+			args[0] = path;
+		}
+		// printf("args[0]: %s\n", args[0]);
+		// if (!args[0])
+		// {
+		// 	printf("we are here");
+		// 	error_string(args[0]);
+		// 	exit(127);
+		// }
+		execve(args[0], args, env);
+		if (errno == ENOENT)
+		{
+			if (!path_exists(env))
+				error_string(args[0]);
+			else
+				failed_exec(args[0]);
+		}
+		else
+			error_string(args[0]);
+		exit(127);
+	}
 }
 
 void	reading_pipe(t_object *pipex, int i)
