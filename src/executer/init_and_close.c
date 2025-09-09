@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   init_and_close.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:29:14 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/07/03 14:10:06 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 09:58:34 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	fd_init(int *infile_fd, int *outfile_fd, char *in, char *out)

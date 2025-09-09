@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_parse.c                                        :+:      :+:    :+:   */
+/*   path_expansion.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:32:23 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/07/03 13:58:09 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:37:20 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*correct_path(char *cmd, char *env[])

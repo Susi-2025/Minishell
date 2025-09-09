@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 19:27:52 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/24 16:46:37 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:36:00 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	handle_word_tokens(t_token *token, t_simple_cmd **current_cmd,
@@ -37,6 +38,7 @@ static int	cmd_init(t_cmd *cmds)
 {
 	cmds->cmds_capacity = 2;
 	cmds->cmds_count = 0;
+	cmds->err_code = 0; // vietadd for err_code control
 	cmds->in_file = NULL;
 	cmds->out_file = NULL;
 	cmds->err_file = NULL;

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   quote_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:53:17 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/24 16:48:41 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:35:53 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*expand_single_var(char *var, char *env[])

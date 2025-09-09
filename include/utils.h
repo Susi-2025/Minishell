@@ -6,7 +6,7 @@
 /*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:29:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/24 15:29:51 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:12:36 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 # include <sys/types.h>
 
 /* Character utilities */
-int     is_space(char c);
-int     is_delimiter(char c);
+int		is_space(char c);
+int		is_delimiter(char c);
 int		ft_isalnum(int c);
 
 /* String utilities */
-int     ft_strlen(const char *s);
-int     ft_strlcpy(char *dst, const char *src, int size);
-char    *ft_strdup(const char *s);
+int		ft_strlen(const char *s);
+int		ft_strlcpy(char *dst, const char *src, int size);
+char	*ft_strdup(const char *s);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
@@ -35,8 +35,7 @@ void	free_split(char **split);
 int		count_strings(char const *str, char delimiter);
 
 /*Parser utilities*/
-int     len_until_delim(char *word);
+int		len_until_delim(char *word);
 char	*find_env_value(char *variable, char *env[], int var_len);
-int 	find_dollar_pos(char *str);
-
+int		find_dollar_pos(char *str);
 #endif

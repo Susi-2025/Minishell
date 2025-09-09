@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:41:08 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/07/03 14:29:29 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:38:15 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	pipe_and_fork_logic(t_object *pipex, int i, t_cmd *cmds, char *env[])
@@ -28,7 +29,10 @@ void	pipe_and_fork_logic(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		exit(1);
 	}
 	else if (pipex->pid == 0)
+	{
+	//	printf("Running child process: %d\n", i);
 		child_process(pipex, i, cmds, env);
+	}
 	else
 		parent_process(pipex, i);
 }
@@ -89,6 +93,7 @@ int	ft_pipex(t_cmd *cmds, char *env[])
 	i = 0;
 	while (i < pipex.num_commands)
 	{
+	//	printf("execute the cmd: %d: %s\n", i, cmds->simple_cmds[i]->args[0]);
 		pipe_and_fork_logic(&pipex, i, cmds, env);
 		i++;
 	}

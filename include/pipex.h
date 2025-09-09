@@ -6,7 +6,7 @@
 /*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:07:22 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/07/03 12:28:19 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:04:55 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <errno.h>
 
 # include "structs.h"
+
 typedef struct s_object
 {
 	int		pipefd[2];

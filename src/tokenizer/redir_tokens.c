@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   redir_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:09:44 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/24 15:09:49 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:36:22 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	handle_redir_in(t_token *token, int *i, char *l)

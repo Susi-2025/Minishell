@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/08 19:22:02 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:35:48 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	execution_single(t_cmd *cmds, char **temp_env)
 	char	**args;
 	int		args_count;
 	
-	printf("Execution Single Start\n");
+	//printf("Execution Single Start\n");
 	args = cmds->simple_cmds[0]->args;
 	args_count = cmds->simple_cmds[0]->args_count;
 	if (check_built_in(args[0]) == 1)

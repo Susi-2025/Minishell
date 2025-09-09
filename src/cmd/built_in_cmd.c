@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/08 18:31:24 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:35:58 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env);
 
 int exec_built_in(t_cmd *cmds, char **args, char **temp_env, int args_count)
 {
-	printf("Exec built-in\n");
+	//printf("Exec built-in\n");
 	if (!cmds || !cmds->simple_cmds || !args[0])
 		//return(error_msg(cmds, 1, "cmds"));
 		return(error_msg(1, "cmds"));

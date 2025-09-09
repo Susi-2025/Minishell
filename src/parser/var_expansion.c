@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:58:23 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/24 16:52:25 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:35:57 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	handle_prefix(char **result, char *line, int dollar_pos)

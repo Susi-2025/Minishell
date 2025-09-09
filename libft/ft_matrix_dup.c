@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:08:00 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/07 17:56:47 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:13:11 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ char	**ft_matrix_dup(char **matrix, int row)
 		}
 		i++;
 	}
-	//out[row] = NULL;
 	return (out);
 }

@@ -6,12 +6,11 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/08 19:53:12 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:35:40 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 volatile sig_atomic_t g_interactive = 1;
 
@@ -94,15 +93,25 @@ int	main(int argc, char *argv[], char *env[])
 			add_history(rl);
 
 		g_interactive = 0;
+		// the below command will use the system env even we already unset $MAIL or $PWD
+		//-> change to fix that
 		cmds = ft_prepare_command(rl, env);
+		//cmds = ft_prepare_command(rl, temp_env);
+		// 1. segmation fault when typing: echo "hello -> maybe just showed syntax error or something
+		// 2. for case: echo $? -> the value of args[1] will be empty, could we store it as: $? ?
+		// I think we need a err_code value for storing -> I put in structs.h
 		cmds->envp = temp_env;
+		// printf("CMDs->ENVP:\n");
+		// envp_print(cmds->envp);
 		if (cmds)
 		{
-			printf("\n");
-			cmd_print(cmds); // viet add for see contents of cmds
+			// printf("\n");
+			//cmd_print(cmds); // viet add for see contents of cmds
 			if (cmds->cmds_count == 1)
-				execution_single(cmds, temp_env);
-			// else 
+				cmds->err_code = execution_single(cmds, temp_env);
+				// execution_single(cmds, temp_env);
+			else 
+				cmds->err_code = ft_pipex(cmds, temp_env);
 			// 	ft_pipex(cmds, temp_env);
 			//cmd_exit_code = ft_pipex(cmds, temp_env);
 			if (cmds)

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   char_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 17:06:28 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/24 17:06:42 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:36:31 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 int	is_space(char c)

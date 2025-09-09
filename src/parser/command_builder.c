@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   command_builder.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:50:32 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/24 16:51:41 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:36:08 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 int	create_current_cmd(t_simple_cmd **current_cmd, t_cmd *cmds)

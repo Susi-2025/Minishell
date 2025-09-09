@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:07:49 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/08/24 15:13:30 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/09/09 10:36:15 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	pipe_token(t_token *token, int *i)

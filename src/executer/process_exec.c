@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:31:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/08 15:21:13 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:38:43 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 	args_count = cmds->simple_cmds[i]->args_count;
 	if (check_built_in(args[0]) == 1)
 	{
+		// printf("Execute builtin in pipex\n");
 		exec_built_in(cmds, args, env, args_count);
 		exit (127);
 	}
 	else
 	{
+		// printf("Execute external in pipex\n");
 		path = correct_path(args[0], env);
 		if (path != NULL)
 		{
@@ -58,6 +60,8 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		}
 		else
 			error_string(args[0]);
+		free(cmds);
+		ft_free_triptr(&env);
 		exit(127);
 	}
 }

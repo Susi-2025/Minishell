@@ -2,7 +2,7 @@
 #include "minishell.h"
 
 static	void	simple_cmd_print(t_simple_cmd *simple_cmd);
-static	void	envp_print(char **envp);
+//static	void	envp_print(char **envp);
 
 void	cmd_print(t_cmd *cmds)
 {
@@ -49,7 +49,7 @@ static	void	simple_cmd_print(t_simple_cmd *simple_cmd)
 	}
 }
 
-static	void	envp_print(char **envp)
+void	envp_print(char **envp)
 {
 	int	i;
 	int	len;
