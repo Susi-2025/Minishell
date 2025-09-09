@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:31:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 11:38:43 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:58:21 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 	if (check_built_in(args[0]) == 1)
 	{
 		// printf("Execute builtin in pipex\n");
-		exec_built_in(cmds, args, env, args_count);
-		exit (127);
+		exit(exec_built_in(cmds, args, env, args_count));
+		//exit (0);
 	}
 	else
 	{

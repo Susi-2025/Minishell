@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 19:27:52 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 10:36:00 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:35:46 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ static int	handle_word_tokens(t_token *token, t_simple_cmd **current_cmd,
 	return (0);
 }
 
-static int	cmd_init(t_cmd *cmds)
+static int	cmd_init(t_cmd *cmds, char *env[])
 {
 	cmds->cmds_capacity = 2;
 	cmds->cmds_count = 0;
 	cmds->err_code = 0; // vietadd for err_code control
+	cmds->envp = env;
 	cmds->in_file = NULL;
 	cmds->out_file = NULL;
 	cmds->err_file = NULL;
@@ -77,7 +78,7 @@ t_cmd	*parse_tokens(t_token *tokens, int token_count, char *env[])
 	cmds = malloc(sizeof(t_cmd));
 	if (!cmds)
 		return (NULL);
-	if (cmd_init(cmds) == -1)
+	if (cmd_init(cmds, env) == -1)
 		return (free(cmds), NULL);
 	current_cmd = NULL;
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:29:14 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 09:58:34 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:47:08 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	fd_init(int *infile_fd, int *outfile_fd, char *in, char *out)
 {
 	if (out != NULL)
 	{
-		*outfile_fd = open(out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		*outfile_fd = open(out, O_WRONLY | O_CREAT | O_TRUNC, 0644); 
 		if (*outfile_fd == -1)
 			error_string(out);
 	}

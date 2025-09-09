@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 11:35:40 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:56:44 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,58 +93,16 @@ int	main(int argc, char *argv[], char *env[])
 			add_history(rl);
 
 		g_interactive = 0;
-		// the below command will use the system env even we already unset $MAIL or $PWD
-		//-> change to fix that
-		cmds = ft_prepare_command(rl, env);
-		//cmds = ft_prepare_command(rl, temp_env);
+		cmds = ft_prepare_command(rl, temp_env);
 		// 1. segmation fault when typing: echo "hello -> maybe just showed syntax error or something
 		// 2. for case: echo $? -> the value of args[1] will be empty, could we store it as: $? ?
 		// I think we need a err_code value for storing -> I put in structs.h
-		cmds->envp = temp_env;
-		// printf("CMDs->ENVP:\n");
-		// envp_print(cmds->envp);
 		if (cmds)
 		{
-			// printf("\n");
-			//cmd_print(cmds); // viet add for see contents of cmds
-			if (cmds->cmds_count == 1)
-				cmds->err_code = execution_single(cmds, temp_env);
-				// execution_single(cmds, temp_env);
-			else 
-				cmds->err_code = ft_pipex(cmds, temp_env);
-			// 	ft_pipex(cmds, temp_env);
-			//cmd_exit_code = ft_pipex(cmds, temp_env);
+			cmds->err_code = ft_pipex(cmds, temp_env);
 			if (cmds)
 				free_cmd(cmds);
 		}
-		// if (cmds)
-		// {
-		// //	printf("Input: %s\n", rl);
-		// 	if (cmds->in_file)
-		// 		printf("Input file: %s\n", cmds->in_file);
-		// 	if (cmds->out_file)
-		// 		printf("Output file: %s\n", cmds->out_file);
-		// 	if (cmds->file_append)
-		// 		printf("Append file: %s\n", cmds->file_append);
-		// 	if (cmds->here_doc)
-		// 		printf("Here_Doc: %s\n", cmds->here_doc);
-			
-		// 	printf("Commands found: %d\n", cmds->cmds_count);
-		// 	i = 0;
-		// 	while (i < cmds->cmds_count)
-		// 	{
-		// 		j = 0;
-		// 		printf("Command %d: ", i + 1);
-		// 		while (j < cmds->simple_cmds[i]->args_count)
-		// 		{
-		// 			printf("%s ",cmds->simple_cmds[i]->args[j]);
-		// 			j++;
-		// 		}
-		// 		i++;
-		// 		printf("\n");
-		// 	}
-		// 	free_cmd(cmds);
-		// }
 		free(rl);
 	}
 	rl_clear_history();

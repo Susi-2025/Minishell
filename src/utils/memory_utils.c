@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 19:28:21 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/07 18:17:30 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:32:16 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	free_cmd(t_cmd *cmds)// I need to have free_envp here
     free(cmds->here_doc);
     free(cmds->file_append);
 	free(cmds);
+	cmds = NULL;
 }
 
 void	free_tokens(t_token *tokens, int count)
