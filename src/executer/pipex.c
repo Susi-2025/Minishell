@@ -85,6 +85,9 @@ int	ft_pipex(t_cmd *cmds, char *env[])
 {
 	t_object	pipex;
 	int			i;
+	char		**args;
+	int			args_count;
+	int			exit_code;
 
 	if (!cmds)
 		return (1);
@@ -94,7 +97,32 @@ int	ft_pipex(t_cmd *cmds, char *env[])
 	while (i < pipex.num_commands)
 	{
 	//	printf("execute the cmd: %d: %s\n", i, cmds->simple_cmds[i]->args[0]);
-		pipe_and_fork_logic(&pipex, i, cmds, env);
+	// if 01 command: only run in parent process
+		args = cmds->simple_cmds[i]->args;
+		args_count = cmds->simple_cmds[i]->args_count;
+		if (check_built_in(args[0]) == 1)
+		{
+			printf("Execute builtin not in fork\n");
+			if (ft_strcmp(args[0], "exit") == 0)
+			{
+				exit_code = exec_built_in(cmds, args, env, args_count);
+				ft_free_triptr(&env);
+				free_cmd(cmds);
+				exit (exit_code);
+			}
+			else
+				exec_built_in(cmds, args, env, args_count);
+			//exit (0);
+		}
+		// else if (cmds->cmds_count == 1 && check_built_in(args[0]) != 1)
+		// {
+		// 	//printf("Need to run in the fork");
+		// 	pipe_and_fork_logic(&pipex, i, cmds, env);
+		// }
+		// else if (cmds->cmds_count > 1)
+		else
+			pipe_and_fork_logic(&pipex, i, cmds, env);
+			// still show memory leakage if we input the wrong commands
 		i++;
 	}
 	last_close(&pipex);

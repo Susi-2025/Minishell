@@ -16,7 +16,7 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 {
 	char	**args;
 	char	*path;
-	int		args_count;
+	// int		args_count;
 
 	//Eliminate this struct
 	(void)pipex;
@@ -27,16 +27,16 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		exit(127);
 	}
 	args = cmds->simple_cmds[i]->args;
-	args_count = cmds->simple_cmds[i]->args_count;
-	if (check_built_in(args[0]) == 1)
+	// args_count = cmds->simple_cmds[i]->args_count;
+	// if (check_built_in(args[0]) == 1)
+	// {
+	// 	// printf("Execute builtin in pipex\n");
+	// 	exit(exec_built_in(cmds, args, env, args_count));
+	// 	//exit (0);
+	// }
+	if (check_built_in(args[0]) != 1)
 	{
-		// printf("Execute builtin in pipex\n");
-		exit(exec_built_in(cmds, args, env, args_count));
-		//exit (0);
-	}
-	else
-	{
-		// printf("Execute external in pipex\n");
+		printf("Execute external in pipex\n");
 		path = correct_path(args[0], env);
 		if (path != NULL)
 		{

@@ -18,7 +18,7 @@ static	int	cd_absolute(t_cmd *cmds, char **args);
 
 int exec_cd(t_cmd *cmds, char **args)
 {
-	// printf("Exec cd\n");
+	printf("Exec cd\n");
 	if (!cmds)
 		//return(error_msg(cmds, 1, "cmds"));
 		return(error_msg(1, "cmds"));
@@ -53,6 +53,7 @@ static	int	cd_only(t_cmd *cmds)
 	if (!home)
 		return (1);
 	oldcwd = getcwd(NULL, 0);
+	// printf("%s\n", oldcwd);
 	if (!oldcwd)
 		return (1);
 	if (chdir(home) != 0)
@@ -61,7 +62,12 @@ static	int	cd_only(t_cmd *cmds)
 		return (1);
 	}
 	if (update_env(cmds, "OLDPWD", oldcwd) != 0 || update_env(cmds, "PWD", home) != 0)
+	{
+		free(oldcwd);
 		return (1);
+	}
+	// printf("Print export to check env\n");
+	// exec_export_only(cmds);
 	free(oldcwd);
 	return (0);
 }
