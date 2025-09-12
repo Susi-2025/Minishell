@@ -25,21 +25,22 @@ int	update_env(t_cmd *cmds, char *key, char *value)
 	i = 0;
 	while (cmds->envp[i])
 	{
-		if (ft_strncmp(cmds->envp[i], key, ft_strlen(key)) == 0)
+		if (ft_strncmp(cmds->envp[i], key, ft_strlen(key)) == 0 &&
+			cmds->envp[i][ft_strlen(key)] == '=')
 		{
 			// printf("Find the string: %s\n", cmds->envp[i]);
 			new_str = malloc(sizeof(char) * (ft_strlen(key) + ft_strlen(value) + 2));
 			if (!new_str)
 				return (1); 
 			ft_copy_str(new_str, key, value);
-			// printf("New string: %s\n", new_str);
+			// printf("Copy new string: %s\n", new_str);
 			free(cmds->envp[i]);
 			cmds->envp[i] = new_str;
 			return (0);
 		}
 		i++;
 	}
-	printf("Uppdate fail: key '%s' not found\n", key);
+	// printf("Uppdate fail: key '%s' not found\n", key);
 	return (1);
 }
 
