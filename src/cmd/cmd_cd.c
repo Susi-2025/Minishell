@@ -13,6 +13,7 @@
 #include "minishell.h"
 
 static	int	change_dir(t_cmd *cmds, char *next_wd);
+static	int	free_2_mem(char *old_wd, char *next_wd, int exit_code);
 
 int	exec_cd(t_cmd *cmds, char **args)
 {
@@ -51,25 +52,24 @@ static	int	change_dir(t_cmd *cmds, char *next_wd)
 	if (chdir(next_wd) != 0)
 	{
 		perror("cd");
-		free(old_wd);
-		return (1);
+		return (free_2_mem(old_wd, NULL, 1));
 	}
 	//printf("Change dir successful\n");
 	// printf("The value of next_wd before updating env: %s\n", next_wd);
 	next_wd = getcwd(NULL, 0); // update nextcwd
 	if (!next_wd)
-	{
-		free(old_wd);
-		return (1);
-	}
+		return (free_2_mem(old_wd, NULL, 1));
 	if (update_env(cmds, "OLDPWD", old_wd) != 0
 		|| update_env(cmds, "PWD", next_wd) != 0)
-	{
+		return (free_2_mem(old_wd, next_wd, 1));
+	return (free_2_mem(old_wd, next_wd, 0));
+}
+
+static	int	free_2_mem(char *old_wd, char *next_wd, int exit_code)
+{
+	if (old_wd)
 		free(old_wd);
+	if (next_wd)
 		free(next_wd);
-		return (1);
-	}
-	free(old_wd);
-	free(next_wd);
-	return (0);
+	return (exit_code);
 }
