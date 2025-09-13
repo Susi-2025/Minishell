@@ -14,25 +14,25 @@
 
 static	void	ft_copy_str(char *origin, char *key, char *value);
 static	int	detect_var(char *origin, char *expan);
-static	int envp_err_free(char **temp_env, int pos);
+static	int	envp_err_free(char **temp_env, int pos);
 
 int	update_env(t_cmd *cmds, char *key, char *value)
 {
 	int	i;
 	char	*new_str;
-	
+
 	if (!cmds || !key || !value)
 		return (1);
 	i = 0;
 	while (cmds->envp[i])
 	{
-		if (ft_strncmp(cmds->envp[i], key, ft_strlen(key)) == 0 &&
-			cmds->envp[i][ft_strlen(key)] == '=')
+		if (ft_strncmp(cmds->envp[i], key, ft_strlen(key)) == 0
+			&& cmds->envp[i][ft_strlen(key)] == '=')
 		{
 			// printf("Find the string: %s\n", cmds->envp[i]);
 			new_str = malloc(sizeof(char) * (ft_strlen(key) + ft_strlen(value) + 2));
 			if (!new_str)
-				return (1); 
+				return (1);
 			ft_copy_str(new_str, key, value);
 			// printf("Copy new string: %s\n", new_str);
 			free(cmds->envp[i]);
@@ -49,7 +49,7 @@ static	void	ft_copy_str(char *origin, char *key, char *value)
 {
 	int	j;
 	int	k;
-	
+
 	j = 0;
 	while (key[j])
 	{
@@ -66,8 +66,8 @@ static	void	ft_copy_str(char *origin, char *key, char *value)
 // int	reduce_env(t_cmd *cmds, char *str, char **env)
 int	reduce_env(t_cmd *cmds, char *str, char ***temp_env)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	// if (!cmds || !str  || !env)
 	if (!str || !temp_env || !(*temp_env))
@@ -76,15 +76,15 @@ int	reduce_env(t_cmd *cmds, char *str, char ***temp_env)
 	len = ft_len_2d(*temp_env);
 	while ((*temp_env)[i])
 	{
-		if (detect_var((*temp_env)[i], str)== 0)
+		if (detect_var((*temp_env)[i], str) == 0)
 		{
-			printf("Detect: %s at position %d\n", str, i);
-			printf("Old value: %s\n", (*temp_env)[i]);
+//			printf("Detect: %s at position %d\n", str, i);
+//			printf("Old value: %s\n", (*temp_env)[i]);
 			free((*temp_env)[i]);
 			while (i < len - 1)
 			{
 				(*temp_env)[i] = (*temp_env)[i + 1];
-				printf("New value: %s\n", (*temp_env)[i]);
+//				printf("New value: %s\n", (*temp_env)[i]);
 				i++;
 			}
 			(*temp_env)[i] = NULL;
@@ -124,7 +124,7 @@ static	int	detect_var(char *origin, char *expan)
 // 	return (1);
 // }
 
-int insert_env(t_cmd *cmds, char *str, char ***temp_env)
+int	insert_env(t_cmd *cmds, char *str, char ***temp_env)
 //int insert_env(char *str, char ***temp_env)
 {
 	int		len_envp;
@@ -133,7 +133,7 @@ int insert_env(t_cmd *cmds, char *str, char ***temp_env)
 
 	len_envp = ft_len_2d(*temp_env);
 	new_env = malloc(sizeof(char *) * (len_envp + 2));
-	printf("Start to insert to env\n");
+//	printf("Start to insert to env\n");
 	if (!new_env)
 		return (1);
 	i = 0;
@@ -148,9 +148,9 @@ int insert_env(t_cmd *cmds, char *str, char ***temp_env)
 	if (!new_env[i])
 		return (envp_err_free(new_env, i));
 	new_env[i + 1] = NULL;
-	printf("Before freeing env\n");
+	//printf("Before freeing env\n");
 	ft_free_triptr(temp_env);
-	printf("After freeing env\n");
+	//printf("After freeing env\n");
 	// ft_free_triptr(temp_env);
 	*temp_env = new_env;
 	cmds->envp = *temp_env;
@@ -158,7 +158,7 @@ int insert_env(t_cmd *cmds, char *str, char ***temp_env)
 	return (0);
 }
 
-static	int envp_err_free(char **temp_env, int pos)
+static	int	envp_err_free(char **temp_env, int pos)
 {
 	int	i;
 

@@ -11,10 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-//"export"
-//a. When no option, it will sort the envp and printout.
-//b. When have option: name "viet"
-//    export name;-> this will assign variable to envp.-> do we need to handle it?
+
 static	void	printf_for_export(char *str);
 
 int	exec_export(t_cmd *cmds, char **args, char ***temp_env)
@@ -42,8 +39,8 @@ int	exec_export_only(t_cmd *cmds)
 	// printf("Export execute\n");
 	if (!cmds->envp)
 		//return(error_msg(cmds, 1, "envp"));
-		return(error_msg(1, "envp"));
-	i  = 0;
+		return (error_msg(1, "envp"));
+	i = 0;
 	temp = ft_matrix_dup(cmds->envp, ft_len_2d(cmds->envp));
 	if (!temp)
 		// return(error_malloc(cmds, 1));
@@ -62,10 +59,10 @@ int	exec_export_only(t_cmd *cmds)
 static	void	printf_for_export(char *str)
 {
 	int	i;
-	
+
 	printf("declare -x ");
 	i = 0;
-	while(str[i] &&str[i] != '=')
+	while (str[i] && str[i] != '=')
 	{
 		printf("%c", str[i]);
 		i++;

@@ -11,19 +11,18 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-// nned to modify again
-int exec_echo(t_cmd *cmds, char **args, int args_count)
+
+int	exec_echo(t_cmd *cmds, char **args, int args_count)
 {
 	int	i;
 	int	no_new_line;
 	//char	*temp;
-		
 	if (!cmds)
 		//return(error_msg(cmds, 1, "cmds"));
-		return(error_msg(1, "cmds"));
+		return (error_msg(1, "cmds"));
 	i = 1;
 	no_new_line = 0;
-	while(args[i])
+	while (args[i])
 	{
 		if (ft_strcmp(args[i], "-n") == 0)
 			no_new_line = 1;

@@ -18,13 +18,12 @@ static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env);
 // static	int	exec_unset(char **args, char ***temp_env);
 static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env);
 
-
-int exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
+int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 {
 	//printf("Exec built-in\n");
 	if (!cmds || !cmds->simple_cmds || !args[0])
 		//return(error_msg(cmds, 1, "cmds"));
-		return(error_msg(1, "cmds"));
+		return (error_msg(1, "cmds"));
 	if (ft_strcmp(args[0], "pwd") == 0)
 		return (exec_pwd(cmds));
 	else if (ft_strcmp(args[0], "env") == 0)
@@ -35,11 +34,10 @@ int exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 		return (exec_cd(cmds, args));
 	else if (ft_strcmp(args[0], "exit") == 0)
 		exec_exit(cmds, args[1], *temp_env);
-	else if (ft_strcmp(args[0], "export") == 0) 
+	else if (ft_strcmp(args[0], "export") == 0)
 		return (exec_export(cmds, args, temp_env));
 	else if (ft_strcmp(args[0], "unset") == 0)
 		return (exec_unset(cmds, args, temp_env)); // not work well
-	
 	return (0);
 }
 
@@ -52,7 +50,7 @@ static	int	exec_pwd(t_cmd *cmds)
 		printf("%s\n", out);
 	else
 		// return(error_msg(cmds, 1, "pwd"));
-		return(error_msg(1, "pwd"));
+		return (error_msg(1, "pwd"));
 	return (0);
 }
 
@@ -63,7 +61,7 @@ int	exec_env(t_cmd *cmds)
 
 	if (!cmds->envp)
 		//return(error_msg(cmds, 1, "envp"));
-		return(error_msg(1, "envp"));
+		return (error_msg(1, "envp"));
 	i = 0;
 	len = ft_len_2d(cmds->envp);
 	// while (cmds->envp[i] && i < len)
@@ -90,7 +88,7 @@ static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 	{
 		printf("Reduce env\n");
 		// return(reduce_env(cmds, args[1] env));
-		return(reduce_env(cmds, args[1], temp_env));
+		return (reduce_env(cmds, args[1], temp_env));
 	}
 }
 

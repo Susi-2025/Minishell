@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static	int ft_cmp_strs(char *s1, char *s2);
+static	int	ft_cmp_strs(char *s1, char *s2);
 
 char	*find_var(char **envp, char *str)
 {
@@ -20,7 +20,7 @@ char	*find_var(char **envp, char *str)
 	char	*sub;
 
 	if (!envp || !str)
-		return (NULL) ;
+		return (NULL);
 	i = 0;
 	while (envp[i])
 	{
@@ -29,7 +29,7 @@ char	*find_var(char **envp, char *str)
 			sub = ft_strchr_char(envp[i], '=');
 			if (sub)
 				return (sub + 1);
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -50,7 +50,7 @@ void	sort_2d_array(char **strs)
 		j = i + 1;
 		while (j < len)
 		{
-			if(ft_cmp_strs(strs[i], strs[j]) > 0)
+			if (ft_cmp_strs(strs[i], strs[j]) > 0)
 			{
 				temp = strs[i];
 				strs[i] = strs[j];
@@ -72,29 +72,29 @@ int	ft_len_2d(char **strs)
 	return (len);
 }
 
-static	int ft_cmp_strs(char *s1, char *s2)
+static	int	ft_cmp_strs(char *s1, char *s2)
 {
 	int	i;
 
 	i = 0;
-	while(s1[i] && s2[i] && s1[i] != '=' && s2[i] != '=')
+	while (s1[i] && s2[i] && s1[i] != '=' && s2[i] != '=')
 	{
 		if (s1[i] != s2[i])
-			return((unsigned char)s1[i] - (unsigned char)s2[i]);
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 		i++;
 	}
 	if ((s1[i] == '=' || s1[i] == '\0') && (s2[i] == '=' || s2[i] == '\0'))
-		return(ft_strcmp(s1, s2));
+		return (ft_strcmp(s1, s2));
 	if (s1[i] == '=' || s1[i] == '\0')
 		return (-1);
 	else
 		return (1);
 }
 
-int ft_is_numeric(char *s)
+int	ft_is_numeric(char *s)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (s[i])
 	{

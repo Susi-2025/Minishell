@@ -14,13 +14,13 @@
 
 int	init_envp(t_cmd *cmds, char **envp)
 {
-	int	 len;
-	
+	int	len;
+
 	len = ft_len_2d(envp);
 	printf("Len of envp: %d\n", len);
 	cmds->envp = ft_matrix_dup(envp, len);
 	if (!cmds->envp)
 	//	return(error_malloc(cmds, 1));
-		return(1);
+		return (1);
 	return (0);
 }
