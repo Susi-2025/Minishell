@@ -63,7 +63,7 @@ void	setup_signals(void)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
-int	main(int argc, char *argv[], char *env[])
+int	main(int argc, char *argv[], char *init_env[])
 {
 	char 	*rl;
 	t_cmd 	*cmds;
@@ -76,7 +76,7 @@ int	main(int argc, char *argv[], char *env[])
 	(void)argv;
 	setup_signals();
 	
-	temp_env = ft_matrix_dup(env, ft_len_2d(env));
+	temp_env = ft_matrix_dup(init_env, ft_len_2d(init_env));
 	if (!temp_env)
 		return(1);
 	while (1)
@@ -93,13 +93,14 @@ int	main(int argc, char *argv[], char *env[])
 			add_history(rl);
 
 		g_interactive = 0;
-		cmds = ft_prepare_command(rl, temp_env);
+		cmds = ft_prepare_command(rl, temp_env); 
 		// 1. segmation fault when typing: echo "hello -> maybe just showed syntax error or something
 		// 2. for case: echo $? -> the value of args[1] will be empty, could we store it as: $? ?
 		// I think we need a err_code value for storing -> I put in structs.h
 		if (cmds)
 		{
-			cmds->err_code = ft_pipex(cmds, temp_env);
+			// cmd_print(cmds);
+			cmds->err_code = ft_pipex(cmds, &temp_env); //for updating temp_env inside the function
 			if (cmds)
 				free_cmd(cmds);
 		}

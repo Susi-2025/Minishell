@@ -17,11 +17,29 @@
 //    export name;-> this will assign variable to envp.-> do we need to handle it?
 static	void	printf_for_export(char *str);
 
+int	exec_export(t_cmd *cmds, char **args, char ***temp_env)
+{
+	if (args[1] == NULL)
+		return (exec_export_only(cmds));
+	else if (ft_strchr(args[1], '='))
+	{
+		printf("Exec export with args\n");
+		return (insert_env(cmds, args[1], temp_env));
+		// return (insert_env(args[1], &temp_env));
+	}
+	else
+	{
+		printf("Error in args\n");
+		return (1); //need the message about error here
+	}
+}
+
 int	exec_export_only(t_cmd *cmds)
 {
 	int	i;
 	char	**temp;
-	printf("Export execute\n");
+
+	// printf("Export execute\n");
 	if (!cmds->envp)
 		//return(error_msg(cmds, 1, "envp"));
 		return(error_msg(1, "envp"));

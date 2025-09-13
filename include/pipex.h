@@ -36,7 +36,7 @@ typedef struct s_object
 }	t_object;
 
 /* Main function*/
-int		ft_pipex(t_cmd *cmds, char *env[]);
+int		ft_pipex(t_cmd *cmds, char **env[]); //add for updating env ability
 
 /* String utils*/
 char	*ft_strcat(char *dest, char *src);

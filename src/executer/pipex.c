@@ -81,7 +81,7 @@ int	wait_for_children(t_object *pipex)
 // add syntax checker in parsing
 // add builtins
 // add here_doc and append
-int	ft_pipex(t_cmd *cmds, char *env[])
+int	ft_pipex(t_cmd *cmds, char **env[])
 {
 	t_object	pipex;
 	int			i;
@@ -106,7 +106,7 @@ int	ft_pipex(t_cmd *cmds, char *env[])
 			if (ft_strcmp(args[0], "exit") == 0)
 			{
 				exit_code = exec_built_in(cmds, args, env, args_count);
-				ft_free_triptr(&env);
+				ft_free_triptr(env);
 				free_cmd(cmds);
 				exit (exit_code);
 			}
@@ -121,7 +121,7 @@ int	ft_pipex(t_cmd *cmds, char *env[])
 		// }
 		// else if (cmds->cmds_count > 1)
 		else
-			pipe_and_fork_logic(&pipex, i, cmds, env);
+			pipe_and_fork_logic(&pipex, i, cmds, *env);
 			// still show memory leakage if we input the wrong commands
 		i++;
 	}

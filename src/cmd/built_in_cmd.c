@@ -13,15 +13,13 @@
 #include "minishell.h"
 
 static	int	exec_pwd(t_cmd *cmds);
-static	int	exec_env(t_cmd *cmds);
-static	int	exec_unset(t_cmd *cmds, char **args);
+// static	int	exec_env(t_cmd *cmds);
+static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env);
+// static	int	exec_unset(char **args, char ***temp_env);
 static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env);
 
-//1. Command will return 0 for success and non-zero for fail.
-//2. "env": Add checking = to make sure only printout line which has =
-//3. "export, echo, cd"->separatre to new file
 
-int exec_built_in(t_cmd *cmds, char **args, char **temp_env, int args_count)
+int exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 {
 	//printf("Exec built-in\n");
 	if (!cmds || !cmds->simple_cmds || !args[0])
@@ -31,16 +29,17 @@ int exec_built_in(t_cmd *cmds, char **args, char **temp_env, int args_count)
 		return (exec_pwd(cmds));
 	else if (ft_strcmp(args[0], "env") == 0)
 		return (exec_env(cmds));
-	else if (ft_strcmp(args[0], "export") == 0 && (!args[1])) 
-		return (exec_export_only(cmds));
 	else if (ft_strcmp(args[0], "echo") == 0)
 		return (exec_echo(cmds, args, args_count));
 	else if (ft_strcmp(args[0], "cd") == 0)
 		return (exec_cd(cmds, args));
-	else if (ft_strcmp(args[0], "unset") == 0)
-		return (exec_unset(cmds, args));
 	else if (ft_strcmp(args[0], "exit") == 0)
-		exec_exit(cmds, args[1], temp_env);
+		exec_exit(cmds, args[1], *temp_env);
+	else if (ft_strcmp(args[0], "export") == 0) 
+		return (exec_export(cmds, args, temp_env));
+	else if (ft_strcmp(args[0], "unset") == 0)
+		return (exec_unset(cmds, args, temp_env)); // not work well
+	
 	return (0);
 }
 
@@ -57,7 +56,7 @@ static	int	exec_pwd(t_cmd *cmds)
 	return (0);
 }
 
-static	int	exec_env(t_cmd *cmds)
+int	exec_env(t_cmd *cmds)
 {
 	int	i;
 
@@ -76,9 +75,10 @@ static	int	exec_env(t_cmd *cmds)
 // need to handle case: unset MAIL->> it works normally in bash,
 // our program works with unset $MAIL, for unset MAIL, it is not work
 
-static	int	exec_unset(t_cmd *cmds, char **args) 
+// static	int	exec_unset(t_cmd *cmds, char **args, char **env)
+static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 {
-	if (!cmds->envp || !args[1])
+	if (!temp_env || !args[1])
 	{
 		printf("Error: %s\n", args[1]);
 		return (1);
@@ -86,7 +86,8 @@ static	int	exec_unset(t_cmd *cmds, char **args)
 	else
 	{
 		printf("Reduce env\n");
-		return(reduce_env(cmds, args[1]));
+		// return(reduce_env(cmds, args[1] env));
+		return(reduce_env(cmds, args[1], temp_env));
 	}
 }
 
