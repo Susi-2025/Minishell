@@ -64,36 +64,40 @@ static	void	ft_copy_str(char *origin, char *key, char *value)
 }
 
 // int	reduce_env(t_cmd *cmds, char *str, char **env)
-int	reduce_env(t_cmd *cmds, char *str, char ***env)
+int	reduce_env(t_cmd *cmds, char *str, char ***temp_env)
 {
 	int i;
 	int len;
 
 	// if (!cmds || !str  || !env)
-	if (!str || !env || !(*env))
+	if (!str || !temp_env || !(*temp_env))
 		return (1);
 	i = 0;
-	len = ft_len_2d(*env);
-	while ((*env)[i])
+	len = ft_len_2d(*temp_env);
+	while ((*temp_env)[i])
 	{
-		if (detect_var((*env)[i], str)== 0)
+		if (detect_var((*temp_env)[i], str)== 0)
 		{
-			free((*env)[i]);
+			printf("Detect: %s at position %d\n", str, i);
+			printf("Old value: %s\n", (*temp_env)[i]);
+			free((*temp_env)[i]);
 			while (i < len - 1)
 			{
-				(*env)[i] = (*env)[i + 1];
+				(*temp_env)[i] = (*temp_env)[i + 1];
+				printf("New value: %s\n", (*temp_env)[i]);
 				i++;
 			}
-			(*env)[i] = NULL;
+			(*temp_env)[i] = NULL;
 			return (0);
 		}
 		i++;
 	}
-	cmds->envp = *env;
+	cmds->envp = *temp_env;
 	return (1);
 }
 
-static	int	detect_var(char *origin, char *expan)// need to modify to work like bash
+// wrong working, it detect wrong position
+static	int	detect_var(char *origin, char *expan)
 {
 	int	i;
 
@@ -104,6 +108,21 @@ static	int	detect_var(char *origin, char *expan)// need to modify to work like b
 		return (0);
 	return (1);
 }
+
+// for case if cmds->simple_cmds[i]->args = variable
+// static	int	detect_var(char *origin, char *expan)
+// {
+// 	int	i;
+// 	int	len;
+
+// 	if (!origin || !expan)
+// 		return (1);
+// 	i = 0;
+// 	len = ft_strlen(expan);
+// 	if (ft_strncmp(origin, expan, len) == 0 && origin[len] == '=')
+// 		return (0);
+// 	return (1);
+// }
 
 int insert_env(t_cmd *cmds, char *str, char ***temp_env)
 //int insert_env(char *str, char ***temp_env)

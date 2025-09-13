@@ -59,14 +59,17 @@ static	int	exec_pwd(t_cmd *cmds)
 int	exec_env(t_cmd *cmds)
 {
 	int	i;
+	int	len;
 
 	if (!cmds->envp)
 		//return(error_msg(cmds, 1, "envp"));
 		return(error_msg(1, "envp"));
 	i = 0;
-	while (cmds->envp[i])
+	len = ft_len_2d(cmds->envp);
+	// while (cmds->envp[i] && i < len)
+	while (i < len)
 	{
-		if (ft_strchr(cmds->envp[i], '='))
+		if (ft_strchr(cmds->envp[i], '=') && cmds->envp[i])
 			printf("%s\n", cmds->envp[i]);
 		i++;
 	}
