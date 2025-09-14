@@ -17,23 +17,14 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 	char	**args;
 	char	*path;
 	// int		args_count;
-
 	//Eliminate this struct
 	(void)pipex;
-	
 	if (i >= cmds->cmds_count || !cmds->simple_cmds[i])
 	{
 		error_string("Invalid command index.");
 		exit(127);
 	}
 	args = cmds->simple_cmds[i]->args;
-	// args_count = cmds->simple_cmds[i]->args_count;
-	// if (check_built_in(args[0]) == 1)
-	// {
-	// 	// printf("Execute builtin in pipex\n");
-	// 	exit(exec_built_in(cmds, args, env, args_count));
-	// 	//exit (0);
-	// }
 	if (check_built_in(args[0]) != 1)
 	{
 		printf("Execute external in pipex\n");

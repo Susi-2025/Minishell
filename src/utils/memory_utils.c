@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	free_cmd(t_cmd *cmds)// I need to have free_envp here
+void	free_cmd(t_cmd *cmds)
 {
 	int	i;
 	int	j;
@@ -35,12 +35,12 @@ void	free_cmd(t_cmd *cmds)// I need to have free_envp here
 		}
 		i++;
 	}
-    free(cmds->simple_cmds);
-    free(cmds->in_file);
-    free(cmds->out_file);
-    free(cmds->err_file);
-    free(cmds->here_doc);
-    free(cmds->file_append);
+	free(cmds->simple_cmds);
+	free(cmds->in_file);
+	free(cmds->out_file);
+	free(cmds->err_file);
+	free(cmds->here_doc);
+	free(cmds->file_append);
 	free(cmds);
 	cmds = NULL;
 }

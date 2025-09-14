@@ -16,14 +16,14 @@ void	fd_init(int *infile_fd, int *outfile_fd, char *in, char *out)
 {
 	if (out != NULL)
 	{
-		*outfile_fd = open(out, O_WRONLY | O_CREAT | O_TRUNC, 0644); 
+		*outfile_fd = open(out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (*outfile_fd == -1)
 			error_string(out);
 	}
 	else
 		*outfile_fd = -1;
 	if (in != NULL)
-	{	
+	{
 		*infile_fd = open(in, O_RDONLY);
 		if (*infile_fd == -1)
 			error_string(in);
@@ -44,7 +44,6 @@ void	last_close(t_object *pipex)
 		close(pipex->pipefd[1]);
 		close(pipex->prev_pipe_in);
 	}
-
 }
 
 void	fire_up_pipeinator(t_object *pipex, t_cmd *cmds)

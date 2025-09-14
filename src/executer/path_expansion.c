@@ -17,10 +17,8 @@ char	*correct_path(char *cmd, char *env[])
 	int		i;
 	char	**paths;
 	char	*try_path;
-
 	//SEPARATE TOMMOROW
 	char	*temp;
-
 
 	i = 0;
 	while (env[i] && ft_strncmp(env[i], "PATH=", 5) != 0)
