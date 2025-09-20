@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:41:08 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/20 18:08:58 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/20 18:32:11 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 	fd_init(&pipex.infile_fd, &pipex.outfile_fd, cmds->in_file, cmds->out_file);
 	fire_up_pipeinator(&pipex, cmds);
 	i = 0;
+	// add for case: << heredoc
+	if (pipex.num_commands == 0 && cmds->here_doc)
+		heredoc_exec(cmds, env, NULL, 0);
 	while (i < pipex.num_commands)
 	{
 	//	printf("execute the cmd: %d: %s\n", i, cmds->simple_cmds[i]->args[0]);
@@ -117,6 +120,7 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 		// 	pipe_and_fork_logic(&pipex, i, cmds, env);
 		// }
 		// else if (cmds->cmds_count > 1)
+		// add for case: cat << heredoc
 		else if (cmds->here_doc)
 			heredoc_exec(cmds, env, args, args_count);
 		else
