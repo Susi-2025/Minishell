@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   1y_env_utility.c                                   :+:      :+:    :+:   */
+/*   envp_utility.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/08 11:36:44 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:51:03 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	reduce_env(t_cmd *cmds, char *str, char ***temp_env)
 		return (1);
 	i = 0;
 	len = ft_len_2d(*temp_env);
-	while ((*temp_env)[i])
+	while ( i < len && (*temp_env)[i])
 	{
 		if (detect_var((*temp_env)[i], str) == 0)
 		{
@@ -92,32 +92,32 @@ int	reduce_env(t_cmd *cmds, char *str, char ***temp_env)
 }
 
 // wrong working, it detect wrong position
-static	int	detect_var(char *origin, char *expan)
-{
-	int	i;
-
-	i = 0;
-	while (origin[i] != '=')
-		i++;
-	if (ft_strncmp(&origin[i + 1], expan, ft_strlen(expan)) == 0)
-		return (0);
-	return (1);
-}
-
-// for case if cmds->simple_cmds[i]->args = variable
 // static	int	detect_var(char *origin, char *expan)
 // {
 // 	int	i;
-// 	int	len;
 
-// 	if (!origin || !expan)
-// 		return (1);
 // 	i = 0;
-// 	len = ft_strlen(expan);
-// 	if (ft_strncmp(origin, expan, len) == 0 && origin[len] == '=')
+// 	while (origin[i] != '=')
+// 		i++;
+// 	if (ft_strncmp(&origin[i + 1], expan, ft_strlen(expan)) == 0)
 // 		return (0);
 // 	return (1);
 // }
+
+// for case if cmds->simple_cmds[i]->args = variable
+static	int	detect_var(char *origin, char *expan)
+{
+	int	i;
+	int	len;
+
+	if (!origin || !expan)
+		return (1);
+	i = 0;
+	len = ft_strlen(expan);
+	if (ft_strncmp(origin, expan, len) == 0 && origin[len] == '=')
+		return (0);
+	return (1);
+}
 
 int	insert_env(t_cmd *cmds, char *str, char ***temp_env)
 {

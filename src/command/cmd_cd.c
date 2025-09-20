@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/08 18:29:27 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/20 15:00:37 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	exec_cd(t_cmd *cmds, char **args)
 {
 	char	*next_wd;
 
+	next_wd = NULL;
 	//printf("Exec cd\n");
 	if (!cmds)
 		//return(error_msg(cmds, 1, "cmds"));

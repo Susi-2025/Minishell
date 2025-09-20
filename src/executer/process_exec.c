@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:31:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 16:58:21 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/20 15:54:32 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		}
 		else
 			error_string(args[0]);
-		free(cmds);
+		free_cmd(cmds);
 		ft_free_triptr(&env);
 		exit(127);
 	}

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/09 17:06:34 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:49:11 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 	}
 	else
 	{
-		printf("Reduce env\n");
+		printf("Execute unset\n");
 		// return(reduce_env(cmds, args[1] env));
 		return (reduce_env(cmds, args[1], temp_env));
 	}

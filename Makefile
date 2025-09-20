@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/16 12:30:39 by vinguyen          #+#    #+#              #
-#    Updated: 2025/09/07 17:56:59 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/09/20 16:45:56 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -Iinclude
 LDLIBS = -lreadline
 
-SRC_DIRS = src/parser src/utils src/tokenizer src/executer src/cmd src
+SRC_DIRS = src/parser src/utils src/tokenizer src/executer src/command src
 OBJ_DIR = object
 
 LIBFT_DIR = ./libft

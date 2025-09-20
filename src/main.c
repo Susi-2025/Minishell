@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 17:56:44 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:20:16 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int argc, char *argv[], char *init_env[])
 		// I think we need a err_code value for storing -> I put in structs.h
 		if (cmds)
 		{
-			// cmd_print(cmds);
+			cmd_print(cmds);
 			cmds->err_code = ft_pipex(cmds, &temp_env); //for updating temp_env inside the function
 			if (cmds)
 				free_cmd(cmds);
