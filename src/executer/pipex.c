@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:41:08 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 17:16:30 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/20 18:08:58 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 	// if 01 command: only run in parent process
 		args = cmds->simple_cmds[i]->args;
 		args_count = cmds->simple_cmds[i]->args_count;
-		if (check_built_in(args[0]) == 1)
+		if (!cmds->here_doc && check_built_in(args[0]) == 1)
 		{
 			printf("Execute builtin not in fork\n");
 			if (ft_strcmp(args[0], "exit") == 0)
@@ -117,6 +117,8 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 		// 	pipe_and_fork_logic(&pipex, i, cmds, env);
 		// }
 		// else if (cmds->cmds_count > 1)
+		else if (cmds->here_doc)
+			heredoc_exec(cmds, env, args, args_count);
 		else
 			pipe_and_fork_logic(&pipex, i, cmds, *env);
 			// still show memory leakage if we input the wrong commands
