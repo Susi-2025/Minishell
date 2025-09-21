@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/20 18:11:01 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/21 12:23:08 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ void	sort_2d_array(char **strs);
 int		error_malloc(t_cmd *shell, int code);
 int		error_msg(int code, char *str);
 
-void	heredoc_exec(t_cmd *cmds, char **env[], char **args, int args_count);
+int		heredoc_exec(t_cmd *cmds, char **env[], char **args, int args_count);
 #endif
