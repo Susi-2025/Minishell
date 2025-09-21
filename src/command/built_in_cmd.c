@@ -6,23 +6,20 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/20 16:49:11 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/21 10:22:58 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static	int	exec_pwd(t_cmd *cmds);
-// static	int	exec_env(t_cmd *cmds);
 static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env);
-// static	int	exec_unset(char **args, char ***temp_env);
 static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env);
 
 int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 {
 	//printf("Exec built-in\n");
 	if (!cmds || !cmds->simple_cmds || !args[0])
-		//return(error_msg(cmds, 1, "cmds"));
 		return (error_msg(1, "cmds"));
 	if (ft_strcmp(args[0], "pwd") == 0)
 		return (exec_pwd(cmds));
@@ -37,7 +34,7 @@ int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 	else if (ft_strcmp(args[0], "export") == 0)
 		return (exec_export(cmds, args, temp_env));
 	else if (ft_strcmp(args[0], "unset") == 0)
-		return (exec_unset(cmds, args, temp_env)); // not work well
+		return (exec_unset(cmds, args, temp_env));
 	return (0);
 }
 
@@ -49,7 +46,6 @@ static	int	exec_pwd(t_cmd *cmds)
 	if (out)
 		printf("%s\n", out);
 	else
-		// return(error_msg(cmds, 1, "pwd"));
 		return (error_msg(1, "pwd"));
 	return (0);
 }
@@ -60,11 +56,9 @@ int	exec_env(t_cmd *cmds)
 	int	len;
 
 	if (!cmds->envp)
-		//return(error_msg(cmds, 1, "envp"));
 		return (error_msg(1, "envp"));
 	i = 0;
 	len = ft_len_2d(cmds->envp);
-	// while (cmds->envp[i] && i < len)
 	while (i < len)
 	{
 		if (ft_strchr(cmds->envp[i], '=') && cmds->envp[i])
@@ -73,10 +67,7 @@ int	exec_env(t_cmd *cmds)
 	}
 	return (0);
 }
-// need to handle case: unset MAIL->> it works normally in bash,
-// our program works with unset $MAIL, for unset MAIL, it is not work
 
-// static	int	exec_unset(t_cmd *cmds, char **args, char **env)
 static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 {
 	if (!temp_env || !args[1])
@@ -87,7 +78,6 @@ static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 	else
 	{
 		printf("Execute unset\n");
-		// return(reduce_env(cmds, args[1] env));
 		return (reduce_env(cmds, args[1], temp_env));
 	}
 }
@@ -109,5 +99,4 @@ static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env)
 	free_cmd(cmds);
 	ft_free_triptr(&temp_env);
 	exit(status);
-	//return (0);
 }

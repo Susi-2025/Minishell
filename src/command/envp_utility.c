@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/20 16:51:03 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/21 10:28:26 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static	int	envp_err_free(char **temp_env, int pos);
 
 int	update_env(t_cmd *cmds, char *key, char *value)
 {
-	int	i;
+	int		i;
 	char	*new_str;
 
 	if (!cmds || !key || !value)
@@ -29,19 +29,17 @@ int	update_env(t_cmd *cmds, char *key, char *value)
 		if (ft_strncmp(cmds->envp[i], key, ft_strlen(key)) == 0
 			&& cmds->envp[i][ft_strlen(key)] == '=')
 		{
-			// printf("Find the string: %s\n", cmds->envp[i]);
-			new_str = malloc(sizeof(char) * (ft_strlen(key) + ft_strlen(value) + 2));
+			new_str = malloc(sizeof(char)
+					* (ft_strlen(key) + ft_strlen(value) + 2));
 			if (!new_str)
 				return (1);
 			ft_copy_str(new_str, key, value);
-			// printf("Copy new string: %s\n", new_str);
 			free(cmds->envp[i]);
 			cmds->envp[i] = new_str;
 			return (0);
 		}
 		i++;
 	}
-	// printf("Uppdate fail: key '%s' not found\n", key);
 	return (1);
 }
 
@@ -72,7 +70,7 @@ int	reduce_env(t_cmd *cmds, char *str, char ***temp_env)
 		return (1);
 	i = 0;
 	len = ft_len_2d(*temp_env);
-	while ( i < len && (*temp_env)[i])
+	while (i < len && (*temp_env)[i])
 	{
 		if (detect_var((*temp_env)[i], str) == 0)
 		{
@@ -91,20 +89,6 @@ int	reduce_env(t_cmd *cmds, char *str, char ***temp_env)
 	return (1);
 }
 
-// wrong working, it detect wrong position
-// static	int	detect_var(char *origin, char *expan)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (origin[i] != '=')
-// 		i++;
-// 	if (ft_strncmp(&origin[i + 1], expan, ft_strlen(expan)) == 0)
-// 		return (0);
-// 	return (1);
-// }
-
-// for case if cmds->simple_cmds[i]->args = variable
 static	int	detect_var(char *origin, char *expan)
 {
 	int	i;

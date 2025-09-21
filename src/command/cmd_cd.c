@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/20 15:00:37 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/21 10:23:48 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,13 @@ int	exec_cd(t_cmd *cmds, char **args)
 	char	*next_wd;
 
 	next_wd = NULL;
-	//printf("Exec cd\n");
 	if (!cmds)
-		//return(error_msg(cmds, 1, "cmds"));
 		return (error_msg(1, "cmds"));
 	if (args[1] == NULL)
 		next_wd = find_var(cmds->envp, "HOME");
 	else if (ft_strcmp(args[1], "-") == 0)
 	{
 		next_wd = find_var(cmds->envp, "OLDPWD");
-		// printf("Value of next wd: %s\n", next_wd);
 	}
 	else if (args[1] && ft_strcmp(args[1], "-") != 0)
 		next_wd = args[1];
@@ -55,9 +52,7 @@ static	int	change_dir(t_cmd *cmds, char *next_wd)
 		perror("cd");
 		return (free_2_mem(old_wd, NULL, 1));
 	}
-	//printf("Change dir successful\n");
-	// printf("The value of next_wd before updating env: %s\n", next_wd);
-	next_wd = getcwd(NULL, 0); // update nextcwd
+	next_wd = getcwd(NULL, 0);
 	if (!next_wd)
 		return (free_2_mem(old_wd, NULL, 1));
 	if (update_env(cmds, "OLDPWD", old_wd) != 0
