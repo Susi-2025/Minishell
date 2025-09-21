@@ -109,7 +109,7 @@ int	insert_env(t_cmd *cmds, char *str, char ***temp_env)
 	char	**new_env;
 	int		i;
 
-	len_envp = ft_len_2d(*temp_env);
+	len_envp = ft_len_2d(*temp_env); 
 	new_env = malloc(sizeof(char *) * (len_envp + 2));
 	if (!new_env)
 		return (1);

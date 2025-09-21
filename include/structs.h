@@ -17,8 +17,15 @@ typedef struct s_simple_cmd
 {
 	int		args_capacity;
 	int		args_count;
-	char	**args;
+	char	**args; 
 }	t_simple_cmd;
+
+typedef struct s_vector
+{
+	int 	args_capacity;
+	int		args_count;
+	char	**args;
+}	t_vector;
 
 typedef struct s_cmd
 {
@@ -26,7 +33,7 @@ typedef struct s_cmd
 	int				cmds_count;
 	int				err_code; //vietadd for handle error code
 	t_simple_cmd	**simple_cmds;
-	char			*out_file;
+	t_vector		*out_file;
 	char			*in_file;
 	char			*err_file;
 	char			*here_doc;

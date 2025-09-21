@@ -61,5 +61,6 @@
     "format": "c",
     "libft.h": "c",
     "cstdlib": "c"
-  }
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }

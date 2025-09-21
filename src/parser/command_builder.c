@@ -18,8 +18,9 @@ int	create_current_cmd(t_simple_cmd **current_cmd, t_cmd *cmds)
 
 	if (cmds->cmds_count >= cmds->cmds_capacity)
 	{
-		tmp = realloc(cmds->simple_cmds,
-				sizeof(t_simple_cmd) * cmds->cmds_capacity * 2);
+		printf("we are reallocating the number of commands\n");
+		tmp = ft_realloc(cmds->simple_cmds, sizeof(t_simple_cmd*) * cmds->cmds_capacity,
+				sizeof(t_simple_cmd*) * cmds->cmds_capacity * 2);
 		if (!tmp)
 			return (-1);
 		cmds->simple_cmds = tmp;
@@ -52,7 +53,7 @@ int	parse_word(char *word, t_simple_cmd **current_cmd, t_cmd *cmds)
 	}
 	if ((*current_cmd)->args_count >= (*current_cmd)->args_capacity - 1)
 	{
-		tmp = realloc((*current_cmd)->args, sizeof(char *)
+		tmp = ft_realloc((*current_cmd)->args, sizeof(char *) * (*current_cmd)->args_capacity, sizeof(char *)
 				* (*current_cmd)->args_capacity * 2);
 		if (!tmp)
 			return (-1);

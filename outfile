@@ -1,0 +1,58 @@
+Execute external in pipex
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+#                                                                              #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#                                                     +:+ +:+         +:+      #
+#                                                 +#+#+#+#+#+   +#+            #
+# **************************************************************************** #
+# **************************************************************************** #
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LDLIBS) $(LIBFT_LIB)
+	$(CC) $(CFLAGS) -c $< -o $@
+$(LIBFT_LIB):
+	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) clean -C $(LIBFT_DIR)
+	@$(MAKE) fclean -C $(LIBFT_DIR)
+$(NAME): $(OBJ) $(LIBFT_LIB)
+$(OBJ_DIR)/%.o: src/%.c
+all:$(LIBFT_LIB) $(NAME)
+#all: $(NAME)
+#Build final executable
+#Build library
+#    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
+CC = cc
+CFLAGS = -Wall -Werror -Wextra -Iinclude
+clean:
+#cleaning
+#    Created: 2025/08/16 12:30:39 by vinguyen          #+#    #+#              #
+Execute external in pipex
+fclean: clean
+LDLIBS = -lreadline
+LIBFT_DIR = ./libft
+LIBFT_LIB = $(LIBFT_DIR)/libft.a
+#    Makefile                                           :+:      :+:    :+:    #
+	mkdir -p $(dir $@)
+NAME = minishell
+OBJ =$(patsubst src/%.c, $(OBJ_DIR)/%.o, $(SRC))
+OBJ_DIR = object
+.PHONY: all clean fclean re
+re: fclean all
+	rm -f $(NAME)
+	rm -rf $(OBJ_DIR)
+.SECONDARY: $(OBJ) $(LIBFT_OBJ)
+SRC =	$(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+SRC_DIRS = src/parser src/utils src/tokenizer src/executer src/command src/heredoc src
+#    Updated: 2025/09/20 18:10:09 by vinguyen         ###   ########.fr        #

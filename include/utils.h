@@ -38,4 +38,7 @@ int		count_strings(char const *str, char delimiter);
 int		len_until_delim(char *word);
 char	*find_env_value(char *variable, char *env[], int var_len);
 int		find_dollar_pos(char *str);
+
+/* Memory*/
+void *ft_realloc(void *ptr, size_t old_size, size_t new_size);
 #endif

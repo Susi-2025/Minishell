@@ -108,3 +108,5 @@ int	main(int argc, char *argv[], char *init_env[])
 		ft_free_triptr(&temp_env);
 	return (0);
 }
+
+// char *cmds = {cmd1, cmd2, cmd3, NULL};
