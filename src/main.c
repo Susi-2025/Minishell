@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/20 16:20:16 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/22 12:10:10 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ int	main(int argc, char *argv[], char *init_env[])
 		if (cmds)
 		{
 			cmd_print(cmds);
+			// if (cmds->here_doc)
+			// 	heredoc_exec(cmds, temp_env, args, args_count);
+			// else 
 			cmds->err_code = ft_pipex(cmds, &temp_env); //for updating temp_env inside the function
 			if (cmds)
 				free_cmd(cmds);

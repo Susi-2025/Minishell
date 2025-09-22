@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:41:08 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/20 18:32:11 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/22 13:24:53 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	pipe_and_fork_logic(t_object *pipex, int i, t_cmd *cmds, char *env[])
 	}
 	else if (pipex->pid == 0)
 	{
-	//	printf("Running child process: %d\n", i);
+		printf("Running child process: %d\n", i);
 		child_process(pipex, i, cmds, env);
 	}
 	else
@@ -84,7 +84,7 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 	int			i;
 	char		**args;
 	int			args_count;
-	int			exit_code;
+	// int			exit_code;
 
 	if (!cmds)
 		return (1);
@@ -96,34 +96,13 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 		heredoc_exec(cmds, env, NULL, 0);
 	while (i < pipex.num_commands)
 	{
-	//	printf("execute the cmd: %d: %s\n", i, cmds->simple_cmds[i]->args[0]);
-	// if 01 command: only run in parent process
 		args = cmds->simple_cmds[i]->args;
 		args_count = cmds->simple_cmds[i]->args_count;
 		if (!cmds->here_doc && check_built_in(args[0]) == 1)
-		{
-			printf("Execute builtin not in fork\n");
-			if (ft_strcmp(args[0], "exit") == 0)
-			{
-				exit_code = exec_built_in(cmds, args, env, args_count);
-				ft_free_triptr(env);
-				free_cmd(cmds);
-				exit (exit_code);
-			}
-			else
-				exec_built_in(cmds, args, env, args_count);
-			//exit (0);
-		}
-		// else if (cmds->cmds_count == 1 && check_built_in(args[0]) != 1)
-		// {
-		// 	//printf("Need to run in the fork");
-		// 	pipe_and_fork_logic(&pipex, i, cmds, env);
-		// }
-		// else if (cmds->cmds_count > 1)
-		// add for case: cat << heredoc
+			exec_parent(cmds, args, env, args_count);
 		else if (cmds->here_doc)
 			heredoc_exec(cmds, env, args, args_count);
-		else
+		else if (!cmds->here_doc)
 			pipe_and_fork_logic(&pipex, i, cmds, *env);
 			// still show memory leakage if we input the wrong commands
 		i++;
@@ -136,4 +115,20 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 	// return (WEXITSTATUS(pipex.last_status));
 	// exit(WEXITSTATUS(pipex.last_status));
 	return (wait_for_children(&pipex));
+}
+
+void	exec_parent(t_cmd *cmds, char **args, char **env[], int args_count)
+{
+	int exit_code;
+	
+	printf("Execute builtin which is in parent process\n");
+	if (ft_strcmp(args[0], "exit") == 0)
+	{
+		exit_code = exec_built_in(cmds, args, env, args_count);
+		ft_free_triptr(env);
+		free_cmd(cmds);
+		exit (exit_code);
+	}
+	else
+		exec_built_in(cmds, args, env, args_count);
 }

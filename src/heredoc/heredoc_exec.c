@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_exec.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/22 13:34:25 by vinguyen          #+#    #+#             */
+/*   Updated: 2025/09/22 13:34:52 by vinguyen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -7,14 +18,13 @@ int	heredoc_exec(t_cmd *cmds, char **env[], char **args, int args_count)
 {
 	char	*input;
 	char	*output;
-	int		exit_code;
+	// int		exit_code;
 	char	*path;
 	int     pipefd[2];
     pid_t   pid;
 
 	printf("Execute heredoc\n");
 	output = ft_strdup("");
-	// output = NULL;
 	while (1)
 	{
 		input = readline("> ");
@@ -29,34 +39,19 @@ int	heredoc_exec(t_cmd *cmds, char **env[], char **args, int args_count)
 			free(input);
 			break;
 		}
-		printf("Value of input: %s", input);
-		printf("\n");
 		if (join_and_free(&output, input) == 1)
 			return (1);
 	}
 	if (cmds->here_doc_cont)
-	// {
-	// 	printf("Is this issue here\n");
 		free(cmds->here_doc_cont);
-	// }
 	cmds->here_doc_cont = output;
-	printf("Value of cmds->heredoc_cont: %s\n", cmds->here_doc_cont);
 	if (!args)
 		return (0);
 	if (args[0] && check_built_in(args[0]) == 1)
+		exec_parent(cmds, args, env, args_count);
+	else if (args[0] && check_built_in(args[0]) == 0)
 	{
-		if (ft_strcmp(args[0], "exit") == 0)
-		{
-			exit_code = exec_built_in(cmds, args, env, args_count);
-			ft_free_triptr(env);
-			free_cmd(cmds);
-			exit (exit_code);
-		}
-		else
-			exec_built_in(cmds, args, env, args_count);
-	}
-	else if (args[0])
-	{
+		printf("Execute external for here_doc\n");
 		if (pipe(pipefd) == -1)
     	{
         	perror("pipe");
@@ -68,7 +63,6 @@ int	heredoc_exec(t_cmd *cmds, char **env[], char **args, int args_count)
         	perror("fork");
         	return (1);
 	    }
-
     	if (pid == 0) // child
     	{
     	    close(pipefd[1]); // close write end
@@ -102,6 +96,10 @@ int	heredoc_exec(t_cmd *cmds, char **env[], char **args, int args_count)
         	waitpid(pid, NULL, 0);
 		}
     }
+	if (cmds->here_doc)
+		cmds->here_doc = NULL;
+	// if (cmds->here_doc_cont)
+	// 	free(cmds->here_doc_cont);
 	return (0);
 }
 
@@ -118,13 +116,9 @@ static	int	join_and_free(char **output, char *input)
 	i = 0;
 	while (*output && (*output)[i])
 		*ptr++ = (*output)[i++];
-	// if (*output)
-	// 	ft_strcpy(res, *output);
 	i = 0;
 	while (input && input[i])
 		*ptr++ = input[i++];
-	// if (input)
-	// 	ft_strcat(res, input);
 	*ptr++ = '\n';
 	*ptr = '\0';
 	if (*output)
