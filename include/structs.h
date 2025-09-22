@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:21:19 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/21 11:48:25 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/22 09:49:30 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef struct s_cmd
 	int				cmds_capacity;
 	int				cmds_count;
 	int				err_code; //vietadd for handle error code
-	t_simple_cmd	**simple_cmds;
-	t_vector		*out_file;
+	t_vector	**simple_cmds;
+	char			*out_file;
 	char			*in_file;
 	char			*err_file;
 	char			*here_doc;

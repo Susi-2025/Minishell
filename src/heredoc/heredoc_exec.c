@@ -14,6 +14,7 @@ int	heredoc_exec(t_cmd *cmds, char **env[], char **args, int args_count)
 
 	printf("Execute heredoc\n");
 	output = ft_strdup("");
+	// output = NULL;
 	while (1)
 	{
 		input = readline("> ");
@@ -28,14 +29,21 @@ int	heredoc_exec(t_cmd *cmds, char **env[], char **args, int args_count)
 			free(input);
 			break;
 		}
-		// printf("Value of input: %s", input);
-		// printf("\n");
+		printf("Value of input: %s", input);
+		printf("\n");
 		if (join_and_free(&output, input) == 1)
 			return (1);
 	}
-	free(cmds->here_doc_cont);
+	if (cmds->here_doc_cont)
+	// {
+	// 	printf("Is this issue here\n");
+		free(cmds->here_doc_cont);
+	// }
 	cmds->here_doc_cont = output;
-	if (check_built_in(args[0]) == 1)
+	printf("Value of cmds->heredoc_cont: %s\n", cmds->here_doc_cont);
+	if (!args)
+		return (0);
+	if (args[0] && check_built_in(args[0]) == 1)
 	{
 		if (ft_strcmp(args[0], "exit") == 0)
 		{
@@ -47,7 +55,7 @@ int	heredoc_exec(t_cmd *cmds, char **env[], char **args, int args_count)
 		else
 			exec_built_in(cmds, args, env, args_count);
 	}
-	else
+	else if (args[0])
 	{
 		if (pipe(pipefd) == -1)
     	{
@@ -110,9 +118,13 @@ static	int	join_and_free(char **output, char *input)
 	i = 0;
 	while (*output && (*output)[i])
 		*ptr++ = (*output)[i++];
+	// if (*output)
+	// 	ft_strcpy(res, *output);
 	i = 0;
 	while (input && input[i])
 		*ptr++ = input[i++];
+	// if (input)
+	// 	ft_strcat(res, input);
 	*ptr++ = '\n';
 	*ptr = '\0';
 	if (*output)

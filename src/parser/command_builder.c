@@ -6,27 +6,27 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:50:32 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 10:36:08 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/22 09:47:14 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	create_current_cmd(t_simple_cmd **current_cmd, t_cmd *cmds)
+int	create_current_cmd(t_vector **current_cmd, t_cmd *cmds)
 {
 	void	*tmp;
 
 	if (cmds->cmds_count >= cmds->cmds_capacity)
 	{
 		printf("we are reallocating the number of commands\n");
-		tmp = ft_realloc(cmds->simple_cmds, sizeof(t_simple_cmd*) * cmds->cmds_capacity,
-				sizeof(t_simple_cmd*) * cmds->cmds_capacity * 2);
+		tmp = ft_realloc(cmds->simple_cmds, sizeof(t_vector*) * cmds->cmds_capacity,
+				sizeof(t_vector*) * cmds->cmds_capacity * 2);
 		if (!tmp)
 			return (-1);
 		cmds->simple_cmds = tmp;
 		cmds->cmds_capacity *= 2;
 	}
-	*current_cmd = malloc(sizeof(t_simple_cmd));
+	*current_cmd = malloc(sizeof(t_vector));
 	if (!*current_cmd)
 		return (-1);
 	(*current_cmd)->args_capacity = 4;
@@ -40,7 +40,7 @@ int	create_current_cmd(t_simple_cmd **current_cmd, t_cmd *cmds)
 	return (0);
 }
 
-int	parse_word(char *word, t_simple_cmd **current_cmd, t_cmd *cmds)
+int	parse_word(char *word, t_vector **current_cmd, t_cmd *cmds)
 {
 	void	*tmp;
 

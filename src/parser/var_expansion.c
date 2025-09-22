@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:58:23 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 10:35:57 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/22 09:47:34 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static char	**expand_var(char *line_value, char *env[])
 	return (process_expansion(line_value, env, dollar_pos));
 }
 
-int	handle_var_expansion(char *value, t_simple_cmd **current_cmd,
+int	handle_var_expansion(char *value, t_vector **current_cmd,
 		t_cmd *cmds, char *env[])
 {
 	char	**var_expansion;

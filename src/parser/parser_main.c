@@ -6,13 +6,13 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 19:27:52 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 16:35:46 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/22 09:47:23 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	handle_word_tokens(t_token *token, t_simple_cmd **current_cmd,
+static int	handle_word_tokens(t_token *token, t_vector **current_cmd,
 	t_cmd *cmds, char *env[])
 {
 	char	*dquote;
@@ -45,13 +45,13 @@ static int	cmd_init(t_cmd *cmds, char *env[])
 	cmds->err_file = NULL;
 	cmds->here_doc = NULL;
 	cmds->file_append = NULL;
-	cmds->simple_cmds = malloc(sizeof(t_simple_cmd *) * cmds->cmds_capacity);
+	cmds->simple_cmds = malloc(sizeof(t_vector *) * cmds->cmds_capacity);
 	if (!cmds->simple_cmds)
 		return (-1);
 	return (0);
 }
 
-static int	process_word_and_redir(t_token *token, t_simple_cmd **current_cmd,
+static int	process_word_and_redir(t_token *token, t_vector **current_cmd,
 	t_cmd *cmds, char *env[])
 {
 	if (handle_word_tokens(token, current_cmd, cmds, env) == -1)
@@ -73,7 +73,7 @@ t_cmd	*parse_tokens(t_token *tokens, int token_count, char *env[])
 {
 	int				i;
 	t_cmd			*cmds;
-	t_simple_cmd	*current_cmd;
+	t_vector	*current_cmd;
 
 	cmds = malloc(sizeof(t_cmd));
 	if (!cmds)

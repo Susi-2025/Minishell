@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:20:20 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 12:04:24 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/22 09:48:40 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int		redir_in_out(t_token *tokens, int token_count, int *i, t_cmd *cmds);
 int		redir_special(t_token *tokens, int token_count, int *i, t_cmd *cmds);
 int		parse_redir(t_token *tokens, int token_count, int *i, t_cmd *cmds);
 int		is_redirect_token(int type);
-int		create_current_cmd(t_simple_cmd **current_cmd, t_cmd *cmds);
-int		parse_word(char *word, t_simple_cmd **current_cmd, t_cmd *cmds);
+int		create_current_cmd(t_vector **current_cmd, t_cmd *cmds);
+int		parse_word(char *word, t_vector **current_cmd, t_cmd *cmds);
 char	*parse_dquote(char *line, char *env[]);
-int		handle_var_expansion(char *value, t_simple_cmd **current_cmd,
+int		handle_var_expansion(char *value, t_vector **current_cmd,
 			t_cmd *cmds, char *env[]);
 #endif

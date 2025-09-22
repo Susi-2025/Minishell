@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-static	void	simple_cmd_print(t_simple_cmd *simple_cmd);
+static	void	simple_cmd_print(t_vector *simple_cmd);
 
 void	cmd_print(t_cmd *cmds)
 {
@@ -29,7 +29,7 @@ void	cmd_print(t_cmd *cmds)
 	// 	printf("ENV is NULL\n");
 }
 
-static	void	simple_cmd_print(t_simple_cmd *simple_cmd)
+static	void	simple_cmd_print(t_vector *simple_cmd)
 {
 	int	i;
 
