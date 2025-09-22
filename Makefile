@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/16 12:30:39 by vinguyen          #+#    #+#              #
-#    Updated: 2025/09/20 18:10:09 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/09/22 17:40:16 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,22 +15,55 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -Iinclude
 LDLIBS = -lreadline
 
-SRC_DIRS = src/parser src/utils src/tokenizer src/executer src/command src/heredoc src
+SRC_DIR = src
+CMD_DIR = $(SRC_DIR)/command
+EXE_DIR = $(SRC_DIR)/executer
+HERE_DIR = $(SRC_DIR)/heredoc
+PARS_DIR = $(SRC_DIR)/parser
+TOKEN_DIR = $(SRC_DIR)/tokenizer
+UTIL_DIR = $(SRC_DIR)/utils
+
+MAIN_FILES = main.c
+CMD_FILES = built_in_cmd.c cmd_cd.c cmd_echo.c cmd_export.c cmd_utility.c \
+			envp_utility.c init_envp.c start_built_in.c
+EXE_FILES = error_handling.c init_and_close.c path_expansion.c pipex.c process_exec.c
+HERE_FILES = heredoc_exec.c heredoc_pipe.c heredoc_utility.c
+PARS_FILES = command_builder.c parser_main.c quote_parser.c redir_parser.c var_expansion.c 
+TOKEN_FILES = cmd_tokens.c redir_tokens.c tokenizer.c
+UTIL_FILES = 9_err_utility.c char_utils.c cmd_utils.c ft_split.c memory_utils.c parser_utils.c str_copying.c \
+			str_utils.c 
+
+SRC =	$(addprefix $(SRC_DIR)/, $(MAIN_FILES)) \
+		$(addprefix $(CMD_DIR)/, $(CMD_FILES)) \
+		$(addprefix $(EXE_DIR)/, $(EXE_FILES)) \
+		$(addprefix $(HERE_DIR)/, $(HERE_FILES)) \
+		$(addprefix $(PARS_DIR)/, $(PARS_FILES)) \
+		$(addprefix $(TOKEN_DIR)/, $(TOKEN_FILES))\
+		$(addprefix $(UTIL_DIR)/, $(UTIL_FILES))
+		
 OBJ_DIR = object
 
 LIBFT_DIR = ./libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-SRC =	$(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+#SRC =	$(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 		
-OBJ =$(patsubst src/%.c, $(OBJ_DIR)/%.o, $(SRC))
+# OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+
+# #OBJ	= $(SRC:%.c=$(OBJ_DIR)/%.o)
+
+# $(OBJ_DIR)/%.o: src/%.c
+# 	@mkdir -p $(dir $@)
+# 	$(CC) $(CFLAGS) -c $< -o $@
+
+OBJ = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 #all: $(NAME)
 all:$(LIBFT_LIB) $(NAME)
-
-$(OBJ_DIR)/%.o: src/%.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
 
 .SECONDARY: $(OBJ) $(LIBFT_OBJ)
 
