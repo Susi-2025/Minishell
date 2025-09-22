@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:41:08 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/22 13:47:37 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/22 15:53:04 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 	i = 0;
 	// add for case: << heredoc
 	if (pipex.num_commands == 0 && cmds->here_doc)
-		heredoc_exec(cmds, env, NULL, 0);
+		heredoc(cmds, env, NULL, 0);
 	while (i < pipex.num_commands)
 	{
 		args = cmds->simple_cmds[i]->args;
@@ -101,7 +101,7 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 		if (!cmds->here_doc && check_built_in(args[0]) == 1)
 			exec_parent(cmds, args, env, args_count);
 		else if (cmds->here_doc)
-			heredoc_exec(cmds, env, args, args_count);
+			heredoc(cmds, env, args, args_count);
 		else if (!cmds->here_doc)
 			pipe_and_fork_logic(&pipex, i, cmds, *env);
 			// still show memory leakage if we input the wrong commands
