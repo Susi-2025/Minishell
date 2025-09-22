@@ -71,8 +71,8 @@ static int	handle_redirection(t_token *tokens, int token_count,
 
 t_cmd	*parse_tokens(t_token *tokens, int token_count, char *env[])
 {
-	int				i;
-	t_cmd			*cmds;
+	int			i;
+	t_cmd		*cmds;
 	t_vector	*current_cmd;
 
 	cmds = malloc(sizeof(t_cmd));

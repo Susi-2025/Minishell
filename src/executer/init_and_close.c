@@ -12,7 +12,24 @@
 
 #include "minishell.h"
 
-void	fd_init(int *infile_fd, int *outfile_fd, char *in, char *out)
+int create_heredoc_fd_direct(t_cmd *cmds)
+{
+    int pipefd[2];
+    
+    if (pipe(pipefd) == -1)
+        return (-1);
+    
+    // Write heredoc content to write end
+    if (cmds->here_doc_cont)
+    {
+        write(pipefd[1], cmds->here_doc_cont, ft_strlen(cmds->here_doc_cont));
+    }
+    close(pipefd[1]); // close write end
+    
+    return (pipefd[0]); // return read end
+}
+
+void	fd_init(int *infile_fd, int *outfile_fd, char *in, char *out, t_cmd *cmds)
 {
 	if (out != NULL)
 	{
@@ -22,7 +39,10 @@ void	fd_init(int *infile_fd, int *outfile_fd, char *in, char *out)
 	}
 	else
 		*outfile_fd = -1;
-	if (in != NULL)
+		
+	if (cmds->here_doc && cmds->here_doc_cont)
+	 	*infile_fd = create_heredoc_fd_direct(cmds);
+	else if (in != NULL)
 	{
 		*infile_fd = open(in, O_RDONLY);
 		if (*infile_fd == -1)

@@ -61,7 +61,7 @@ char	**cmd_error(char *argv);
 int		path_exists(char *env[]);
 char	*correct_path(char *cmd, char *env[]);
 // char	**parse_cmd(char *argv, char *env[]);
-void	fd_init(int *infile_fd, int *outfile_fd, char *in, char *out);
+void	fd_init(int *infile_fd, int *outfile_fd, char *in, char *out, t_cmd *cmds);
 void	last_close(t_object *pipex);
 void	fire_up_pipeinator(t_object *pipex, t_cmd *cmds);
 void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[]);

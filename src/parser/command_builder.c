@@ -18,7 +18,6 @@ int	create_current_cmd(t_vector **current_cmd, t_cmd *cmds)
 
 	if (cmds->cmds_count >= cmds->cmds_capacity)
 	{
-		printf("we are reallocating the number of commands\n");
 		tmp = ft_realloc(cmds->simple_cmds, sizeof(t_vector*) * cmds->cmds_capacity,
 				sizeof(t_vector*) * cmds->cmds_capacity * 2);
 		if (!tmp)

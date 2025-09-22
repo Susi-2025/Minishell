@@ -32,7 +32,7 @@ typedef struct s_cmd
 	int				cmds_capacity;
 	int				cmds_count;
 	int				err_code; //vietadd for handle error code
-	t_vector	**simple_cmds;
+	t_vector		**simple_cmds;
 	char			*out_file;
 	char			*in_file;
 	char			*err_file;

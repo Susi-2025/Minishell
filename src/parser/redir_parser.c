@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+// static int vector_init(t_vector *vec)
+// {
+// 	vec = malloc(sizeof(t_vector));
+// 	if (!vec)
+// 		return (-1);
+// 	vec->args_capacity = 4;
+// 	vec->args_count = 0;
+// 	vec->args = malloc(sizeof(char *) * vec->args_capacity);
+// 	if (!vec->args)
+// 		return (free(vec), -1);
+// 	return (0);
+// }
+
 int	redir_in_out(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 {
 	if (tokens[*i].type == REDIR_IN)
@@ -19,7 +32,11 @@ int	redir_in_out(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 		(*i)++;
 		if (*i < token_count && tokens[*i].type == WORD)
 		{
-			free(cmds->in_file);
+			// if (!cmds->in_file)
+			// {
+			// 	if (vector_init(cmds->infile) == -1)
+			// 		return (-1);
+			// }
 			cmds->in_file = ft_strdup(tokens[*i].value);
 			if (cmds->in_file == NULL)
 				return (-1);
