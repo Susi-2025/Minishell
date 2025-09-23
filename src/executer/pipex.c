@@ -116,11 +116,11 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 
 	if (!cmds)
 		return (1);
-	if (pipex.num_commands == 0 && cmds->here_doc)
-		heredoc_read(cmds);
-		
+	
 	fd_init(&pipex.infile_fd, &pipex.outfile_fd, cmds->in_file, cmds->out_file, cmds);
 	fire_up_pipeinator(&pipex, cmds);
+	if (pipex.num_commands == 0 && cmds->here_doc)
+		heredoc_read(cmds);
 	i = 0;
 	// add for case: << heredoc
 	while (i < pipex.num_commands)

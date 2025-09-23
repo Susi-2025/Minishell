@@ -91,12 +91,12 @@ int	reduce_env(t_cmd *cmds, char *str, char ***temp_env)
 
 static	int	detect_var(char *origin, char *expan)
 {
-	int	i;
+	// int	i;
 	int	len;
 
 	if (!origin || !expan)
 		return (1);
-	i = 0;
+	// i = 0;
 	len = ft_strlen(expan);
 	if (ft_strncmp(origin, expan, len) == 0 && origin[len] == '=')
 		return (0);
