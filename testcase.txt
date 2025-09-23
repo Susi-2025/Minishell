@@ -12,3 +12,150 @@ Value of no_double_quote and single_quote: 0 and 0
 ==2271248==    at 0x4037A0: ft_pipex (in /home/vinguyen/Documents/Minishell/minishell)
 ==2271248== 
 
+
+2. Test case: ls | pwd
+Value of rl: ls | pwd
+Value of no_double_quote and single_quote: 0 and 0 
+Print cmds
+Value of cmds_capacity: 2
+Value of cmds_count: 2
+Value of out_file: (null)
+Value of in_file: (null)
+Value of err_file: (null)
+Value of here_doc: (null)
+Value of file_append: (null)
+Simple command 0
+Value of args_capacity: 4
+Value of args_count: 1
+Value of args at 0 position is: ls
+Simple command 1
+Value of args_capacity: 4
+Value of args_count: 1
+Value of args at 0 position is: pwd
+/home/vinguyen/Documents/Minishell
+==2274741== 
+==2274741== HEAP SUMMARY:
+==2274741==     in use at exit: 211,157 bytes in 298 blocks
+==2274741==   total heap usage: 533 allocs, 235 frees, 236,685 bytes allocated
+==2274741== 
+==2274741== 7 bytes in 2 blocks are still reachable in loss record 1 of 74
+==2274741==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2274741==    by 0x406B6E: ft_strdup (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x40456E: parse_word (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x404919: handle_word_tokens (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x40482C: process_word_and_redir (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x4046CC: parse_tokens (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x401318: ft_prepare_command (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x401530: main (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741== 
+==2274741== 16 bytes in 1 blocks are still reachable in loss record 12 of 74
+==2274741==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2274741==    by 0x4047C7: cmd_init (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x404645: parse_tokens (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x401318: ft_prepare_command (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x401530: main (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741== 
+==2274741== 32 bytes in 2 blocks are still reachable in loss record 17 of 74
+==2274741==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2274741==    by 0x4043B5: create_current_cmd (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x4044C5: parse_word (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x404919: handle_word_tokens (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x40482C: process_word_and_redir (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x4046CC: parse_tokens (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x401318: ft_prepare_command (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x401530: main (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741== 
+==2274741== 64 bytes in 2 blocks are still reachable in loss record 22 of 74
+==2274741==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2274741==    by 0x404407: create_current_cmd (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x4044C5: parse_word (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x404919: handle_word_tokens (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x40482C: process_word_and_redir (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x4046CC: parse_tokens (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x401318: ft_prepare_command (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x401530: main (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741== 
+==2274741== 80 bytes in 1 blocks are still reachable in loss record 25 of 74
+==2274741==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2274741==    by 0x40461C: parse_tokens (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x401318: ft_prepare_command (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x401530: main (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741== 
+==2274741== 464 bytes in 1 blocks are still reachable in loss record 32 of 74
+==2274741==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2274741==    by 0x40758D: ft_calloc (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x407321: ft_matrix_dup (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x40148A: main (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741== 
+==2274741== 2,186 bytes in 57 blocks are still reachable in loss record 48 of 74
+==2274741==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2274741==    by 0x407488: ft_strdup_char (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x407361: ft_matrix_dup (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741==    by 0x40148A: main (in /home/vinguyen/Documents/Minishell/minishell)
+==2274741== 
+==2274741== LEAK SUMMARY:
+==2274741==    definitely lost: 0 bytes in 0 blocks
+==2274741==    indirectly lost: 0 bytes in 0 blocks
+==2274741==      possibly lost: 0 bytes in 0 blocks
+==2274741==    still reachable: 2,849 bytes in 66 blocks
+==2274741==         suppressed: 208,308 bytes in 232 blocks
+==2274741== 
+==2274741== For lists of detected and suppressed errors, rerun with: -s
+==2274741== ERROR SUMMARY: 3 errors from 1 contexts (suppressed: 0 from 0)
+
+3. Test case: echo " bag
+Value of rl: echo " bag
+Value of no_double_quote and single_quote: 1 and 0 
+minishell: syntax error
+==2274738== 
+==2274738== HEAP SUMMARY:
+==2274738==     in use at exit: 208,186 bytes in 223 blocks
+==2274738==   total heap usage: 636 allocs, 413 frees, 243,233 bytes allocated
+==2274738== 
+==2274738== LEAK SUMMARY:
+==2274738==    definitely lost: 0 bytes in 0 blocks
+==2274738==    indirectly lost: 0 bytes in 0 blocks
+==2274738==      possibly lost: 0 bytes in 0 blocks
+==2274738==    still reachable: 0 bytes in 0 blocks
+==2274738==         suppressed: 208,186 bytes in 223 blocks
+==2274738== 
+==2274738== For lists of detected and suppressed errors, rerun with: -s
+==2274738== ERROR SUMMARY: 6 errors from 1 contexts (suppressed: 1 from 1)
+
+4. Test case: Prompt: exit
+Value of rl: exit
+Value of no_double_quote and single_quote: 0 and 0 
+Print cmds
+Value of cmds_capacity: 2
+Value of cmds_count: 1
+Value of out_file: (null)
+Value of in_file: (null)
+Value of err_file: (null)
+Value of here_doc: (null)
+Value of file_append: (null)
+Simple command 0
+Value of args_capacity: 4
+Value of args_count: 1
+Value of args at 0 position is: exit
+==2274800== Conditional jump or move depends on uninitialised value(s)
+==2274800==    at 0x4037BB: ft_pipex (in /home/vinguyen/Documents/Minishell/minishell)
+==2274800==    by 0x40155F: main (in /home/vinguyen/Documents/Minishell/minishell)
+==2274800==  Uninitialised value was created by a stack allocation
+==2274800==    at 0x403790: ft_pipex (in /home/vinguyen/Documents/Minishell/minishell)
+==2274800== 
+Execute builtin which is in parent process
+exit
+==2274800== 
+==2274800== HEAP SUMMARY:
+==2274800==     in use at exit: 208,221 bytes in 226 blocks
+==2274800==   total heap usage: 498 allocs, 272 frees, 232,920 bytes allocated
+==2274800== 
+==2274800== LEAK SUMMARY:
+==2274800==    definitely lost: 0 bytes in 0 blocks
+==2274800==    indirectly lost: 0 bytes in 0 blocks
+==2274800==      possibly lost: 0 bytes in 0 blocks
+==2274800==    still reachable: 0 bytes in 0 blocks
+==2274800==         suppressed: 208,221 bytes in 226 blocks
+==2274800== 
+==2274800== For lists of detected and suppressed errors, rerun with: -s
+==2274800== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
