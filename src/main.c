@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/22 13:48:22 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/23 10:55:55 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,47 @@ void	setup_signals(void)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
+static	int	count_symbol(char *rl, char c)
+{
+	int	i;
+	int	out;
+
+	i = 0;
+	out = 0;
+	while (rl[i])
+	{
+		if (rl[i] == c)
+			out++;
+		i++;
+	}
+	return (out);
+}
+
+static	int	check_rl(char *rl)
+{
+	int	i;
+	int	no_d_quote;
+	int no_s_quote;
+	
+	i = 0;
+	no_d_quote = count_symbol(rl, '\"');
+	no_s_quote = count_symbol(rl, '\'');
+	printf("Value of rl: %s\n", rl);
+	printf("Value of no_double_quote and single_quote: %i and %i \n", no_d_quote, no_s_quote);
+	if (no_d_quote % 2 != 0 || no_s_quote % 2 != 0)
+	{
+		printf("minishell: syntax error\n");
+		return (1);
+	}
+	return (0);
+}
+
 int	main(int argc, char *argv[], char *init_env[])
 {
 	char	*rl;
 	t_cmd	*cmds;
 	char	**temp_env;
+	int		code;
 	// int		cmd_exit_code;
 	// int		i;
 	// int		j;
@@ -76,6 +112,8 @@ int	main(int argc, char *argv[], char *init_env[])
 	temp_env = ft_matrix_dup(init_env, ft_len_2d(init_env));
 	if (!temp_env)
 		return (1);
+	// cmds->err_code = 0;
+	code = 0;
 	while (1)
 	{
 		g_interactive = 1;
@@ -87,6 +125,8 @@ int	main(int argc, char *argv[], char *init_env[])
 		}
 		if (*rl)
 			add_history(rl);
+		if (check_rl(rl))
+			break ;
 		g_interactive = 0;
 		cmds = ft_prepare_command(rl, temp_env);
 		// 1. segmation fault when typing: 
@@ -97,7 +137,9 @@ int	main(int argc, char *argv[], char *init_env[])
 		if (cmds)
 		{
 			cmd_print(cmds);
-			cmds->err_code = ft_pipex(cmds, &temp_env); //for updating temp_env inside the function
+			cmds->err_code = code;
+			code = ft_pipex(cmds, &temp_env); //for updating temp_env inside the function
+			printf("Return code from previous command is: %d\n", code);
 			if (cmds)
 				free_cmd(cmds);
 		}
@@ -108,5 +150,4 @@ int	main(int argc, char *argv[], char *init_env[])
 		ft_free_triptr(&temp_env);
 	return (0);
 }
-
 // char *cmds = {cmd1, cmd2, cmd3, NULL};

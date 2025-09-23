@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:41:08 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/22 15:53:04 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/23 11:01:01 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 		return (1);
 	if (pipex.num_commands == 0 && cmds->here_doc)
 		heredoc_read(cmds);
-	
+		
 	fd_init(&pipex.infile_fd, &pipex.outfile_fd, cmds->in_file, cmds->out_file, cmds);
 	fire_up_pipeinator(&pipex, cmds);
 	i = 0;

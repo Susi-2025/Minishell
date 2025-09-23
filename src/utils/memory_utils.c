@@ -6,13 +6,13 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 19:28:21 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 17:32:16 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/23 10:34:54 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_cmd(t_cmd *cmds)
+void	free_cmd(t_cmd *cmds) //we face double free in here
 {
 	int	i;
 	int	j;
