@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:41:08 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/23 11:01:01 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/23 13:15:06 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	pipe_and_fork_logic(t_object *pipex, int i, t_cmd *cmds, char *env[])
 	}
 	else if (pipex->pid == 0)
 	{
-		printf("Running child process: %d\n", i);
+		// printf("Running child process: %d\n", i);
 		child_process(pipex, i, cmds, env);
 	}
 	else
@@ -127,7 +127,8 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 	{
 		args = cmds->simple_cmds[i]->args;
 		args_count = cmds->simple_cmds[i]->args_count;
-		if (!cmds->here_doc && check_built_in(args[0]) == 1)
+		// if there is only 01 built-in command, it must run without pipe.
+		if (cmds->cmds_count == 1 && check_built_in(args[0]) == 1)
 			exec_parent(cmds, args, env, args_count);
 		else
 			pipe_and_fork_logic(&pipex, i, cmds, *env);

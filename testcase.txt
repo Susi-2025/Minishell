@@ -1,0 +1,14 @@
+// for running
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --track-origins=yes ./minishell
+
+
+1. Test case: echo a
+Value of rl: echo a
+Value of no_double_quote and single_quote: 0 and 0 
+==2271248== Conditional jump or move depends on uninitialised value(s)
+==2271248==    at 0x4037CB: ft_pipex (in /home/vinguyen/Documents/Minishell/minishell)
+==2271248==    by 0x401556: main (in /home/vinguyen/Documents/Minishell/minishell)
+==2271248==  Uninitialised value was created by a stack allocation
+==2271248==    at 0x4037A0: ft_pipex (in /home/vinguyen/Documents/Minishell/minishell)
+==2271248== 
+

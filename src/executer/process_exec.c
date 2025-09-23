@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:31:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/20 15:54:32 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/23 13:28:40 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 {
 	char	**args;
 	char	*path;
-	// int		args_count;
+	int		args_count;
+	int		exit_code;
 	//Eliminate this struct
 	(void)pipex;
 	if (i >= cmds->cmds_count || !cmds->simple_cmds[i])
@@ -25,9 +26,16 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		exit(127);
 	}
 	args = cmds->simple_cmds[i]->args;
-	if (check_built_in(args[0]) != 1)
+	args_count = cmds->simple_cmds[i]->args_count;
+	if (check_built_in(args[0]) == 1)
 	{
-		printf("Execute external in pipex\n");
+		exit_code = exec_built_in(cmds, args, &env, args_count);
+		exit(exit_code);
+	}
+	else 
+	// if (check_built_in(args[0]) != 1)
+	{
+		// printf("Execute external in pipex\n");
 		path = correct_path(args[0], env);
 		if (path != NULL)
 		{

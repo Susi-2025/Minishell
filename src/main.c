@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/23 10:55:55 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/09/23 13:03:40 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	main(int argc, char *argv[], char *init_env[])
 			cmd_print(cmds);
 			cmds->err_code = code;
 			code = ft_pipex(cmds, &temp_env); //for updating temp_env inside the function
-			printf("Return code from previous command is: %d\n", code);
+			// printf("Return code from previous command is: %d\n", code);
 			if (cmds)
 				free_cmd(cmds);
 		}
