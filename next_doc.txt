@@ -1,10 +1,17 @@
-1. Handle unset again -> ok
-5. Heredoc -> on the way
-2. Realloc function not allow in create_current_cmd/parse_word which in inside command_builder.c of parser folder
-3. Size of token arry in tokenize function which is inside tokenizer.c is not correct.
-6. echo " -> need to have error syntax -> syntax_check needed
-7. Check memory leak again.
-4. Norminette -> src/command folder
-8. Test with online tester
-Deadline: Monday 22/9
+NEXT ACTION
+2. Handle echo $? -> viet will did it
+3. Input echo " -> need to have error syntax -> syntax_check needed.
+4. Size of token arry in tokenize function which is inside tokenizer.c is not correct.
+5. Check memory leak again -> leak relating to free_cmd
+6. Norminette -> src/command folder
+7. Test with online tester
+
+DONE- 23/9
+
+1. Heredoc -> on the way -> cristi simplified it from viet -> good job
+2. Realloc function not allow in create_current_cmd/parse_word which in inside command_builder.c of parser folder -> cristi did it
+3. Handle unset again -> ok
+
+DEADLINE
+24/9 -> handle echo $
 
