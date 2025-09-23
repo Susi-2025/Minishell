@@ -1,16 +1,19 @@
 NEXT ACTION
-2. Handle echo $? -> viet will did it
-3. Input echo " -> need to have error syntax -> syntax_check needed.
 4. Size of token arry in tokenize function which is inside tokenizer.c is not correct.
 5. Check memory leak again -> leak relating to free_cmd
 6. Norminette -> src/command folder
 7. Test with online tester
 
-DONE- 23/9
+UPDATED FEATURE BUT NOT YET DONE
+2. Handle echo $? -> viet will did it -> add already but need to wait from parsing
+3. Input echo " -> need to have error syntax -> syntax_check needed -> already added but not sure
+4. Pipe works well with 1 commands, 2 commands but memory leak relating to uninitialised.
 
+DONE- 23/9
 1. Heredoc -> on the way -> cristi simplified it from viet -> good job
 2. Realloc function not allow in create_current_cmd/parse_word which in inside command_builder.c of parser folder -> cristi did it
 3. Handle unset again -> ok
+
 
 DEADLINE
 24/9 -> handle echo $
