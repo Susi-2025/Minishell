@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:31:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/23 13:28:40 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/13 17:30:41 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 	if (check_built_in(args[0]) == 1)
 	{
 		exit_code = exec_built_in(cmds, args, &env, args_count);
+		// need to free memory cmd, env before 
 		exit(exit_code);
 	}
 	else 
