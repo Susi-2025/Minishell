@@ -18,6 +18,29 @@ void	error_token(t_token *token)
 	token->value = NULL;
 }
 
+static int	count_token(char *l)
+{
+	int	i;
+	int	out;
+	int	start;
+
+	i = 0;
+	start = 0;
+	out = 0;
+	while (l[i])
+	{
+		if (is_space(l[i]) == 0 && start == 0) //detect word
+		{
+			start = 1;
+			out++;
+		}
+		else if (start == 1 && is_space(l[i])) //finish word
+			start = 0;
+		i++;
+	}
+	return (out);
+}
+
 static	void	process_next_token(t_token *token, char *l, int *i)
 {
 	if (l[*i] == '"' || l[*i] == '\'')
@@ -36,11 +59,15 @@ t_token	*tokenize(char *l, int *token_count)
 {
 	int		i;
 	int		count;
+	int		count_new;
 	t_token	*tokens;
 
 	count = 0;
 	i = 0;
-	tokens = malloc(sizeof(t_token) * 100);
+	count_new = count_token(l);
+	printf("Value of counting: %d\n", count_new);
+	// tokens = malloc(sizeof(t_token) * 100);
+	tokens = malloc(sizeof(t_token) * (count_new + 1));
 	if (!tokens)
 		return (NULL);
 	while (l[i])
@@ -57,3 +84,4 @@ t_token	*tokenize(char *l, int *token_count)
 	*token_count = count;
 	return (tokens);
 }
+

@@ -23,6 +23,7 @@ t_cmd	*ft_prepare_command(char *line, char *env[])
 	tokens = tokenize(line, &token_count);
 	if (!tokens)
 		return (NULL);
+	// printf("value of token count: %i\n", token_count);
 	cmds = parse_tokens(tokens, token_count, env);
 	free_tokens(tokens, token_count);
 	return (cmds);
@@ -80,11 +81,9 @@ static	int	count_symbol(char *rl, char c)
 
 static	int	check_rl(char *rl)
 {
-	int	i;
 	int	no_d_quote;
 	int no_s_quote;
 	
-	i = 0;
 	no_d_quote = count_symbol(rl, '\"');
 	no_s_quote = count_symbol(rl, '\'');
 	printf("Value of rl: %s\n", rl);
