@@ -31,7 +31,7 @@ HERE_FILES = heredoc_exec.c heredoc_pipe.c heredoc_utility.c
 PARS_FILES = command_builder.c parser_main.c quote_parser.c redir_parser.c var_expansion.c 
 TOKEN_FILES = cmd_tokens.c redir_tokens.c tokenizer.c
 UTIL_FILES = 9_err_utility.c char_utils.c cmd_utils.c ft_split.c memory_utils.c parser_utils.c str_copying.c \
-			str_utils.c 
+			str_utils.c vector.c
 
 SRC =	$(addprefix $(SRC_DIR)/, $(MAIN_FILES)) \
 		$(addprefix $(CMD_DIR)/, $(CMD_FILES)) \

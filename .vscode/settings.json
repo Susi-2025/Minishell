@@ -60,7 +60,8 @@
     "minishell.h": "c",
     "format": "c",
     "libft.h": "c",
-    "cstdlib": "c"
+    "cstdlib": "c",
+    "vector": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

@@ -29,8 +29,14 @@ int create_heredoc_fd_direct(t_cmd *cmds)
     return (pipefd[0]); // return read end
 }
 
-void	fd_init(int *infile_fd, int *outfile_fd, char *in, char *out, t_cmd *cmds)
+void	fd_init(int *infile_fd, int *outfile_fd, t_object* pipex, char *out, t_cmd *cmds)
 {
+	int i;
+	int	fd;
+
+	i = 0;
+	*infile_fd = -1;
+	pipex->status = INFILE_NONE;
 	if (out != NULL)
 	{
 		*outfile_fd = open(out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -42,14 +48,27 @@ void	fd_init(int *infile_fd, int *outfile_fd, char *in, char *out, t_cmd *cmds)
 		
 	if (cmds->here_doc && cmds->here_doc_cont)
 	 	*infile_fd = create_heredoc_fd_direct(cmds);
-	else if (in != NULL)
+	else if (cmds->in_file != NULL)
 	{
-		*infile_fd = open(in, O_RDONLY);
-		if (*infile_fd == -1)
-			error_string(in);
+		while (i < cmds->in_file->args_count)
+		{
+			fd = open(cmds->in_file->args[i], O_RDONLY);
+			if (fd == -1)
+			{
+				error_string(cmds->in_file->args[i]);
+				pipex->status = INFILE_ERROR;
+				return;
+			}
+			i++;
+			if (i != cmds->in_file->args_count)
+				close(*infile_fd);
+			else
+			{
+				*infile_fd = fd;
+				pipex->status = INFILE_VALID;
+			}
+		}
 	}
-	else
-		*infile_fd = -1;
 }
 
 void	last_close(t_object *pipex)

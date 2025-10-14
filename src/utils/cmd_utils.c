@@ -11,7 +11,11 @@ void	cmd_print(t_cmd *cmds)
 	printf("Value of cmds_capacity: %d\n", cmds->cmds_capacity);
 	printf("Value of cmds_count: %d\n", cmds->cmds_count);
 	printf("Value of out_file: %s\n", cmds->out_file);
-	printf("Value of in_file: %s\n", cmds->in_file);
+	if (cmds->in_file != NULL)
+	{
+		for (int i = 0; i < cmds->in_file->args_count; i++)
+			printf("Value of in_file: %s\n", cmds->in_file->args[i]);
+	}
 	printf("Value of err_file: %s\n", cmds->err_file);
 	printf("Value of here_doc: %s\n", cmds->here_doc);
 	printf("Value of file_append: %s\n", cmds->file_append);

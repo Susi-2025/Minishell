@@ -34,5 +34,6 @@
 # include "pipex.h"
 # include "command.h"
 # include "heredoc.h"
+# include "vector.h"
 
 #endif

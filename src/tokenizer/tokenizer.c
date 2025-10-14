@@ -18,28 +18,28 @@ void	error_token(t_token *token)
 	token->value = NULL;
 }
 
-static int	count_token(char *l)
-{
-	int	i;
-	int	out;
-	int	start;
+// static int	count_token(char *l)
+// {
+// 	int	i;
+// 	int	out;
+// 	int	start;
 
-	i = 0;
-	start = 0;
-	out = 0;
-	while (l[i])
-	{
-		if (is_space(l[i]) == 0 && start == 0) //detect word
-		{
-			start = 1;
-			out++;
-		}
-		else if (start == 1 && is_space(l[i])) //finish word
-			start = 0;
-		i++;
-	}
-	return (out);
-}
+// 	i = 0;
+// 	start = 0;
+// 	out = 0;
+// 	while (l[i])
+// 	{
+// 		if (is_space(l[i]) == 0 && start == 0) //detect word
+// 		{
+// 			start = 1;
+// 			out++;
+// 		}
+// 		else if (start == 1 && is_space(l[i])) //finish word
+// 			start = 0;
+// 		i++;
+// 	}
+// 	return (out);
+// }
 
 static	void	process_next_token(t_token *token, char *l, int *i)
 {
@@ -59,15 +59,15 @@ t_token	*tokenize(char *l, int *token_count)
 {
 	int		i;
 	int		count;
-	int		count_new;
+	int		capacity;
 	t_token	*tokens;
 
 	count = 0;
 	i = 0;
-	count_new = count_token(l);
-	printf("Value of counting: %d\n", count_new);
+	capacity = 2;
 	// tokens = malloc(sizeof(t_token) * 100);
-	tokens = malloc(sizeof(t_token) * (count_new + 1));
+	tokens = malloc(sizeof(t_token) * (capacity)); // token1, token2
+	
 	if (!tokens)
 		return (NULL);
 	while (l[i])
@@ -79,6 +79,11 @@ t_token	*tokenize(char *l, int *token_count)
 		if (tokens[count].type == ERROR_TOKEN)
 			return (free_tokens(tokens, count), NULL);
 		count++;
+		if (count == capacity)
+		{
+			tokens = ft_realloc(tokens, capacity * sizeof(t_token), capacity * 2 * sizeof(t_token));
+			capacity *= 2;
+		}
 	}
 	eof_token(tokens, &count);
 	*token_count = count;

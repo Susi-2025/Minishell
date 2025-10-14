@@ -86,8 +86,8 @@ static	int	check_rl(char *rl)
 	
 	no_d_quote = count_symbol(rl, '\"');
 	no_s_quote = count_symbol(rl, '\'');
-	printf("Value of rl: %s\n", rl);
-	printf("Value of no_double_quote and single_quote: %i and %i \n", no_d_quote, no_s_quote);
+	// printf("Value of rl: %s\n", rl);
+	// printf("Value of no_double_quote and single_quote: %i and %i \n", no_d_quote, no_s_quote);
 	if (no_d_quote % 2 != 0 || no_s_quote % 2 != 0)
 	{
 		printf("minishell: syntax error\n");
@@ -135,7 +135,7 @@ int	main(int argc, char *argv[], char *init_env[])
 		// I think we need a err_code value for storing -> I put in structs.h
 		if (cmds)
 		{
-			cmd_print(cmds);
+			// cmd_print(cmds);
 			cmds->err_code = code;
 			code = ft_pipex(cmds, &temp_env); //for updating temp_env inside the function
 			// printf("Return code from previous command is: %d\n", code);

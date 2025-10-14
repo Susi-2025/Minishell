@@ -43,7 +43,7 @@ void	pipe_and_fork_logic(t_object *pipex, int i, t_cmd *cmds, char *env[])
 	// exit(WEXITSTATUS(pipex.last_status));
 
 int	wait_for_children(t_object *pipex)
-{
+{ 
 	// // printf("DEBUG: About to enter while(wait...)\n");
 	// while (wait(&pipex->status) > 0)
 	// {
@@ -116,8 +116,7 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 
 	if (!cmds)
 		return (1);
-	
-	fd_init(&pipex.infile_fd, &pipex.outfile_fd, cmds->in_file, cmds->out_file, cmds);
+	fd_init(&pipex.infile_fd, &pipex.outfile_fd, &pipex, cmds->out_file, cmds);
 	fire_up_pipeinator(&pipex, cmds);
 	if (pipex.num_commands == 0 && cmds->here_doc)
 		heredoc_read(cmds);

@@ -36,7 +36,7 @@ void	free_cmd(t_cmd *cmds) //we face double free in here
 		i++;
 	}
 	free(cmds->simple_cmds);
-	free(cmds->in_file);
+	vector_destroy(cmds->in_file);
 	free(cmds->out_file);
 	free(cmds->err_file);
 	free(cmds->here_doc);
