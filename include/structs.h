@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:21:19 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/22 09:49:30 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/14 18:03:51 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_cmd
 	char			*here_doc;
 	char			*here_doc_cont;
 	char			*file_append;
+	char			**envp;
 }	t_cmd;
 
 typedef enum s_token_type

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 19:27:52 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/23 10:29:07 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/14 19:15:56 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	cmd_init(t_cmd *cmds, char *env[])
 	cmds->cmds_capacity = 2;
 	cmds->cmds_count = 0;
 	cmds->err_code = 0; // vietadd for err_code control
-	cmds->envp = env;
+	cmds->envp = env; // vietadd for built-in function
 	cmds->out_file = NULL;
 	cmds->err_file = NULL;
 	cmds->here_doc = NULL;

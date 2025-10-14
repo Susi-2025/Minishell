@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/21 10:28:26 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/14 19:00:03 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ int	reduce_env(t_cmd *cmds, char *str, char ***temp_env)
 		i++;
 	}
 	cmds->envp = *temp_env;
-	return (1);
+	printf("Already reduce and new value of env:\n");
+	exec_export_only(cmds);
+	printf("\n");
+	return (0);
 }
 
 static	int	detect_var(char *origin, char *expan)
@@ -128,6 +131,7 @@ int	insert_env(t_cmd *cmds, char *str, char ***temp_env)
 	ft_free_triptr(temp_env);
 	*temp_env = new_env;
 	cmds->envp = *temp_env;
+	printf("Already insert\n");
 	return (0);
 }
 
