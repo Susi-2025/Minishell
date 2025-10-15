@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:07:22 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/22 14:34:46 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:01:08 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*ft_strcpy(char *dest, char *src);
 /* Memory and error*/
 void	free_strings(char **str);
 void	error_string(char *argv);
+void	error_string_export(char *argv);
 void	failed_exec(char *argv);
 char	**cmd_error(char *argv);
 

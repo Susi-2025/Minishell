@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/14 19:13:09 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:41:02 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,45 @@ int	exec_export(t_cmd *cmds, char **args, char ***temp_env)
 	char	*args_heads;
 	int		i;
 	char	*value;
+	int		equal_signal;
 	
 	if (args[1] == NULL)
 		return (exec_export_only(cmds));
 	i = 1;
+	equal_signal = 0;
 	while (args[i])
 	{
-		args_heads = ft_strhead(args[i], '=');
-		printf("value of args_heads: %s\n", args_heads);
-		if (find_var(*temp_env, args_heads) == NULL)
+
+		equal_signal = ft_strchr(args[i], '=');
+		if ((args[i][0] >= '0' && args[i][0] <= '9') || args[i][0] == '_')
 		{
-			printf("New value is not found in envp\n");
-			printf("Args value is %s\n", args[i]);
+			error_string_export(args[i]);
+			return (1);
+		}
+		if (equal_signal)
+			args_heads = ft_strhead(args[i], '=');
+		else
+			args_heads = args[i];
+		if (check_var_env(*temp_env, args_heads) == 0)
+		{
 			if (insert_env(cmds, args[i], temp_env) == 1)
 				return (1);
 		}
-		else if (ft_strchr_char(args[i], '=') && find_var(*temp_env, args_heads))
+		else if (equal_signal == 1 && check_var_env(*temp_env, args_heads) == 1)
 		{
-			printf("New value is found in envp\n");
 			value = ft_strtail(args[i], '=');
-			printf("Heads: %s\n", args_heads);
-			printf("Value: %s\n", value);
 			update_env(cmds, args_heads, value);
+			if (value)
+				free(value);
 		}
-		free(args_heads);
+		if (equal_signal)
+			free(args_heads);
 		i++;
 	}
 	return (0);
 }
+
+
 
 char	*ft_strhead(char *str, char c)
 {
@@ -81,6 +92,8 @@ char	*ft_strtail(char *str, char c)
 	while (str[i] && str[i] != c)
 		i++;
 	i++;
+	if (!str[i])
+		return (NULL);
 	len = ft_strlen(str) - i;
 	out = malloc (len + 1);
 	if (!out)
@@ -88,6 +101,8 @@ char	*ft_strtail(char *str, char c)
 	j = 0;
 	while (j < len)
 	{
+		if (str[i + j] == '\"')
+			i++;
 		out[j] = str[i + j];
 		j++;
 	}
