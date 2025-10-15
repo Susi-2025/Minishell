@@ -6,58 +6,105 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/15 15:41:02 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/15 17:28:17 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static	int		invalid_args(char *str);
 static	void	printf_for_export(char *str);
 
 int	exec_export(t_cmd *cmds, char **args, char ***temp_env)
 {
-	char	*args_heads;
+	// char	*args_heads;
 	int		i;
-	char	*value;
-	int		equal_signal;
+	// char	*value;
+	//int		equal_signal;
 	
 	if (args[1] == NULL)
 		return (exec_export_only(cmds));
 	i = 1;
-	equal_signal = 0;
+	// equal_signal = 0;
 	while (args[i])
 	{
-
-		equal_signal = ft_strchr(args[i], '=');
-		if ((args[i][0] >= '0' && args[i][0] <= '9') || args[i][0] == '_')
+		//equal_signal = ft_strchr(args[i], '=');
+		//if (args[i][0] >= '0' && args[i][0] <= '9')
+		if (invalid_args(args[i]))
 		{
 			error_string_export(args[i]);
+			i++;
+		}
+		if (export_with_args(cmds, args[i], temp_env) == 1)
 			return (1);
-		}
-		if (equal_signal)
-			args_heads = ft_strhead(args[i], '=');
-		else
-			args_heads = args[i];
-		if (check_var_env(*temp_env, args_heads) == 0)
-		{
-			if (insert_env(cmds, args[i], temp_env) == 1)
-				return (1);
-		}
-		else if (equal_signal == 1 && check_var_env(*temp_env, args_heads) == 1)
-		{
-			value = ft_strtail(args[i], '=');
-			update_env(cmds, args_heads, value);
-			if (value)
-				free(value);
-		}
-		if (equal_signal)
-			free(args_heads);
+		// if (ft_strchr(args[i], '='))
+		// 	args_heads = ft_strhead(args[i], '=');
+		// else
+		// 	args_heads = args[i];
+		// if (check_var_env(*temp_env, args_heads) == 0)
+		// {
+		// 	if (insert_env(cmds, args[i], temp_env) == 1)
+		// 		return (1);
+		// }
+		// else if (ft_strchr(args[i], '=') == 1 && check_var_env(*temp_env, args_heads) == 1)
+		// {
+		// 	value = ft_strtail(args[i], '=');
+		// 	if (update_env(cmds, args_heads, value) == 1)
+		// 		return (1);
+		// 	if (value)
+		// 		free(value);
+		// }
+		// if (ft_strchr(args[i], '='))
+		// 	free(args_heads);
 		i++;
 	}
 	return (0);
 }
 
+// so [0] NOT number only alpha or _. the whole string alphanumeric or _ 
+static	int	invalid_args(char *str)
+{
+	int	i;
+	
+	i = 0;
+	if (!(ft_isalpha(str[i]) || str[i] == '_'))
+		return (1);
+	i++;
+	while (str[i])
+	{
+		if(ft_isalnum(str[i])== 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
+int export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env)
+{
+	char	*args_heads;
+	char	*value;
+	
+	if (ft_strchr(arg_str, '='))
+		args_heads = ft_strhead(arg_str, '=');
+	else
+		args_heads = arg_str;
+	if (check_var_env(*temp_env, args_heads) == 0)
+	{
+		if (insert_env(cmds, arg_str, temp_env) == 1)
+			return (1);
+	}
+	else if (ft_strchr(arg_str, '=') == 1 && check_var_env(*temp_env, args_heads) == 1)
+	{
+		value = ft_strtail(arg_str, '=');
+		if (update_env(cmds, args_heads, value) == 1)
+			return (1);
+		if (value)
+			free(value);
+	}
+	if (ft_strchr(arg_str, '='))
+		free(args_heads);
+	return (0);
+}
 
 char	*ft_strhead(char *str, char c)
 {
@@ -125,7 +172,7 @@ int	exec_export_only(t_cmd *cmds)
 	while (temp[i])
 	{
 		// if (ft_strchr(temp[i], '=') && temp[i][0] != '_')
-		if (temp[i][0] != '_')
+		if (temp[i][0] != '_') // not correct if we run export _viet => _viet must be added and showed
 			printf_for_export(temp[i]);
 		i++;
 	}

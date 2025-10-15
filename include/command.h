@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/15 12:46:46 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/15 16:39:02 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		exec_built_in(t_cmd *shell, char **args,
 			char ***temp_env, int args_count);
 int		exec_export(t_cmd *cmds, char **args, char ***temp_env);
 int		exec_export_only(t_cmd *shell);
+int		export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env);
 // int		export_replace(t_cmd *cmds, char **args, char ***temp_env, char *str);
 int		exec_echo(t_cmd *shell, char **args, int args_count);
 int		exec_cd(t_cmd *shell, char **args);
