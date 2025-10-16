@@ -33,7 +33,7 @@ int	redir_in_out(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 		{
 			cmds->in_file = malloc(sizeof(t_vector));
 			if (!cmds->in_file)
-				return -1;
+				return (-1);
 			if (vector_setup(cmds->in_file) == VECTOR_ERROR)
 				return (-1);
 		}
@@ -46,12 +46,18 @@ int	redir_in_out(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 	}
 	else if (tokens[*i].type == REDIR_OUT)
 	{
+		if (cmds->out_file == NULL)
+		{
+			cmds->out_file = malloc(sizeof(t_vector));
+			if (!cmds->out_file)
+				return (-1);
+			if (vector_setup(cmds->out_file) == VECTOR_ERROR)
+				return (-1);
+		}
 		(*i)++;
 		if (*i < token_count && tokens[*i].type == WORD)
 		{
-			free(cmds->out_file);
-			cmds->out_file = ft_strdup(tokens[*i].value);
-			if (cmds->out_file == NULL)
+			if (vector_push_back(cmds->out_file, ft_strdup(tokens[*i].value)) == VECTOR_ERROR)
 				return (-1);
 		}
 	}

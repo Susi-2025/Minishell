@@ -75,27 +75,33 @@ void	reading_pipe(t_object *pipex, t_cmd *cmds, char *env[], int i)
 		dup2(pipex->prev_pipe_in, STDIN_FILENO);
 		close(pipex->prev_pipe_in);
 	}
-	else if (pipex->status == INFILE_ERROR)
+	else if (pipex->status[0] == FILE_ERROR)
 	{
 		free_cmd(cmds);
 		ft_free_triptr(&env);
 		exit(1);
 	}
-	else if (pipex->status == INFILE_VALID)
+	else if (pipex->status[0] == FILE_VALID)
 	{
 		dup2(pipex->infile_fd, STDIN_FILENO);
 		close(pipex->infile_fd);
 	}
 }
 
-void	writing_pipe(t_object *pipex, int i)
+void	writing_pipe(t_object *pipex, t_cmd *cmds, char *env[], int i)
 {
 	if (i == pipex->num_commands - 1)
 	{
-		if (pipex->outfile_fd != -1)
+		if (pipex->status[1] == FILE_VALID)
 		{
 			dup2(pipex->outfile_fd, STDOUT_FILENO);
 			close(pipex->outfile_fd);
+		}
+		else if (pipex->status[1] == FILE_ERROR)
+		{
+			free_cmd(cmds);
+			ft_free_triptr(&env);
+			exit(1);
 		}
 	}
 	else
@@ -109,7 +115,7 @@ void	writing_pipe(t_object *pipex, int i)
 void	child_process(t_object *pipex, int i, t_cmd *cmds, char *env[])
 {
 	reading_pipe(pipex, cmds, env, i);
-	writing_pipe(pipex, i);
+	writing_pipe(pipex, cmds, env, i);
 	run_cmd(pipex, i, cmds, env);
 }
 

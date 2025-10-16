@@ -29,23 +29,39 @@ int create_heredoc_fd_direct(t_cmd *cmds)
     return (pipefd[0]); // return read end
 }
 
-void	fd_init(int *infile_fd, int *outfile_fd, t_object* pipex, char *out, t_cmd *cmds)
+void	fd_init(int *infile_fd, int *outfile_fd, t_object* pipex, t_cmd *cmds)
 {
 	int i;
 	int	fd;
 
 	i = 0;
 	*infile_fd = -1;
-	pipex->status = INFILE_NONE;
-	if (out != NULL)
+	*outfile_fd = -1;
+	pipex->status[0] = FILE_NONE;
+	pipex->status[1] = FILE_NONE;
+	if (cmds->out_file != NULL)
 	{
-		*outfile_fd = open(out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (*outfile_fd == -1)
-			error_string(out);
+		while (i < cmds->out_file->args_count)
+		{
+			fd = open(cmds->out_file->args[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (fd == -1)
+			{
+				error_string(cmds->out_file->args[i]);
+				pipex->status[1] = FILE_ERROR;
+				return;
+			}
+			i++;
+			if (i != cmds->out_file->args_count)
+				close(fd);
+			else
+			{
+				*outfile_fd = fd;
+				pipex->status[1] = FILE_VALID;
+			}
+		}
 	}
-	else
-		*outfile_fd = -1;
-		
+
+	i = 0;	
 	if (cmds->here_doc && cmds->here_doc_cont)
 	 	*infile_fd = create_heredoc_fd_direct(cmds);
 	else if (cmds->in_file != NULL)
@@ -56,16 +72,16 @@ void	fd_init(int *infile_fd, int *outfile_fd, t_object* pipex, char *out, t_cmd 
 			if (fd == -1)
 			{
 				error_string(cmds->in_file->args[i]);
-				pipex->status = INFILE_ERROR;
+				pipex->status[0] = FILE_ERROR;
 				return;
 			}
 			i++;
 			if (i != cmds->in_file->args_count)
-				close(*infile_fd);
+				close(fd);
 			else
 			{
 				*infile_fd = fd;
-				pipex->status = INFILE_VALID;
+				pipex->status[0] = FILE_VALID;
 			}
 		}
 	}

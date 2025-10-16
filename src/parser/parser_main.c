@@ -39,7 +39,8 @@ static int	cmd_init(t_cmd *cmds, char *env[])
 	cmds->cmds_capacity = 2;
 	cmds->cmds_count = 0;
 	cmds->err_code = 0; // vietadd for err_code control
-	cmds->envp = env; // vietadd for built-in function
+	cmds->envp = env;
+	cmds->in_file = NULL;
 	cmds->out_file = NULL;
 	cmds->err_file = NULL;
 	cmds->here_doc = NULL;
@@ -47,8 +48,6 @@ static int	cmd_init(t_cmd *cmds, char *env[])
 	cmds->simple_cmds = malloc(sizeof(t_vector *) * cmds->cmds_capacity);
 	if (!cmds->simple_cmds)
 		return (-1);
-	cmds->in_file = NULL;
-
 	return (0);
 
 }

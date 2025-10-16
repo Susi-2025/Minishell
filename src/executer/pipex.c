@@ -116,7 +116,7 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 
 	if (!cmds)
 		return (1);
-	fd_init(&pipex.infile_fd, &pipex.outfile_fd, &pipex, cmds->out_file, cmds);
+	fd_init(&pipex.infile_fd, &pipex.outfile_fd, &pipex, cmds);
 	fire_up_pipeinator(&pipex, cmds);
 	if (pipex.num_commands == 0 && cmds->here_doc)
 		heredoc_read(cmds);
