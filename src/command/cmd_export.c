@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/16 12:00:14 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:12:02 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	exec_export(t_cmd *cmds, char **args, char ***temp_env)
 	}
 	return (0);
 }
-
 // so [0] NOT number only alpha or _. the whole string alphanumeric or _ 
 static	int	invalid_args(char *str)
 {
@@ -117,15 +116,11 @@ char	*ft_strtail(char *str, char c)
 	if (!out)
 		return (NULL);
 	j = 0;
-	while (j < (ft_strlen(str) - i))
+	while (str[i])
 	{
-		if (str[i + j] == '\"')
-			i++;
-		if ((i + j) > (ft_strlen(str) - i))
-			break ;
-		if (str[i + j])
-			out[j] = str[i + j];
-		j++;
+		if (str[i] != '\"')
+			out[j++] = str[i];
+		i++;
 	}
 	out[j] = '\0';
 	return (out);
