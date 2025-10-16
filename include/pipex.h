@@ -22,9 +22,9 @@
 # include "structs.h"
 
 typedef enum e_infile_status {
-    INFILE_NONE = 0,      // no infile
-    INFILE_ERROR = -1,    // open failed
-    INFILE_VALID = 1      // valid fd
+    FILE_NONE = 0,      // no infile
+    FILE_ERROR = -1,    // open failed
+    FILE_VALID = 1      // valid fd
 } t_status;
 
 typedef struct s_object
@@ -40,7 +40,7 @@ typedef struct s_object
 	// int		status;
 	int		num_commands;
 	int		last_status;
-	t_status status;
+	t_status status[2];
 }	t_object;
 
 // viet add for here_doc
@@ -69,7 +69,7 @@ char	**cmd_error(char *argv);
 int		path_exists(char *env[]);
 char	*correct_path(char *cmd, char *env[]);
 // char	**parse_cmd(char *argv, char *env[]);
-void	fd_init(int *infile_fd, int *outfile_fd, t_object *pipex, char *out, t_cmd *cmds);
+void	fd_init(int *infile_fd, int *outfile_fd, t_object *pipex, t_cmd *cmds);
 void	last_close(t_object *pipex);
 void	fire_up_pipeinator(t_object *pipex, t_cmd *cmds);
 void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[]);

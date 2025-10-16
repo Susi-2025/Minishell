@@ -10,7 +10,11 @@ void	cmd_print(t_cmd *cmds)
 	printf("Print cmds\n");
 	printf("Value of cmds_capacity: %d\n", cmds->cmds_capacity);
 	printf("Value of cmds_count: %d\n", cmds->cmds_count);
-	printf("Value of out_file: %s\n", cmds->out_file);
+	if (cmds->out_file != NULL)
+	{
+		for (int i = 0; i < cmds->out_file->args_count; i++)
+			printf("Value of in_file: %s\n", cmds->out_file->args[i]);
+	}
 	if (cmds->in_file != NULL)
 	{
 		for (int i = 0; i < cmds->in_file->args_count; i++)

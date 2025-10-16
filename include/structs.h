@@ -33,12 +33,13 @@ typedef struct s_cmd
 	int				cmds_count;
 	int				err_code; //vietadd for handle error code
 	t_vector		**simple_cmds;
-	char			*out_file;
+	t_vector		*out_file;
 	t_vector		*in_file;
 	char			*err_file;
 	char			*here_doc;
 	char			*here_doc_cont;
 	char			*file_append;
+	char			**envp;
 }	t_cmd;
 
 typedef enum s_token_type
