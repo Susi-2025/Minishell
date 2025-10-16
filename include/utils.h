@@ -6,7 +6,7 @@
 /*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:29:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 12:12:36 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:54:28 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ char	*find_env_value(char *variable, char *env[], int var_len);
 int		find_dollar_pos(char *str);
 
 /* Memory*/
-void *ft_realloc(void *ptr, size_t old_size, size_t new_size);
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 #endif

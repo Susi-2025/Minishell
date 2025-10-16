@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:07:22 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/15 15:01:08 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/16 16:35:46 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,27 @@
 
 # include "structs.h"
 
-typedef enum e_infile_status {
-    FILE_NONE = 0,      // no infile
-    FILE_ERROR = -1,    // open failed
-    FILE_VALID = 1      // valid fd
-} t_status;
+typedef enum e_infile_status
+{
+	FILE_NONE = 0,		// no infile
+	FILE_ERROR = -1,	// open failed
+	FILE_VALID = 1		// valid fd
+}	t_status;
 
 typedef struct s_object
 {
-	int		pipefd[2];
-	int		prev_pipe_in;
-	int		last_child_pid;
-	pid_t	pid;
-	int		infile_fd;
-	int		outfile_fd;
-	int		file_flags[2];
-	char	**cmd;
+	int			pipefd[2];
+	int			prev_pipe_in;
+	int			last_child_pid;
+	pid_t		pid;
+	int			infile_fd;
+	int			outfile_fd;
+	int			file_flags[2];
+	char		**cmd;
 	// int		status;
-	int		num_commands;
-	int		last_status;
-	t_status status[2];
+	int			num_commands;
+	int			last_status;
+	t_status	status[2];
 }	t_object;
 
 // viet add for here_doc

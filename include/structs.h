@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:21:19 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/14 18:03:51 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/16 16:38:03 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ typedef struct s_simple_cmd
 {
 	int		args_capacity;
 	int		args_count;
-	char	**args; 
+	char	**args;
 }	t_simple_cmd;
 
 typedef struct s_vector
 {
-	int 	args_capacity;
+	int		args_capacity;
 	int		args_count;
 	char	**args;
 }	t_vector;
@@ -60,6 +60,6 @@ typedef enum s_token_type
 typedef struct s_token
 {
 	t_token_type	type;
-	char			*value; 
+	char			*value;
 }	t_token;
 #endif
