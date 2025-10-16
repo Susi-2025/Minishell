@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/21 10:23:48 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:15:47 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,22 @@ int	exec_cd(t_cmd *cmds, char **args)
 	if (!cmds)
 		return (error_msg(1, "cmds"));
 	if (args[1] == NULL)
+	{
 		next_wd = find_var(cmds->envp, "HOME");
+		return (error_string_cd("HOME", 1));
+	}
 	else if (ft_strcmp(args[1], "-") == 0)
 	{
 		next_wd = find_var(cmds->envp, "OLDPWD");
+		return (error_string_cd("OLDPWD", 1));
 	}
 	else if (args[1] && ft_strcmp(args[1], "-") != 0)
 		next_wd = args[1];
 	if (!next_wd)
 		return (1);
+		// return (error_string_cd(NULL, 1));
 	if (change_dir(cmds, next_wd) == 1)
-	{
-		free(next_wd);
 		return (1);
-	}
 	return (0);
 }
 
