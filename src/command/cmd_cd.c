@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/16 12:15:47 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/16 16:52:48 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	exec_cd(t_cmd *cmds, char **args)
 		next_wd = args[1];
 	if (!next_wd)
 		return (1);
-		// return (error_string_cd(NULL, 1));
 	if (change_dir(cmds, next_wd) == 1)
 		return (1);
 	return (0);
