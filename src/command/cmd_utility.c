@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/21 10:26:04 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/15 12:50:10 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@ char	*find_var(char **envp, char *str)
 	if (!envp || !str)
 		return (NULL);
 	i = 0;
+	printf("String for compare: %s\n", str);
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], str, ft_strlen(str)) == 0)
 		{
+			printf("Going to condition: %s\n",str);
 			sub = ft_strchr_char(envp[i], '=');
+			printf("%s\n",sub);
 			if (sub)
 				return (sub + 1);
 			break ;
@@ -34,6 +37,22 @@ char	*find_var(char **envp, char *str)
 		i++;
 	}
 	return (NULL);
+}
+
+int	check_var_env(char **envp, char *str)
+{
+	int		i;
+
+	if (!envp || !str)
+		return (0);
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], str, ft_strlen(str)) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 void	sort_2d_array(char **strs)
