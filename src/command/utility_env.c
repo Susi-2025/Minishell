@@ -6,16 +6,14 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/16 17:09:26 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/17 13:12:34 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static	void	ft_copy_str(char *origin, char *key, char *value);
 static	int	detect_var(char *origin, char *expan);
 static	int	envp_err_free(char **temp_env, int pos);
-// static	char	*create_new_str(char *key, char *value);
 
 int	update_env(t_cmd *cmds, char *key, char *value)
 {
@@ -110,7 +108,7 @@ int	insert_env(t_cmd *cmds, char *str, char ***temp_env)
 	ft_free_triptr(temp_env);
 	*temp_env = new_env;
 	cmds->envp = *temp_env;
-	printf("Already insert\n");
+	// printf("Already insert\n");
 	return (0);
 }
 

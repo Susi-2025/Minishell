@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/16 16:59:03 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/17 13:12:53 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env)
 		&& check_var_env(*temp_env, args_heads) == 1)
 	{
 		value = ft_strtail(arg_str, '=');
-		printf("Value is: %s\n", value);
+		// printf("Value is: %s\n", value);
 		if (update_env(cmds, args_heads, value) == 1)
 			return (1);
 		if (value)
