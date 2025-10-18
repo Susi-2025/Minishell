@@ -36,11 +36,6 @@ void	pipe_and_fork_logic(t_object *pipex, int i, t_cmd *cmds, char *env[])
 	else
 		parent_process(pipex, i);
 }
-	// if (pipex.last_child_pid != -1)
-	// 	waitpid(pipex.last_child_pid, &pipex.last_status, 0);
-	// while (pipex->num_commands > 1 && (&pipex.status) > 0)
-	// 	;
-	// exit(WEXITSTATUS(pipex.last_status));
 
 int	wait_for_children(t_object *pipex)
 { 
@@ -69,42 +64,33 @@ int	wait_for_children(t_object *pipex)
 	}
 	return (exit_code);
 }
-// TASKS
-// Analyze the code: get a good understanding of it
-// Remove redundant things: remove some stuff from s_object struct
-// understand error number output.. since you are in the same shell all the time.. 
-// you don t want to use exit? maybe?
-// add syntax checker in parsing
-// add builtins
-// add here_doc and append
-static	int		heredoc_read(t_cmd *cmds)
-{
-	char	*input;
-	char	*output;
+
+// static	int		heredoc_read(t_cmd *cmds)
+// {
+// 	char	*input;
+// 	char	*output;
 	
-	output = ft_strdup("");
-	while (1)
-	{
-		input = readline("> ");
-		if (!input)
-			break ;
-		if ((ft_strcmp(input, cmds->here_doc) == 0)
-			&& (ft_strlen(input) == ft_strlen(cmds->here_doc)))
-		{
-			// printf("Detect EOF\n");
-			free(input);
-			break ;
-		}
-		if (join_and_free(&output, input) == 1)
-			return (1);
-	}
-	// printf("Out of loop\n");
-	if (cmds->here_doc_cont)
-		free(cmds->here_doc_cont);
-	cmds->here_doc_cont = output;
-	// printf("Value of here_doc_cont %s\n", cmds->here_doc_cont);
-	return (0);
-}
+// 	output = ft_strdup("");
+// 	while (1)
+// 	{
+// 		input = readline("> ");
+// 		if (!input)
+// 			break ;
+// 		if ((ft_strcmp(input, cmds->here_doc) == 0)
+// 			&& (ft_strlen(input) == ft_strlen(cmds->here_doc)))
+// 		{
+// 			free(input);
+// 			break ;
+// 		}
+// 		if (join_and_free(&output, input) == 1)
+// 			return (1);
+// 	}
+// 	// printf("Out of loop\n");
+// 	if (cmds->here_doc_cont)
+// 		free(cmds->here_doc_cont);
+// 	cmds->here_doc_cont = output;
+// 	return (0);
+// }
 
 int	ft_pipex(t_cmd *cmds, char **env[])
 {
@@ -116,22 +102,18 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 
 	if (!cmds)
 		return (1);
-	fd_init(&pipex.infile_fd, &pipex.outfile_fd, &pipex, cmds);
+
 	fire_up_pipeinator(&pipex, cmds);
-	if (pipex.num_commands == 0 && cmds->here_doc)
-		heredoc_read(cmds);
+
 	i = 0;
-	// add for case: << heredoc
 	while (i < pipex.num_commands)
 	{
 		args = cmds->simple_cmds[i]->args;
 		args_count = cmds->simple_cmds[i]->args_count;
-		// if there is only 01 built-in command, it must run without pipe.
 		if (cmds->cmds_count == 1 && check_built_in(args[0]) == 1)
 			exec_parent(cmds, args, env, args_count);
 		else
 			pipe_and_fork_logic(&pipex, i, cmds, *env);
-			// still show memory leakage if we input the wrong commands
 		i++;
 	}
 	last_close(&pipex);

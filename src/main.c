@@ -12,7 +12,45 @@
 
 #include "minishell.h"
 
+# define ERROR -1
+# define SUCCESS 0
 volatile sig_atomic_t	g_interactive = 1;
+
+int syntax_checker(t_token *tokens, int token_count)
+{
+	int	i;
+
+	if (token_count == 0)
+		return (ERROR);
+	if (tokens[0].type == PIPE)
+	{
+		error_syntax(tokens[0].value);
+		return (ERROR);
+	}
+	i = 0;
+	while (i < token_count && tokens[i].type != TOKEN_EOF)
+	{
+
+		if (tokens[i].type == PIPE)
+		{
+			if (tokens[i + 1].type == REDIR_OUT || tokens[i + 1].type == REDIR_IN)
+			{
+				i++;
+				continue ;
+			}
+			if (tokens[i + 1].type == TOKEN_EOF || tokens[i + 1].type != WORD)
+			{
+				if (tokens[i + 1].type == TOKEN_EOF)
+					error_syntax("newline");
+				else
+					error_syntax(tokens[i + 1].value);
+				return (ERROR);
+			}
+		}
+		i++;
+	}
+	return SUCCESS;
+}
 
 t_cmd	*ft_prepare_command(char *line, char *env[])
 {
@@ -23,7 +61,12 @@ t_cmd	*ft_prepare_command(char *line, char *env[])
 	tokens = tokenize(line, &token_count);
 	if (!tokens)
 		return (NULL);
-	// printf("value of token count: %i\n", token_count);
+	if (syntax_checker(tokens, token_count) == ERROR)
+	{
+		free_tokens(tokens, token_count);
+		return (NULL);
+	}
+	printf("value of token count: %i\n", token_count);
 	cmds = parse_tokens(tokens, token_count, env);
 	free_tokens(tokens, token_count);
 	return (cmds);
@@ -135,7 +178,7 @@ int	main(int argc, char *argv[], char *init_env[])
 		// I think we need a err_code value for storing -> I put in structs.h
 		if (cmds)
 		{
-			// cmd_print(cmds);
+			cmd_print(cmds);
 			cmds->err_code = code;
 			code = ft_pipex(cmds, &temp_env); //for updating temp_env inside the function
 			// printf("Return code from previous command is: %d\n", code);

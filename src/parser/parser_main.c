@@ -12,25 +12,24 @@
 
 #include "minishell.h"
 
-static int	handle_word_tokens(t_token *token, t_vector **current_cmd,
-	t_cmd *cmds, char *env[])
+static int	handle_word_tokens(t_token *token, t_simple_cmd **current_cmd, char *env[])
 {
 	char	*dquote;
 	int		act;
 
 	if (token->type == WORD)
-		return (parse_word(token->value, current_cmd, cmds));
+		return (parse_word(token->value, current_cmd));
 	if (token->type == VAR_WORD)
-		return (handle_var_expansion(token->value, current_cmd, cmds, env));
+		return (handle_var_expansion(token->value, current_cmd, env));
 	if (token->type == DQUOTE_WORD)
 	{
 		dquote = parse_dquote(token->value, env);
-		act = parse_word(dquote, current_cmd, cmds);
+		act = parse_word(dquote, current_cmd);
 		free(dquote);
 		return (act);
 	}
 	if (token->type == SQUOTE_WORD)
-		return (parse_word(token->value, current_cmd, cmds));
+		return (parse_word(token->value, current_cmd));
 	return (0);
 }
 
@@ -40,22 +39,19 @@ static int	cmd_init(t_cmd *cmds, char *env[])
 	cmds->cmds_count = 0;
 	cmds->err_code = 0; // vietadd for err_code control
 	cmds->envp = env;
-	cmds->in_file = NULL;
-	cmds->out_file = NULL;
 	cmds->err_file = NULL;
 	cmds->here_doc = NULL;
 	cmds->file_append = NULL;
-	cmds->simple_cmds = malloc(sizeof(t_vector *) * cmds->cmds_capacity);
+	cmds->simple_cmds = malloc(sizeof(t_simple_cmd *) * cmds->cmds_capacity);
 	if (!cmds->simple_cmds)
 		return (-1);
 	return (0);
 
 }
 
-static int	process_word_and_redir(t_token *token, t_vector **current_cmd,
-	t_cmd *cmds, char *env[])
+static int	process_word_and_pipe(t_token *token, t_simple_cmd **current_cmd, char *env[])
 {
-	if (handle_word_tokens(token, current_cmd, cmds, env) == -1)
+	if (handle_word_tokens(token, current_cmd, env) == -1)
 		return (-1);
 	if (token->type == PIPE)
 		*current_cmd = NULL;
@@ -70,11 +66,41 @@ static int	handle_redirection(t_token *tokens, int token_count,
 	return (0);
 }
 
+int	create_current_cmd(t_simple_cmd **current_cmd, t_cmd *cmds)
+{
+	void	*tmp;
+
+	if (cmds->cmds_count >= cmds->cmds_capacity)
+	{
+		tmp = ft_realloc(cmds->simple_cmds, sizeof(t_simple_cmd*) * cmds->cmds_capacity,
+				sizeof(t_simple_cmd*) * cmds->cmds_capacity * 2);
+		if (!tmp)
+			return (-1);
+		cmds->simple_cmds = tmp;
+		cmds->cmds_capacity *= 2;
+	}
+	*current_cmd = malloc(sizeof(t_simple_cmd));
+	if (!*current_cmd)
+		return (-1);
+	(*current_cmd)->args_capacity = 4;
+	(*current_cmd)->args_count = 0;
+	(*current_cmd)->args = malloc(sizeof(char *)
+			* (*current_cmd)->args_capacity);
+	if (!(*current_cmd)->args)
+		return (free(*current_cmd), -1);
+	(*current_cmd)->args[0] = NULL;
+	(*current_cmd)->in_file = NULL;
+	(*current_cmd)->out_file = NULL;
+	cmds->simple_cmds[cmds->cmds_count] = *current_cmd;
+	cmds->cmds_count++;
+	return (0);
+}
+
 t_cmd	*parse_tokens(t_token *tokens, int token_count, char *env[])
 {
-	int			i;
-	t_cmd		*cmds;
-	t_vector	*current_cmd;
+	int				i;
+	t_cmd			*cmds;
+	t_simple_cmd	*current_cmd;
 
 	cmds = malloc(sizeof(t_cmd));
 	if (!cmds)
@@ -85,7 +111,12 @@ t_cmd	*parse_tokens(t_token *tokens, int token_count, char *env[])
 	i = 0;
 	while (i < token_count && tokens[i].type != TOKEN_EOF)
 	{
-		if (process_word_and_redir(&tokens[i], &current_cmd, cmds, env) == -1)
+		if (!current_cmd)
+		{
+			if (create_current_cmd(&current_cmd, cmds) == -1)
+				return (free_cmd(cmds), NULL);
+		}
+		if (process_word_and_pipe(&tokens[i], &current_cmd, env) == -1)
 			return (free_cmd(cmds), NULL);
 		if (handle_redirection(tokens, token_count, &i, cmds) == -1)
 			return (free_cmd(cmds), NULL);

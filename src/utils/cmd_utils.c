@@ -1,24 +1,32 @@
 
 #include "minishell.h"
 
-static	void	simple_cmd_print(t_vector *simple_cmd);
+static	void	simple_cmd_print(t_simple_cmd *simple_cmd);
 
 void	cmd_print(t_cmd *cmds)
 {
 	int	i;
 
+
 	printf("Print cmds\n");
 	printf("Value of cmds_capacity: %d\n", cmds->cmds_capacity);
 	printf("Value of cmds_count: %d\n", cmds->cmds_count);
-	if (cmds->out_file != NULL)
+	i = 0;
+	t_simple_cmd *cmd;
+	while (i < cmds->cmds_count && cmds->simple_cmds && cmds->simple_cmds[i])
 	{
-		for (int i = 0; i < cmds->out_file->args_count; i++)
-			printf("Value of in_file: %s\n", cmds->out_file->args[i]);
-	}
-	if (cmds->in_file != NULL)
-	{
-		for (int i = 0; i < cmds->in_file->args_count; i++)
-			printf("Value of in_file: %s\n", cmds->in_file->args[i]);
+		cmd = cmds->simple_cmds[i];
+		if (cmd->out_file != NULL)
+		{
+			for (int i = 0; i < cmd->out_file->args_count; i++)
+				printf("Value of out_file: %s\n", cmd->out_file->args[i]);
+		}
+		if (cmd->in_file != NULL)
+		{
+			for (int i = 0; i < cmd->in_file->args_count; i++)
+				printf("Value of in_file: %s\n", cmd->in_file->args[i]);
+		}
+		i++;
 	}
 	printf("Value of err_file: %s\n", cmds->err_file);
 	printf("Value of here_doc: %s\n", cmds->here_doc);
@@ -37,7 +45,7 @@ void	cmd_print(t_cmd *cmds)
 	// 	printf("ENV is NULL\n");
 }
 
-static	void	simple_cmd_print(t_vector *simple_cmd)
+static	void	simple_cmd_print(t_simple_cmd *simple_cmd)
 {
 	int	i;
 

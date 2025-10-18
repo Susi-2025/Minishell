@@ -13,13 +13,6 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_simple_cmd
-{
-	int		args_capacity;
-	int		args_count;
-	char	**args; 
-}	t_simple_cmd;
-
 typedef struct s_vector
 {
 	int 	args_capacity;
@@ -27,14 +20,25 @@ typedef struct s_vector
 	char	**args;
 }	t_vector;
 
+typedef struct s_simple_cmd
+{
+	int			args_capacity;
+	int			args_count;
+	char		**args;
+	t_vector	*out_file;
+	t_vector	*in_file;
+	char			*here_doc;
+	char			*here_doc_cont;
+}	t_simple_cmd;
+
+
 typedef struct s_cmd
 {
 	int				cmds_capacity;
 	int				cmds_count;
 	int				err_code; //vietadd for handle error code
-	t_vector		**simple_cmds;
-	t_vector		*out_file;
-	t_vector		*in_file;
+	t_simple_cmd	**simple_cmds; // cmd1(in, out) cmd2(in, out) cmd3(in,out)
+
 	char			*err_file;
 	char			*here_doc;
 	char			*here_doc_cont;

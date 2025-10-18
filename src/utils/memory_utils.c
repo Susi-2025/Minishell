@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+	
 void	free_cmd(t_cmd *cmds) //we face double free in here
 {
 	int	i;
@@ -30,14 +30,14 @@ void	free_cmd(t_cmd *cmds) //we face double free in here
 				free(cmds->simple_cmds[i]->args[j]);
 				j++;
 			}
+			vector_destroy(cmds->simple_cmds[i]->in_file);
+			vector_destroy(cmds->simple_cmds[i]->out_file);
 			free(cmds->simple_cmds[i]->args);
 			free(cmds->simple_cmds[i]);
 		}
 		i++;
 	}
 	free(cmds->simple_cmds);
-	vector_destroy(cmds->in_file);
-	vector_destroy(cmds->out_file);
 	free(cmds->err_file);
 	free(cmds->here_doc);
 	free(cmds->file_append);

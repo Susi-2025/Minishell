@@ -88,19 +88,18 @@ static char	**expand_var(char *line_value, char *env[])
 	return (process_expansion(line_value, env, dollar_pos));
 }
 
-int	handle_var_expansion(char *value, t_vector **current_cmd,
-		t_cmd *cmds, char *env[])
+int	handle_var_expansion(char *value, t_simple_cmd **current_cmd, char *env[])
 {
 	char	**var_expansion;
 	int		i;
 
 	var_expansion = expand_var(value, env);
 	if (var_expansion == NULL)
-		return (parse_word("", current_cmd, cmds));
+		return (parse_word("", current_cmd));
 	i = 0;
 	while (var_expansion[i] != NULL)
 	{
-		if (parse_word(var_expansion[i], current_cmd, cmds) == -1)
+		if (parse_word(var_expansion[i], current_cmd) == -1)
 			return (free_split(var_expansion), -1);
 		i++;
 	}

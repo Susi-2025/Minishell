@@ -37,6 +37,13 @@ void	error_string(char *argv)
 	ft_putstr_fd(error, 2);
 }
 
+void error_syntax(char *argv)
+{
+	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+    ft_putstr_fd(argv, 2);
+    ft_putstr_fd("'\n", 2);
+}
+
 void	error_string_export(char *argv)
 {
 	char	error[1000];

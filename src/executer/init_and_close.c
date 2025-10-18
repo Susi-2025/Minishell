@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int create_heredoc_fd_direct(t_cmd *cmds)
+int create_heredoc_fd_direct(t_simple_cmd *cmds)
 {
     int pipefd[2];
     
@@ -29,63 +29,62 @@ int create_heredoc_fd_direct(t_cmd *cmds)
     return (pipefd[0]); // return read end
 }
 
-void	fd_init(int *infile_fd, int *outfile_fd, t_object* pipex, t_cmd *cmds)
-{
-	int i;
-	int	fd;
+// void	fd_init(int *infile_fd, int *outfile_fd, t_object* pipex, t_simple_cmd *cmds)
+// {
+// 	int i;
+// 	int	fd;
 
-	i = 0;
-	*infile_fd = -1;
-	*outfile_fd = -1;
-	pipex->status[0] = FILE_NONE;
-	pipex->status[1] = FILE_NONE;
-	if (cmds->out_file != NULL)
-	{
-		while (i < cmds->out_file->args_count)
-		{
-			fd = open(cmds->out_file->args[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (fd == -1)
-			{
-				error_string(cmds->out_file->args[i]);
-				pipex->status[1] = FILE_ERROR;
-				return;
-			}
-			i++;
-			if (i != cmds->out_file->args_count)
-				close(fd);
-			else
-			{
-				*outfile_fd = fd;
-				pipex->status[1] = FILE_VALID;
-			}
-		}
-	}
-
-	i = 0;	
-	if (cmds->here_doc && cmds->here_doc_cont)
-	 	*infile_fd = create_heredoc_fd_direct(cmds);
-	else if (cmds->in_file != NULL)
-	{
-		while (i < cmds->in_file->args_count)
-		{
-			fd = open(cmds->in_file->args[i], O_RDONLY);
-			if (fd == -1)
-			{
-				error_string(cmds->in_file->args[i]);
-				pipex->status[0] = FILE_ERROR;
-				return;
-			}
-			i++;
-			if (i != cmds->in_file->args_count)
-				close(fd);
-			else
-			{
-				*infile_fd = fd;
-				pipex->status[0] = FILE_VALID;
-			}
-		}
-	}
-}
+// 	i = 0;
+// 	*infile_fd = -1;
+// 	*outfile_fd = -1;
+// 	pipex->status[0] = FILE_NONE;
+// 	pipex->status[1] = FILE_NONE;
+// 	if (cmds->out_file != NULL)
+// 	{
+// 		while (i < cmds->out_file->args_count)
+// 		{
+// 			fd = open(cmds->out_file->args[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 			if (fd == -1)
+// 			{
+// 				error_string(cmds->out_file->args[i]);
+// 				pipex->status[1] = FILE_ERROR;
+// 				return;
+// 			}
+// 			i++;
+// 			if (i != cmds->out_file->args_count)
+// 				close(fd);
+// 			else
+// 			{
+// 				*outfile_fd = fd;
+// 				pipex->status[1] = FILE_VALID;
+// 			}
+// 		}
+// 	}
+// 	i = 0;	
+// 	if (cmds->here_doc && cmds->here_doc_cont)
+// 	 	*infile_fd = create_heredoc_fd_direct(cmds);
+// 	else if (cmds->in_file != NULL)
+// 	{
+// 		while (i < cmds->in_file->args_count)
+// 		{
+// 			fd = open(cmds->in_file->args[i], O_RDONLY);
+// 			if (fd == -1)
+// 			{
+// 				error_string(cmds->in_file->args[i]);
+// 				pipex->status[0] = FILE_ERROR;
+// 				return;
+// 			}
+// 			i++;
+// 			if (i != cmds->in_file->args_count)
+// 				close(fd);
+// 			else
+// 			{
+// 				*infile_fd = fd;
+// 				pipex->status[0] = FILE_VALID;
+// 			}
+// 		}
+// 	}
+// }
 
 void	last_close(t_object *pipex)
 {
@@ -105,8 +104,11 @@ void	fire_up_pipeinator(t_object *pipex, t_cmd *cmds)
 {
 	pipex->last_child_pid = -1;
 	pipex->num_commands = cmds->cmds_count;
+	pipex->infile_fd = -1;
+	pipex->outfile_fd = -1;
 	pipex->prev_pipe_in = pipex->infile_fd;
 	pipex->last_status = 0;
+	pipex->status = FILE_NONE;
 }
 
 //MOVE FROM HERE
