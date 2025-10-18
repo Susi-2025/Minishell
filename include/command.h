@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/16 12:10:48 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/16 17:04:51 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int		exec_built_in(t_cmd *shell, char **args,
 int		exec_export(t_cmd *cmds, char **args, char ***temp_env);
 int		exec_export_only(t_cmd *shell);
 int		export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env);
-// int		export_replace(t_cmd *cmds, char **args, char ***temp_env, char *str);
 int		exec_echo(t_cmd *shell, char **args, int args_count);
 int		exec_cd(t_cmd *shell, char **args);
 int		exec_env(t_cmd *cmds);
@@ -36,11 +35,16 @@ int		reduce_env(t_cmd *cmds, char *str, char ***env);
 int		insert_env(t_cmd *cmds, char *str, char ***temp_env);
 void	envp_print(char **envp);
 void	cmd_print(t_cmd *cmds);
+
 char	*find_var(char **envp, char *str);
 int		check_var_env(char **envp, char *str);
 void	sort_2d_array(char **strs);
+// string utilities
+int		invalid_args(char *str);
 char	*ft_strhead(char *str, char c);
 char	*ft_strtail(char *str, char c);
+void	ft_copy_str(char *origin, char *key, char *value);
+char	*create_new_str(char *key, char *value);
 
 // handle_error
 int		error_malloc(t_cmd *shell, int code);

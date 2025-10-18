@@ -6,19 +6,18 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/16 12:00:14 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/17 13:12:53 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int		invalid_args(char *str);
 static	void	printf_for_export(char *str);
 
 int	exec_export(t_cmd *cmds, char **args, char ***temp_env)
 {
 	int		i;
-	
+
 	if (args[1] == NULL)
 		return (exec_export_only(cmds));
 	i = 1;
@@ -36,28 +35,11 @@ int	exec_export(t_cmd *cmds, char **args, char ***temp_env)
 	return (0);
 }
 
-// so [0] NOT number only alpha or _. the whole string alphanumeric or _ 
-static	int	invalid_args(char *str)
-{
-	int	i;
-	
-	if (!(ft_isalpha(str[0]) || str[0] == '_'))
-		return (1);
-	i = 1;
-	while (str[i])
-	{
-		if (!(ft_isalnum(str[i]) || str[i] == '=' || str[i] == '"'))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env)
+int	export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env)
 {
 	char	*args_heads;
 	char	*value;
-	
+
 	if (ft_strchr(arg_str, '='))
 		args_heads = ft_strhead(arg_str, '=');
 	else
@@ -67,10 +49,11 @@ int export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env)
 		if (insert_env(cmds, arg_str, temp_env) == 1)
 			return (1);
 	}
-	else if (ft_strchr(arg_str, '=') == 1 && check_var_env(*temp_env, args_heads) == 1)
+	else if (ft_strchr(arg_str, '=') == 1
+		&& check_var_env(*temp_env, args_heads) == 1)
 	{
 		value = ft_strtail(arg_str, '=');
-		printf("Value is: %s\n", value);
+		// printf("Value is: %s\n", value);
 		if (update_env(cmds, args_heads, value) == 1)
 			return (1);
 		if (value)
@@ -79,56 +62,6 @@ int export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env)
 	if (ft_strchr(arg_str, '='))
 		free(args_heads);
 	return (0);
-}
-
-char	*ft_strhead(char *str, char c)
-{
-	int	i;
-	int j;
-	char *out;
-
-	i = 0;
-	while (str[i] && str[i] != c)
-		i++;
-	out = malloc(i + 1);
-	if (!out)
-		return (NULL);
-	j = 0;
-	while (j < i)
-	{
-		out[j] = str[j];
-		j++;
-	}
-	out[j] = '\0';
-	return (out);
-}
-
-char	*ft_strtail(char *str, char c)
-{
-	int	i;
-	int j;
-	char *out;
-
-	i = 0;
-	while (str[i] && str[i] != c)
-		i++;
-	i++;
-	out = malloc(ft_strlen(str) - i + 1);
-	if (!out)
-		return (NULL);
-	j = 0;
-	while (j < (ft_strlen(str) - i))
-	{
-		if (str[i + j] == '\"')
-			i++;
-		if ((i + j) > (ft_strlen(str) - i))
-			break ;
-		if (str[i + j])
-			out[j] = str[i + j];
-		j++;
-	}
-	out[j] = '\0';
-	return (out);
 }
 
 int	exec_export_only(t_cmd *cmds)

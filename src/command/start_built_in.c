@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_built_in.c                                   :+:      :+:    :+:   */
+/*   start_built_in.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/22 13:47:40 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/16 16:52:28 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ int	check_built_in(char *cmd)
 
 void	exec_parent(t_cmd *cmds, char **args, char **env[], int args_count)
 {
-	int exit_code;
-	
-	printf("Execute builtin which is in parent process\n");
+	int	exit_code;
+
 	if (ft_strcmp(args[0], "exit") == 0)
 	{
 		exit_code = exec_built_in(cmds, args, env, args_count);

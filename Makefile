@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/16 12:30:39 by vinguyen          #+#    #+#              #
-#    Updated: 2025/09/22 17:40:16 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/10/16 17:06:07 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ TOKEN_DIR = $(SRC_DIR)/tokenizer
 UTIL_DIR = $(SRC_DIR)/utils
 
 MAIN_FILES = main.c
-CMD_FILES = built_in_cmd.c cmd_cd.c cmd_echo.c cmd_export.c cmd_utility.c \
-			envp_utility.c init_envp.c start_built_in.c
+CMD_FILES = built_in_cmd.c cmd_cd.c cmd_echo.c cmd_export.c utility_cmd.c \
+			utility_env.c init_envp.c start_built_in.c utility_array.c utility_str.c
 EXE_FILES = error_handling.c init_and_close.c path_expansion.c pipex.c process_exec.c
 HERE_FILES = heredoc_exec.c heredoc_pipe.c heredoc_utility.c
 PARS_FILES = command_builder.c parser_main.c quote_parser.c redir_parser.c var_expansion.c 
