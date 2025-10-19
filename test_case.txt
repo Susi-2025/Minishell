@@ -1,0 +1,13 @@
+test for echo
+1. echo $"HOME"$USER  -> result must be: $HOMEvinguyen, now empty due to args[1] is empty
+2. echo $"HOM"E$USER  -> result must be: $HOMEvinguyen, now empty due to args[1] is empty
+3. echo $"HOME"       -> result must be: $HOME,         now empty due to args[1] is empty
+4. echo cd ~          -> must be cd /home/vinguyen,     now is cd ~
+
+test for cd:
+1. cd echo echo -> too many arguments -> ok
+2. cd $HOME if $HOME is not exist-> no such file or directory-> ok
+3. cd ~ = cd (NULL) -> move to HOME -> ok
+4. cd .. -> move to parent -> ok
+5. cd .. if parent folder is removed -> change the pwd with ..-> ok
+6. cd . -> keep the current -> ok

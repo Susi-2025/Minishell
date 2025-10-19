@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/18 18:48:13 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/19 17:53:06 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ int	exec_cd(t_cmd *cmds, char **args)
 	next_wd = NULL;
 	if (!cmds)
 		return (error_msg(1, "cmds"));
-	if (args[1] == NULL)
+	if (args[2])
+		return (error_string_cd_1("too many arguments", 1));
+	if ((args[1] == NULL) || ft_strcmp(args[1],"~") == 0)
 	{
 		next_wd = find_var(cmds->envp, "HOME");
 		if (!next_wd)
@@ -75,7 +77,8 @@ static	int	change_dir(t_cmd *cmds, char *next_wd)
 		return (1);
 	if (chdir(next_wd) != 0)
 	{
-		perror("cd");
+		//perror("cd");// need to modify again to show the correct message
+		error_string_cd_2(next_wd, 1);
 		return (free_2_mem(old_wd, NULL, 1));
 	}
 	temp_wd = getcwd(NULL, 0);
@@ -99,4 +102,28 @@ static	int	free_2_mem(char *old_wd, char *next_wd, int exit_code)
 	if (next_wd)
 		free(next_wd);
 	return (exit_code);
+}
+
+int	error_string_cd_1(char *argv, int code)
+{
+	char	error[1000];
+
+	ft_strcpy(error, "bash: ");
+	ft_strcat(error, "cd: ");
+	ft_strcat(error, argv);
+	ft_strcat(error, "\n");
+	ft_putstr_fd(error, 2);
+	return  (code);
+}
+
+int	error_string_cd_2(char *argv, int code)
+{
+	char	error[1000];
+
+	ft_strcpy(error, "bash: ");
+	ft_strcat(error, "cd: ");
+	ft_strcat(error, argv);
+	ft_strcat(error, " : No such file or directory\n");
+	ft_putstr_fd(error, 2);
+	return  (code);
 }

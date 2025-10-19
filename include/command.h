@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/16 17:04:51 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/19 17:53:25 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,6 @@ char	*create_new_str(char *key, char *value);
 int		error_malloc(t_cmd *shell, int code);
 int		error_msg(int code, char *str);
 int		error_string_cd(char *argv, int code);
+int		error_string_cd_1(char *argv, int code);
+int		error_string_cd_2(char *argv, int code);
 #endif
