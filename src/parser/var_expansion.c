@@ -76,7 +76,7 @@ static char	**process_expansion(char *line, char *env[], int dollar_pos)
 	return (result);
 }
 
-static char	**expand_var(char *line_value, char *env[])
+char	**expand_var(char *line_value, char *env[])
 {
 	int		dollar_pos;
 
@@ -88,21 +88,51 @@ static char	**expand_var(char *line_value, char *env[])
 	return (process_expansion(line_value, env, dollar_pos));
 }
 
-int	handle_var_expansion(char *value, t_simple_cmd **current_cmd, char *env[])
+
+char	*handle_var_exp(char *prefix, char *env_value, t_simple_cmd **current_cmd)
 {
-	char	**var_expansion;
+	char	**result;
+	char	*last;
 	int		i;
 
-	var_expansion = expand_var(value, env);
-	if (var_expansion == NULL)
-		return (parse_word("", current_cmd));
+	result = ft_split(env_value, ' ');
+	free(env_value);
+	if (!result)
+		return (NULL);
+	result[0] = ft_strjoin_and_free(prefix, result[0]);
 	i = 0;
-	while (var_expansion[i] != NULL)
+	while (result[i + 1] != NULL)
 	{
-		if (parse_word(var_expansion[i], current_cmd) == -1)
-			return (free_split(var_expansion), -1);
+		if (parse_word(result[i], current_cmd) == -1)
+			return (free_split(result), NULL);
 		i++;
 	}
-	free_split(var_expansion);
-	return (0);
+	last = ft_strdup(result[i]);
+	free_split(result);
+	if (!last)
+		return (NULL);
+	return (last);
 }
+
+// int	handle_var_expansion(char *value, t_simple_cmd **current_cmd, char *env[])
+// {
+// 	char	**var_expansion;
+// 	char	*last;
+// 	int		i;
+
+// 	var_expansion = expand_var(value, env);
+// 	if (var_expansion == NULL)
+// 		return (parse_word("", current_cmd));
+// 	i = 0;
+// 	while (var_expansion[i + 1] != NULL)
+// 	{
+// 		if (parse_word(var_expansion[i], current_cmd) == -1)
+// 			return (free_split(var_expansion), NULL);
+// 		i++;
+// 	}
+// 	last = ft_strdup(var_expansion[i]);
+// 	free_split(var_expansion);
+// 	if (!last)
+// 		return (NULL);
+// 	return (last);
+// }

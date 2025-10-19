@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 	
-void	free_cmd(t_cmd *cmds) //we face double free in here
+void	free_cmd(t_cmd *cmds)
 {
 	int	i;
 	int	j;
@@ -37,9 +37,10 @@ void	free_cmd(t_cmd *cmds) //we face double free in here
 		}
 		i++;
 	}
+	if (cmds->heredoc_files)
+        vector_destroy_heredocs(cmds->heredoc_files);
 	free(cmds->simple_cmds);
 	free(cmds->err_file);
-	free(cmds->here_doc);
 	free(cmds->file_append);
 	free(cmds);
 	cmds = NULL;

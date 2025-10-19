@@ -28,9 +28,6 @@ void	cmd_print(t_cmd *cmds)
 		}
 		i++;
 	}
-	printf("Value of err_file: %s\n", cmds->err_file);
-	printf("Value of here_doc: %s\n", cmds->here_doc);
-	printf("Value of file_append: %s\n", cmds->file_append);
 	i = 0;
 	while (i < cmds->cmds_count && cmds->simple_cmds && cmds->simple_cmds[i])
 	{

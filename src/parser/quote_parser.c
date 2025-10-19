@@ -68,7 +68,7 @@ static int	append_variable(char **result, char *line, int *i, char *env[])
 	return (0);
 }
 
-char	*parse_dquote(char *line, char *env[])
+char	*parse_dquote(char *line, int *j, char *env[])
 {
 	char	*result;
 	int		i;
@@ -79,7 +79,7 @@ char	*parse_dquote(char *line, char *env[])
 	result = ft_strdup("");
 	if (!result)
 		return (NULL);
-	while (line[i])
+	while (line[i] && line[i] != '\"')
 	{
 		if (line[i] == '$')
 		{
@@ -94,5 +94,6 @@ char	*parse_dquote(char *line, char *env[])
 	}
 	if (append_literal(&result, line, start, i) == -1)
 		return (NULL);
+	(*j) += i;
 	return (result);
 }

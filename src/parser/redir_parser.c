@@ -30,7 +30,6 @@ int	redir_in_out(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 	int	idx;
 
 	idx = cmds->cmds_count - 1;
-	printf("TYPE: %d\n", tokens[*i].type);
 	if (tokens[*i].type == REDIR_IN)
 	{
 		if (cmds->simple_cmds[idx]->in_file == NULL)
@@ -70,6 +69,9 @@ int	redir_in_out(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 
 int	redir_special(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 {
+	int	idx;
+
+	idx = cmds->cmds_count - 1;
 	if (tokens[*i].type == REDIR_APPEND)
 	{
 		(*i)++;
@@ -83,13 +85,20 @@ int	redir_special(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 	}
 	else if (tokens[*i].type == HERE_DOC)
 	{
+		if (cmds->simple_cmds[idx]->in_file == NULL)
+		{
+			cmds->simple_cmds[idx]->in_file = malloc(sizeof(t_vector));
+			if (!cmds->simple_cmds[idx]->in_file)
+				return (-1);
+			if (vector_setup(cmds->simple_cmds[idx]->in_file) == VECTOR_ERROR)
+				return (-1);
+		}
 		(*i)++;
 		if (*i < token_count && tokens[*i].type == WORD)
 		{
-			free(cmds->here_doc);
-			cmds->here_doc = ft_strdup(tokens[*i].value);
-			if (cmds->here_doc == NULL)
+			if (vector_push_back(cmds->simple_cmds[idx]->in_file, ft_strdup(cmds->heredoc_files->args[cmds->heredoc_idx])) == VECTOR_ERROR)
 				return (-1);
+			cmds->heredoc_idx++;
 		}
 	}
 	return (0);

@@ -29,10 +29,17 @@ void	word_token(t_token *token, char *l, int *i)
 {
 	int	start;
 	int	len;
+	int quote_flag;
 
 	start = *i;
-	while (l[*i] && !is_space(l[*i]) && !is_delimiter(l[*i]))
+	quote_flag = 0;
+	//is not space ? yes.. 
+	while (l[*i] && (quote_flag || (!is_space(l[*i]) && !is_delimiter(l[*i]))))
+	{
+		if (l[*i] =='\"' || l[*i] =='\'')
+			quote_flag = 1 - quote_flag;
 		(*i)++;
+	}	
 	len = *i - start;
 	if (len > 0)
 	{
@@ -40,10 +47,7 @@ void	word_token(t_token *token, char *l, int *i)
 		if (token->value == NULL)
 			return (error_token(token));
 		ft_strlcpy(token->value, l + start, len + 1);
-		if (ft_strchr(token->value, '$'))
-			token->type = VAR_WORD;
-		else
-			token->type = WORD;
+		token->type = WORD;
 	}
 }
 

@@ -61,7 +61,10 @@
     "format": "c",
     "libft.h": "c",
     "cstdlib": "c",
-    "vector": "cpp"
+    "vector": "cpp",
+    "vector.h": "c",
+    "command.h": "c",
+    "sstream": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

@@ -12,22 +12,22 @@
 
 #include "minishell.h"
 
-int create_heredoc_fd_direct(t_simple_cmd *cmds)
-{
-    int pipefd[2];
+// int create_heredoc_fd_direct(t_simple_cmd *cmds)
+// {
+//     int pipefd[2];
     
-    if (pipe(pipefd) == -1)
-        return (-1);
+//     if (pipe(pipefd) == -1)
+//         return (-1);
     
-    // Write heredoc content to write end
-    if (cmds->here_doc_cont)
-    {
-        write(pipefd[1], cmds->here_doc_cont, ft_strlen(cmds->here_doc_cont));
-    }
-    close(pipefd[1]); // close write end
+//     // Write heredoc content to write end
+//     if (cmds->here_doc_cont)
+//     {
+//         write(pipefd[1], cmds->here_doc_cont, ft_strlen(cmds->here_doc_cont));
+//     }
+//     close(pipefd[1]); // close write end
     
-    return (pipefd[0]); // return read end
-}
+//     return (pipefd[0]); // return read end
+// }
 
 // void	fd_init(int *infile_fd, int *outfile_fd, t_object* pipex, t_simple_cmd *cmds)
 // {

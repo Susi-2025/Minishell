@@ -12,11 +12,89 @@
 
 #include "minishell.h"
 
-# define ERROR -1
-# define SUCCESS 0
 volatile sig_atomic_t	g_interactive = 1;
 
-int syntax_checker(t_token *tokens, int token_count)
+
+static int	read_heredoc_to_file(char *delimiter, char *filename)
+{
+	int		fd;
+	char	*input;
+
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+		return (-1);
+	while (1)
+	{
+		input = readline("> ");
+		if (!input)
+        {
+            ft_putstr_fd("minishell: warning: here-document delimited by end-of-file\n", 2);
+            break; 
+        }
+		if ((ft_strcmp(input, delimiter) == 0)
+            && (ft_strlen(input) == ft_strlen(delimiter)))
+        {
+            free(input);
+            break;
+        }
+		write(fd, input, ft_strlen(input));
+		write(fd, "\n", 1);
+		free(input);
+	}
+	close(fd);
+	return (0);
+}
+
+char *create_heredoc_file(void)
+{
+	static unsigned int file_counter;
+	const char* path_start = ".here_doc";
+	char	*temp_num;
+	char	*path;
+
+	path = NULL;
+	while (path == NULL)
+	{
+		temp_num = ft_itoa(file_counter);
+		file_counter++;
+		if (!temp_num)
+			return (NULL);
+		path = ft_strjoin(path_start, temp_num);
+		free(temp_num);
+		if (!path)
+			return (NULL);
+		if (access(path, F_OK) == 0)
+		{
+			free(path);
+			path = NULL;
+			continue ;
+		}
+	}
+	return (path);
+}
+
+int handle_heredoc(t_vector *here_docs, char *delimiter)
+{
+	char	*filename;
+
+	filename = create_heredoc_file();
+	if (!filename)
+		return (-1);
+	printf("filename: %s\n", filename);
+	if (read_heredoc_to_file(delimiter, filename) == -1)
+	{
+		free(filename);
+		return (-1);
+	}
+	if (vector_push_back(here_docs, filename) == VECTOR_ERROR)
+	{
+		free(filename);
+		return (-1);
+	}
+	return (0);
+}
+
+int syntax_checker(t_token *tokens, int token_count, t_vector *here_docs)
 {
 	int	i;
 
@@ -30,15 +108,19 @@ int syntax_checker(t_token *tokens, int token_count)
 	i = 0;
 	while (i < token_count && tokens[i].type != TOKEN_EOF)
 	{
-
+		if (tokens[i].type == HERE_DOC)
+		{
+			if (tokens[i + 1].type != WORD)
+			{
+				error_syntax(tokens[i + 1].value);
+				return (ERROR);
+			}
+			if (handle_heredoc(here_docs, tokens[i + 1].value) == -1)
+				return (ERROR);
+		}
 		if (tokens[i].type == PIPE)
 		{
-			if (tokens[i + 1].type == REDIR_OUT || tokens[i + 1].type == REDIR_IN)
-			{
-				i++;
-				continue ;
-			}
-			if (tokens[i + 1].type == TOKEN_EOF || tokens[i + 1].type != WORD)
+			if (tokens[i + 1].type == TOKEN_EOF || tokens[i + 1].type == PIPE)
 			{
 				if (tokens[i + 1].type == TOKEN_EOF)
 					error_syntax("newline");
@@ -54,21 +136,53 @@ int syntax_checker(t_token *tokens, int token_count)
 
 t_cmd	*ft_prepare_command(char *line, char *env[])
 {
-	int		token_count;
-	t_token	*tokens;
-	t_cmd	*cmds;
+	int			token_count;
+	t_token		*tokens;
+	t_cmd		*cmds;
+
+	cmds = malloc(sizeof(t_cmd));
+	if (!cmds)
+		return (NULL);
+		
+	cmds->heredoc_files = malloc(sizeof(t_vector));
+    if (!cmds->heredoc_files)
+    {
+        free(cmds);
+        return (NULL);
+    }
+	if (vector_setup(cmds->heredoc_files) == VECTOR_ERROR) // <-- NO '&'
+    {
+        free(cmds->heredoc_files);
+        free(cmds);
+        return (NULL);
+    }
 
 	tokens = tokenize(line, &token_count);
 	if (!tokens)
-		return (NULL);
-	if (syntax_checker(tokens, token_count) == ERROR)
 	{
-		free_tokens(tokens, token_count);
+		vector_destroy(cmds->heredoc_files);
+		free(cmds);
 		return (NULL);
 	}
-	printf("value of token count: %i\n", token_count);
-	cmds = parse_tokens(tokens, token_count, env);
-	free_tokens(tokens, token_count);
+
+	if (syntax_checker(tokens, token_count, cmds->heredoc_files) == ERROR) // <-- PASS BY POINTER
+    {
+        free_tokens(tokens, token_count);
+        // We must destroy the vector (and unlink files) before freeing cmds
+        vector_destroy_heredocs(cmds->heredoc_files); // <-- Custom free function
+        free(cmds);
+        return (NULL);
+    }
+	if (parse_tokens(cmds, tokens, token_count, env) == ERROR)
+    {
+        free_tokens(tokens, token_count);
+        free_cmd(cmds); // free_cmd should also call vector_destroy_heredocs
+        return (NULL);
+    }
+    free_tokens(tokens, token_count);
+
+	// cmds = parse_tokens(tokens, token_count, env);
+	// free_tokens(tokens, token_count);
 	return (cmds);
 }
 

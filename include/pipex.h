@@ -67,6 +67,7 @@ void	error_string_export(char *argv);
 void	failed_exec(char *argv);
 char	**cmd_error(char *argv);
 void	error_syntax(char *argv);
+int		error_redir(char *argv);
 
 int		path_exists(char *env[]);
 char	*correct_path(char *cmd, char *env[]);

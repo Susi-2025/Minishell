@@ -33,5 +33,6 @@
 int		vector_setup(t_vector *vector);
 int		vector_push_back(t_vector *vector, char *element);
 void	vector_destroy(t_vector *vector);
+void	vector_destroy_heredocs(t_vector* vector);
 
 #endif

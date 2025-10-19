@@ -36,4 +36,6 @@
 # include "heredoc.h"
 # include "vector.h"
 
+# define ERROR -1
+# define SUCCESS 0
 #endif

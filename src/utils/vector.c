@@ -13,6 +13,24 @@ int vector_setup(t_vector* vector) {
     return VECTOR_SUCCESS;
 }
 
+void vector_destroy_heredocs(t_vector* vector)
+{
+    int i;
+
+    i = 0;
+    if (!vector)
+        return;
+    while (i < vector->args_count)
+    {
+        unlink(vector->args[i]);
+        free(vector->args[i]);
+        i++;
+    }
+    if (vector->args)
+        free(vector->args);
+    free(vector);
+}
+
 void vector_destroy(t_vector* vector) {
     int i;
 
