@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/22 11:31:47 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/19 15:35:52 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env)
 		status = 100;
 	free_cmd(cmds);
 	ft_free_triptr(&temp_env);
-	exit(status);
+	printf("%d\n", (unsigned char)status);
+	exit((unsigned char)status);
 }
