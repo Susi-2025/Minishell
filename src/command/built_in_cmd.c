@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/20 17:38:07 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/20 20:05:23 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	int	exec_pwd(t_cmd *cmds);
 static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env);
-static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env);
+static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count);
 
 int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 {
@@ -29,7 +29,7 @@ int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 	else if (ft_strcmp(args[0], "cd") == 0)
 		return (exec_cd(cmds, args));
 	else if (ft_strcmp(args[0], "exit") == 0)
-		exec_exit(cmds, args[1], *temp_env);
+		exec_exit(cmds, args[1], *temp_env, args_count);
 	else if (ft_strcmp(args[0], "export") == 0)
 		return (exec_export(cmds, args, temp_env));
 	else if (ft_strcmp(args[0], "unset") == 0)
@@ -72,11 +72,14 @@ int	exec_env(t_cmd *cmds)
 
 static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 {
-	if (!temp_env || !args[1])
+	// if (!temp_env || !args[1])
+	if (!temp_env)
 	{
-		printf("Error: %s\n", args[1]);
+		printf("Error:\n");
 		return (1);
 	}
+	else if (!args[1])
+		return (1);
 	else
 	{
 		printf("Execute unset\n");
@@ -84,22 +87,30 @@ static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 	}
 }
 
-static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env)
+static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count)
 {
 	int	status;
 
-	printf("exit\n");
-	if (s && ft_is_numeric(s))
-		status = ft_atoi(s);
-	else if (s)
+	if (args_count > 2)
 	{
-		printf("bash: exit: %s: numeric argument required\n", s);
-		status = 2;
+		printf("exit: too many arguments\n");
+		return ;
 	}
 	else
-		status = 100;
-	free_cmd(cmds);
-	ft_free_triptr(&temp_env);
-	printf("%d\n", (unsigned char)status);
-	exit((unsigned char)status);
+	{
+		printf("exit\n");
+		if (s && ft_is_numeric(s))
+			status = ft_atoi(s);
+		else if (s)
+		{
+			printf("bash: exit: %s: numeric argument required\n", s);
+			status = 2;
+		}
+		else
+			status = 100;
+		free_cmd(cmds);
+		ft_free_triptr(&temp_env);
+		printf("%d\n", (unsigned char)status);
+		exit((unsigned char)status);
+	}
 }

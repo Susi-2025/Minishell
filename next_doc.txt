@@ -11,3 +11,6 @@ NEXT ACTION
 		echo "cat lol.c '|' cat > lol.c" must show cat lol.c '|' cat > lol.c but we show empty
 		echo '$USER' "$USER" "text  ' text" must show $USER vinguyen text  ' text but we show empty
 		echo $USER$TESTNOTFOUND$HOME$ must show vinguyen/home/vinguyen$ but we show empty
+2. Test with export
+	-> case:
+		export TEST+=100 -> must add but we have not a valid identifier.
