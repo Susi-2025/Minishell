@@ -107,6 +107,8 @@ static int process_word_expansion(char *str, t_simple_cmd **current_cmd, char *e
             
 			i++;
 			tmp = parse_dquote(str + i, &i, env);
+			if (tmp == NULL)
+				return (ERROR);
 			final_cmd = ft_strjoin_and_free(final_cmd, tmp);
 
             // // 2. Enter "double-quote" mode
@@ -255,8 +257,8 @@ static int	handle_word_tokens(t_token *token, t_simple_cmd **current_cmd, char *
 	// 	free(dquote);
 	// 	return (act);
 	// }
-	if (token->type == SQUOTE_WORD)
-		return (parse_word(token->value, current_cmd));
+	// if (token->type == SQUOTE_WORD)
+	// 	return (parse_word(token->value, current_cmd));
 	return (0);
 }
 

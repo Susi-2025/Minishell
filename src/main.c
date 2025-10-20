@@ -282,7 +282,7 @@ int	main(int argc, char *argv[], char *init_env[])
 		if (*rl)
 			add_history(rl);
 		if (check_rl(rl))
-			break ;
+		{}
 		g_interactive = 0;
 		cmds = ft_prepare_command(rl, temp_env);
 		// 1. segmation fault when typing: 

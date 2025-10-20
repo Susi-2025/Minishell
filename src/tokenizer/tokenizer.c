@@ -43,9 +43,9 @@ void	error_token(t_token *token)
 
 static	void	process_next_token(t_token *token, char *l, int *i)
 {
-	if (l[*i] == '"' || l[*i] == '\'')
-		quote_word_token(token, i, l);
-	else if (l[*i] == '<' || l[*i] == '>')
+	// if (l[*i] == '"' || l[*i] == '\'')
+	// 	quote_word_token(token, i, l);
+	if (l[*i] == '<' || l[*i] == '>')
 		redir_token(token, i, l);
 	else if (l[*i] == '|')
 		pipe_token(token, i);
@@ -78,6 +78,11 @@ t_token	*tokenize(char *l, int *token_count)
 		process_next_token(&tokens[count], l, &i);
 		if (tokens[count].type == ERROR_TOKEN)
 			return (free_tokens(tokens, count), NULL);
+		if (tokens[count].type == WORD)
+		{
+			printf("--WORD--\n");
+			printf("TOKEN VALUE: %s\n", tokens[count].value);
+		}
 		count++;
 		if (count == capacity)
 		{

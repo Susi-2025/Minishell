@@ -92,6 +92,8 @@ char	*parse_dquote(char *line, int *j, char *env[])
 		else
 			i++;
 	}
+	if (line[i] == '\0')
+		return (NULL);
 	if (append_literal(&result, line, start, i) == -1)
 		return (NULL);
 	(*j) += i;
