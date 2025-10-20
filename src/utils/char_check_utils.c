@@ -1,45 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   char_utils.c                                       :+:      :+:    :+:   */
+/*   char_check_utils .c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 17:06:28 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/20 14:14:50 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:09:59 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_space(char c)
+int	ft_isdigit(int c)
 {
-	int		i;
-	char	*spaces;
-
-	spaces = " \t\r\n\v";
-	i = 0;
-	while (spaces[i])
-	{
-		if (c == spaces[i])
-			return (1);
-		i++;
-	}
-	return (0);
+	return (c >= '0' && c <= '9');
 }
 
-int	is_delimiter(char c)
+int	ft_isalpha(int c)
 {
-	int		i;
-	char	*delimiters;
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z' ));
+}
 
-	delimiters = "|<>";
-	i = 0;
-	while (delimiters[i])
-	{
-		if (c == delimiters[i])
-			return (1);
-		i++;
-	}
-	return (0);
+int	ft_isascii(int c)
+{
+	return (c >= 0 && c <= 127);
+}
+
+int	ft_isalnum(int c)
+{
+	return (ft_isdigit(c) || ft_isalpha(c));
 }

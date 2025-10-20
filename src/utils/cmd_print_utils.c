@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_print_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/20 13:54:00 by vinguyen          #+#    #+#             */
+/*   Updated: 2025/10/20 13:57:43 by vinguyen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -5,14 +16,13 @@ static	void	simple_cmd_print(t_simple_cmd *simple_cmd);
 
 void	cmd_print(t_cmd *cmds)
 {
-	int	i;
-
+	int				i;
+	t_simple_cmd	*cmd;
 
 	printf("Print cmds\n");
 	printf("Value of cmds_capacity: %d\n", cmds->cmds_capacity);
 	printf("Value of cmds_count: %d\n", cmds->cmds_count);
 	i = 0;
-	t_simple_cmd *cmd;
 	while (i < cmds->cmds_count && cmds->simple_cmds && cmds->simple_cmds[i])
 	{
 		cmd = cmds->simple_cmds[i];

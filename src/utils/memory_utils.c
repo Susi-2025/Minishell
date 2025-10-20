@@ -6,12 +6,12 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 19:28:21 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/23 10:34:54 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:59:09 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-	
+
 void	free_cmd(t_cmd *cmds)
 {
 	int	i;
@@ -38,7 +38,7 @@ void	free_cmd(t_cmd *cmds)
 		i++;
 	}
 	if (cmds->heredoc_files)
-        vector_destroy_heredocs(cmds->heredoc_files);
+		vector_destroy_heredocs(cmds->heredoc_files);
 	free(cmds->simple_cmds);
 	free(cmds->err_file);
 	free(cmds->file_append);
@@ -93,9 +93,9 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-void *ft_realloc(void *ptr, size_t old_size, size_t new_size)
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
-	void *new_ptr;
+	void	*new_ptr;
 	size_t	copy_size;
 
 	if (new_size == 0)

@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/16 12:30:39 by vinguyen          #+#    #+#              #
-#    Updated: 2025/10/20 10:31:17 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/10/20 14:11:47 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,14 @@ UTIL_DIR = $(SRC_DIR)/utils
 
 MAIN_FILES = main.c
 CMD_FILES = built_in_cmd.c cmd_cd.c cmd_echo.c cmd_export.c \
-			envp_utils.c free_mem_utils.c init_envp.c start_built_in.c utility_array.c \
-			utility_cmd.c print_utils.c utility_str.c
+			envp_utils.c free_mem_utils.c init_envp.c start_built_in.c array_utils.c \
+			built_in_cmd_utils.c print_utils.c str_envp_utils.c
 EXE_FILES = error_handling.c init_and_close.c path_expansion.c pipex.c process_exec.c
 HERE_FILES = heredoc_exec.c heredoc_pipe.c heredoc_utility.c
 PARS_FILES = command_builder.c parser_main.c quote_parser.c redir_parser.c var_expansion.c 
 TOKEN_FILES = cmd_tokens.c redir_tokens.c tokenizer.c
-UTIL_FILES = err_utils.c char_utils.c cmd_utils.c ft_split.c memory_utils.c parser_utils.c str_copying.c \
-			str_utils.c vector.c
+UTIL_FILES = err_utils.c char_utils.c cmd_print_utils.c ft_split.c memory_utils.c parser_utils.c str_copying.c \
+			str_utils.c vector.c char_check_utils.c
 
 SRC =	$(addprefix $(SRC_DIR)/, $(MAIN_FILES)) \
 		$(addprefix $(CMD_DIR)/, $(CMD_FILES)) \
