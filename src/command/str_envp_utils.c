@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utility_str.c                                      :+:      :+:    :+:   */
+/*   str_envp_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/16 17:09:45 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/20 15:32:03 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	invalid_args(char *str)
 	if (!(ft_isalpha(str[0]) || str[0] == '_'))
 		return (1);
 	i = 1;
-	while (str[i])
+	while (str[i] && str[i] != '=')
 	{
-		if (!(ft_isalnum(str[i]) || str[i] == '=' || str[i] == '"'))
+		if (!(ft_isalnum(str[i]) || str[i] == '"' || str[i] == '\''))
 			return (1);
 		i++;
 	}
