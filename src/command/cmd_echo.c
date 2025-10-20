@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/19 16:25:36 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/20 10:19:07 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ int	exec_echo(t_cmd *cmds, char **args, int args_count)
 	no_new_line = 0;
 	while (args[i])
 	{
-		if (ft_strcmp(args[i], "$?") == 0)//this will be handled by parsing, echo just print out
-			//need from input
+		if (ft_strcmp(args[i], "$?") == 0)
+		//this will be handled by parsing, echo just print out
+		//need from input
 			printf("%d", cmds->err_code);
 		if (ft_strcmp(args[i], "-n") == 0)
 			no_new_line = 1;

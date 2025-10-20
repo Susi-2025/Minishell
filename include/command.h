@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/19 17:53:25 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/20 10:37:11 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define COMMAND_H
 
 # include "structs.h"
+
+# define ERR_EMPTY_FOLDER "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory"
 // command
 void	exec_parent(t_cmd *cmds, char **args, char **env[], int args_count);
 int		init_envp(t_cmd *cmds, char **envp);
@@ -46,10 +48,13 @@ char	*ft_strtail(char *str, char c);
 void	ft_copy_str(char *origin, char *key, char *value);
 char	*create_new_str(char *key, char *value);
 
+void	printf_for_export(char *str);
 // handle_error
 int		error_malloc(t_cmd *shell, int code);
 int		error_msg(int code, char *str);
 int		error_string_cd(char *argv, int code);
 int		error_string_cd_1(char *argv, int code);
 int		error_string_cd_2(char *argv, int code);
+// free_mem
+int		free_2_mem(char *old_wd, char *next_wd, int exit_code);
 #endif

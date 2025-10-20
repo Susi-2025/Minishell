@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   9_err_utility.c                                    :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/17 18:02:33 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/16 12:18:04 by vinguyen         ###   ########.fr       */
+/*   Created: 2025/10/20 10:33:06 by vinguyen          #+#    #+#             */
+/*   Updated: 2025/10/20 10:33:41 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	error_malloc(t_cmd *cmds, int code)
+void	printf_for_export(char *str)
 {
-	free_cmd(cmds);
-	return (code);
-}
+	int	i;
 
-int	error_msg(int code, char *str)
-{
-	printf("%s\n", str);
-	return (code);
-}
-
-int	error_string_cd(char *argv, int code)
-{
-	char	error[1000];
-
-	ft_strcpy(error, "bash: ");
-	ft_strcat(error, "cd: ");
-	ft_strcat(error, argv);
-	ft_strcat(error, " not set\n");
-	ft_putstr_fd(error, 2);
-	return  (code);
+	ft_putstr_fd("declare -x ", STDIN_FILENO);
+	i = 0;
+	while (str[i] && str[i] != '=')
+	{
+		write(STDIN_FILENO, &str[i], 1);
+		i++;
+	}
+	if (str[i] == '=' && str[i + 1] != '\"' )
+	{
+		ft_putstr_fd("=\"", STDIN_FILENO);
+		ft_putstr_fd(&str[i + 1], STDIN_FILENO);
+		ft_putstr_fd("\"", STDIN_FILENO);
+	}
+	else
+		ft_putstr_fd(&str[i], STDIN_FILENO);
+	ft_putstr_fd("\n", STDIN_FILENO);
 }

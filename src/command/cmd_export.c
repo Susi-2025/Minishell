@@ -6,13 +6,11 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/17 13:12:53 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/20 10:19:34 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static	void	printf_for_export(char *str);
 
 int	exec_export(t_cmd *cmds, char **args, char ***temp_env)
 {
@@ -53,7 +51,6 @@ int	export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env)
 		&& check_var_env(*temp_env, args_heads) == 1)
 	{
 		value = ft_strtail(arg_str, '=');
-		// printf("Value is: %s\n", value);
 		if (update_env(cmds, args_heads, value) == 1)
 			return (1);
 		if (value)
@@ -86,26 +83,4 @@ int	exec_export_only(t_cmd *cmds)
 	}
 	ft_free_triptr(&temp);
 	return (0);
-}
-
-static	void	printf_for_export(char *str)
-{
-	int	i;
-
-	ft_putstr_fd("declare -x ", STDIN_FILENO);
-	i = 0;
-	while (str[i] && str[i] != '=')
-	{
-		write(STDIN_FILENO, &str[i], 1);
-		i++;
-	}
-	if (str[i] == '=' && str[i + 1] != '\"' )
-	{
-		ft_putstr_fd("=\"", STDIN_FILENO);
-		ft_putstr_fd(&str[i + 1], STDIN_FILENO);
-		ft_putstr_fd("\"", STDIN_FILENO);
-	}
-	else
-		ft_putstr_fd(&str[i], STDIN_FILENO);
-	ft_putstr_fd("\n", STDIN_FILENO);
 }
