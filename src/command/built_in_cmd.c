@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 19:30:07 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:58:51 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 		return (1);
 	}
 	else if (!args[1])
-		return (1);
+		return (0);
 	else
 	{
 		// printf("Execute unset\n");
