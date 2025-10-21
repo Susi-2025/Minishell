@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 11:05:24 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 12:23:35 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ void	exec_parent(t_cmd *cmds, char **args, char **env[], int args_count)
 	if ((ft_strcmp(args[0], "exit") == 0) && (args_count <= 2))
 	{
 		exit_code = exec_built_in(cmds, args, env, args_count);
-		ft_free_triptr(env);
-		free_cmd(cmds);
-		exit (exit_code);
+		free_and_exit(cmds, *env, exit_code);
+		// ft_free_triptr(env);
+		// free_cmd(cmds);
+		// exit (exit_code);
 	}
 	// else if (ft_strcmp(args[0], "exit") == 0 && args_count > 2)
 	// {

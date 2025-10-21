@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 11:55:02 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 12:21:51 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "structs.h"
 
+# define NUM_ARG "numeric argument required"
 # define MANY_ARGS "too many arguments"
 # define NO_SUCH_FILE "No such file or directory"
 # define ERR_EMPTY_FOLDER "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory"
@@ -61,4 +62,5 @@ int		error_cmd(int code, char *str_cmd, char *arg, char *message);
 int		error_cmd_fd(int code, char *str_cmd, char *arg, char *message);
 // free_mem
 int		free_2_mem(char *old_wd, char *next_wd, int exit_code);
+void	free_and_exit(t_cmd *cmds, char **temp_env, int status);
 #endif

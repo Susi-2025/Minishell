@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 11:09:01 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 12:21:37 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 		return (1);
 	else
 	{
-		printf("Execute unset\n");
+		// printf("Execute unset\n");
 		return (reduce_env(cmds, args[1], temp_env));
 	}
 }
@@ -93,25 +93,39 @@ static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count)
 
 	if (args_count > 2)
 	{
-		// printf("exit: too many arguments\n");
-		error_cmd(1, "bash", "exit", MANY_ARGS);
-		return ;
+		if (ft_is_numeric(s) == 0)
+		{
+			ft_printf_fd(2, "exit\n");
+			status = error_cmd_fd(2, "exit", s, NUM_ARG); // will exit
+			// free_cmd(cmds);
+			// ft_free_triptr(&temp_env);
+			// exit((unsigned char)status);
+			free_and_exit(cmds, temp_env, status);
+		}
+		else
+			status = error_cmd_fd(1, "bash", "exit", MANY_ARGS); // no exit
 	}
 	else
 	{
-		printf("exit\n");
+		ft_printf_fd(2, "exit\n");
 		if (s && ft_is_numeric(s))
 			status = ft_atoi(s);
 		else if (s)
-		{
-			printf("bash: exit: %s: numeric argument required\n", s);
-			status = 2;
-		}
+			status = error_cmd_fd(2, "exit", s, NUM_ARG);
 		else
 			status = 100;
-		free_cmd(cmds);
-		ft_free_triptr(&temp_env);
-		printf("%d\n", (unsigned char)status);
-		exit((unsigned char)status);
+		// free_cmd(cmds);
+		// ft_free_triptr(&temp_env);
+		// printf("%d\n", (unsigned char)status);
+		// exit((unsigned char)status);
+		free_and_exit(cmds, temp_env, status);
 	}
+}
+
+void	free_and_exit(t_cmd *cmds, char **temp_env, int status)
+{
+	free_cmd(cmds);
+	ft_free_triptr(&temp_env);
+	printf("%d\n", (unsigned char)status);
+	exit((unsigned char)status);
 }
