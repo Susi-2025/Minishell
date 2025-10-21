@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:41:08 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/21 19:11:22 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:28:27 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 	t_object	pipex;
 	int			i;
 	char		**args;
-	int			args_count;
+	// int			args_count;
 	// int			exit_code;
 
 	if (!cmds)
@@ -109,10 +109,12 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 	while (i < pipex.num_commands)
 	{
 		args = cmds->simple_cmds[i]->args;
-		args_count = cmds->simple_cmds[i]->args_count;
+		// args_count = cmds->simple_cmds[i]->args_count;
 		if (cmds->cmds_count == 1 && check_built_in(args[0]) == 1)
 		{
-			cmds->err_code = exec_parent(cmds, args, env, args_count);
+			//cmds->err_code = exec_parent(cmds, args, env, args_count);
+			cmds->err_code = exec_parent(cmds, args, env, &pipex);
+			last_close(&pipex);
 			return (cmds->err_code);
 			// ft_printf_fd(2, "Return from parent exec: %d\n", cmds->err_code);
 		}

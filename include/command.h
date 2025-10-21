@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 19:29:21 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:26:34 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 # define NO_SUCH_FILE "No such file or directory"
 # define ERR_EMPTY_FOLDER "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory"
 // command
-int		exec_parent(t_cmd *cmds, char **args, char **env[], int args_count);
+// int		exec_parent(t_cmd *cmds, char **args, char **env[], int args_count);
+int		exec_parent(t_cmd *cmds, char **args, char **env[], t_object *pipex);
 int		init_envp(t_cmd *cmds, char **envp);
 int		check_built_in(char *cmd);
 int		exec_built_in(t_cmd *shell, char **args,

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/21 15:49:09 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 19:55:48 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,7 +318,7 @@ int	main(int argc, char *argv[], char *init_env[])
 		if (cmds)
 		{
 			// ft_printf_fd(2, "Value of previous err code: %d\n", cmds->err_code);
-			// cmd_print(cmds);
+			cmd_print(cmds);
 			// error_cmd_fd(0, "exec", "test print fd", "success");
 			//cmds->err_code = code;
 			ft_pipex(cmds, &temp_env); //updating cmd->err_code inside
