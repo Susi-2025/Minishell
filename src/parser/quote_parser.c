@@ -28,7 +28,7 @@ char	*expand_single_var(char *var, char *env[])
 	return (ft_strdup(""));
 }
 
-static int	append_literal(char **result, char *line, int start, int end)
+int	append_literal(char **result, char *line, int start, int end)
 {
 	char	*literal;
 	char	*temp;
@@ -47,7 +47,7 @@ static int	append_literal(char **result, char *line, int start, int end)
 	return (0);
 }
 
-static int	append_variable(char **result, char *line, int *i, char *env[])
+int	append_variable(char **result, char *line, int *i, char *env[])
 {
 	char	*var_value;
 	char	*temp;

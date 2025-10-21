@@ -30,13 +30,24 @@ void	word_token(t_token *token, char *l, int *i)
 	int	start;
 	int	len;
 	int quote_flag;
+	char	c;
 
 	start = *i;
 	quote_flag = 0; 
-	while (l[*i] && (quote_flag || (!is_space(l[*i]) && !is_delimiter(l[*i]))))
+	while (l[*i] && (quote_flag != 0 || (!is_space(l[*i]) && !is_delimiter(l[*i]))))
 	{
-		if (l[*i] =='\"' || l[*i] =='\'')
-			quote_flag = 1 - quote_flag;
+		c = l[*i];
+		if (quote_flag == 0)
+        {
+            // Not inside quotes: check for a new opening quote
+            if (c == '\"' || c == '\'')
+                quote_flag = c; // Set the *active* quote
+        }
+        else if (c == quote_flag)
+        {
+            // Inside quotes: check for the *matching* closing quote
+            quote_flag = 0; // Close it
+        }
 		(*i)++;
 	}	
 	len = *i - start;

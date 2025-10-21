@@ -91,6 +91,7 @@ static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count)
 {
 	int	status;
 
+	status = cmds->err_code;
 	if (args_count > 2)
 	{
 		if (ft_is_numeric(s) == 0)
@@ -113,7 +114,7 @@ static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count)
 		else if (s)
 			status = error_cmd_fd(2, "exit", s, NUM_ARG);
 		else
-			status = 100;
+			status = 0;
 		// free_cmd(cmds);
 		// ft_free_triptr(&temp_env);
 		// printf("%d\n", (unsigned char)status);
@@ -126,6 +127,6 @@ void	free_and_exit(t_cmd *cmds, char **temp_env, int status)
 {
 	free_cmd(cmds);
 	ft_free_triptr(&temp_env);
-	printf("%d\n", (unsigned char)status);
+	// printf("%d\n", (unsigned char)status);
 	exit((unsigned char)status);
 }

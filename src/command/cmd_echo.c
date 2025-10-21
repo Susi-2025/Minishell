@@ -23,11 +23,22 @@ int	exec_echo(t_cmd *cmds, char **args, int args_count)
 
 	if (!cmds)
 		return (error_msg(1, "cmds"));
+	if (args_count == 1)
+    {
+        printf("\n");
+        return (0);
+    }
 	i = 1;
 	no_nl = 0;
 	stop_check = 0;
 	while (args[i])
 	{
+		if (ft_strlen(args[i]) == 2 && ((args[i][0] == '\'' && args[i][1] == '\'')
+			|| (args[i][0] == '"' && args[i][1] == '"')))
+        {
+            i++;
+            continue; 
+        }
 		echo_args(args[i], &stop_check, &no_nl);
 		if ((check_n_cd(args[i]) == 1) && (i < (args_count - 1)))
 			printf(" ");

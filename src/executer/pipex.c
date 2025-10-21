@@ -111,7 +111,7 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 		args = cmds->simple_cmds[i]->args;
 		args_count = cmds->simple_cmds[i]->args_count;
 		if (cmds->cmds_count == 1 && check_built_in(args[0]) == 1)
-			exec_parent(cmds, args, env, args_count);
+			return (exec_built_in(cmds, args, env, args_count));
 		else
 			pipe_and_fork_logic(&pipex, i, cmds, *env);
 		i++;

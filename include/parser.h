@@ -29,4 +29,7 @@ char	**expand_var(char *line_value, char *env[]);
 
 char	*handle_var_exp(char *prefix, char *env_value, t_simple_cmd **current_cmd, char *var_name);
 char    *ft_strjoin_and_free(char *s1, char *s2);
+
+int	append_literal(char **result, char *line, int start, int end);
+int	append_variable(char **result, char *line, int *i, char *env[]);
 #endif

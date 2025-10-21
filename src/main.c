@@ -14,12 +14,100 @@
 
 volatile sig_atomic_t	g_interactive = 1;
 
+char	*parse_heredoc(char *line, char *env[], int exit_code)
+{
+	char	*result;
+	int		i;
+	int		start;
 
-static int	read_heredoc_to_file(char *delimiter, char *filename)
+	i = 0;
+	start = 0;
+	result = ft_strdup("");
+	if (!result)
+		return (NULL);
+	while (line[i])
+	{
+		if (line[i] == '$')
+		{
+			if (append_literal(&result, line, start, i) == -1)
+				return (NULL);
+			i++;
+			if (line[i] == '?')
+			{
+				result = ft_strjoin_and_free(result, ft_itoa(exit_code));
+				if (!result)
+					return (NULL);
+				i++;
+			}
+			else if (append_variable(&result, line, &i, env) == -1)
+				return (NULL);
+			start = i;
+		}
+		else
+			i++;
+	}
+	if (append_literal(&result, line, start, i) == -1)
+		return (NULL);
+	free(line);
+	return (result);
+}
+
+int contains_quotes(char *delimiter)
+{
+    int i;
+    int j;
+    char quote_char;
+	int	quote_found;
+
+	i = 0;
+	j = 0;
+	quote_char = 0;
+	quote_found = 0;
+    while (delimiter[i])
+    {
+        if (quote_char == 0)
+        {
+            if (delimiter[i] == '\'' || delimiter[i] == '\"')
+			{
+				quote_found = 1;
+                quote_char = delimiter[i];
+			}
+            else
+            {
+                delimiter[j] = delimiter[i];
+                j++;
+            }
+        }
+        else
+        {
+            if (delimiter[i] == quote_char)
+                quote_char = 0;
+            else
+            {
+                delimiter[j] = delimiter[i];
+                j++;
+            }
+        }
+        i++;
+    }
+    delimiter[j] = '\0';
+
+	if (quote_char != 0)
+		return (-1);
+	if (quote_found)
+		return (0);
+    return (1);
+}
+
+static int	read_heredoc_to_file(char *delimiter, char *filename, char *env[], int exit_code)
 {
 	int		fd;
 	char	*input;
+	int		quote_found;
 
+	quote_found = contains_quotes(delimiter);
+	if (quote_found == -1)
+		return(-1);
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		return (-1);
@@ -37,6 +125,8 @@ static int	read_heredoc_to_file(char *delimiter, char *filename)
             free(input);
             break;
         }
+		if (quote_found)
+			input = parse_heredoc(input, env, exit_code);
 		write(fd, input, ft_strlen(input));
 		write(fd, "\n", 1);
 		free(input);
@@ -73,16 +163,16 @@ char *create_heredoc_file(void)
 	return (path);
 }
 
-int handle_heredoc(t_vector *here_docs, char *delimiter)
+int handle_heredoc(t_vector *here_docs, char *delimiter, char *env[], int error_code)
 {
 	char	*filename;
 
 	filename = create_heredoc_file();
 	if (!filename)
 		return (-1);
-	printf("filename: %s\n", filename);
-	if (read_heredoc_to_file(delimiter, filename) == -1)
+	if (read_heredoc_to_file(delimiter, filename, env, error_code) == -1)
 	{
+		error_syntax("newline");
 		free(filename);
 		return (-1);
 	}
@@ -141,7 +231,7 @@ static int  check_token_in_loop(t_token *tokens, int i)
     return (SUCCESS);
 }
 
-int syntax_checker(t_token *tokens, int token_count, t_vector *here_docs)
+int syntax_checker(t_token *tokens, int token_count, t_vector *here_docs, char *env[], int error_code)
 {
 	int	i;
 
@@ -154,7 +244,7 @@ int syntax_checker(t_token *tokens, int token_count, t_vector *here_docs)
             return (ERROR);
 		if (tokens[i].type == HERE_DOC)
 		{
-			if (handle_heredoc(here_docs, tokens[i + 1].value) == -1)
+			if (handle_heredoc(here_docs, tokens[i + 1].value, env, error_code) == -1)
 				return (ERROR);
 		}
 		i++;
@@ -194,7 +284,7 @@ t_cmd	*ft_prepare_command(char *line, char *env[], int error_code)
 		return (NULL);
 	}
 
-	if (syntax_checker(tokens, token_count, cmds->heredoc_files) == ERROR) // <-- PASS BY POINTER
+	if (syntax_checker(tokens, token_count, cmds->heredoc_files, env, error_code) == ERROR) // <-- PASS BY POINTER
     {
         free_tokens(tokens, token_count);
         // We must destroy the vector (and unlink files) before freeing cmds
@@ -322,7 +412,7 @@ int	main(int argc, char *argv[], char *init_env[])
 		// I think we need a err_code value for storing -> I put in structs.h
 		if (cmds)
 		{
-			cmd_print(cmds);
+			// cmd_print(cmds);
 			// error_cmd_fd(0, "exec", "test print fd", "success");
 			cmds->err_code = code;
 			
