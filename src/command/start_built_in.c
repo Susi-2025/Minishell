@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 12:57:18 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 15:34:33 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_built_in(char *cmd)
 	return (0);
 }
 
-void	exec_parent(t_cmd *cmds, char **args, char **env[], int args_count)
+int	exec_parent(t_cmd *cmds, char **args, char **env[], int args_count)
 {
 	int	exit_code;
 
@@ -43,5 +43,6 @@ void	exec_parent(t_cmd *cmds, char **args, char **env[], int args_count)
 		free_and_exit(cmds, *env, exit_code);
 	}
 	else
-		exec_built_in(cmds, args, env, args_count);
+		exit_code = exec_built_in(cmds, args, env, args_count);
+	return (exit_code);
 }
