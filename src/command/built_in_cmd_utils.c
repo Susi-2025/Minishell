@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utility_cmd.c                                      :+:      :+:    :+:   */
+/*   built_in_cmd_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/19 15:38:27 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:19:48 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,20 @@ char	*find_var(char **envp, char *str)
 
 int	check_var_env(char **envp, char *str)
 {
-	int		i;
+	int	i;
+	int	len;
 
 	if (!envp || !str)
 		return (0);
 	i = 0;
+	len = ft_strlen(str);
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], str, ft_strlen(str)) == 0)
-			return (1);
+		{
+			if (envp[i][len] == '=')
+				return (1);
+		}
 		i++;
 	}
 	return (0);
