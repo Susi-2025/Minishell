@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 13:17:02 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 14:47:17 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env)
 	char	*args_heads;
 	char	*value;
 
-	ft_printf_fd(2, "Start export with add\n");
+	ft_printf_fd(2, "Start export with args\n");
 	if (ft_strchr(arg_str, '='))
 		args_heads = ft_strhead(arg_str, '=');
 	else

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 13:19:48 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 14:53:42 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_var_env(char **envp, char *str)
 	{
 		if (ft_strncmp(envp[i], str, ft_strlen(str)) == 0)
 		{
-			if (envp[i][len] == '=')
+			if (envp[i][len] == '=' || envp[i][len] == '\0')
 				return (1);
 		}
 		i++;
