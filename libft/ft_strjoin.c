@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 20:46:53 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/22 14:57:18 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:14:31 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)

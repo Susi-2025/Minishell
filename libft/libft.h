@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 13:04:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/09/09 12:13:34 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:55:43 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,21 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
-void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-void	ft_putstr_fd(char *s, int fd);
+
 int		ft_putchar(int c);
+int		ft_putchar_fd(char c, int fd);
 int		ft_putstr(char *str);
+int		ft_putstr_fd_v(char *s, int fd);
 int		ft_putptr(void *ptr, char *base, int i);
+int		ft_putptr_fd(void *ptr, char *base, int i, int fd);
 int		ft_putnbr_base(long long number, char *base, int i);
+int		ft_putnbr_base_fd(long long number, char *base, int i, int fd);
 int		ft_putnbr_base_unsigned(unsigned long long number, char *base, int i);
+int		ft_putnbr_base_unsigned_fd(unsigned long long number, char *base,
+			int i, int fd);
+
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
@@ -67,6 +73,7 @@ void	ft_free_triptr(char ***str);
 int		check_format(va_list args, const char *string, int i);
 int		check_string(va_list args, const char *string, int i);
 int		ft_printf(const char *string, ...);
+int		ft_printf_fd(int fd, const char *string, ...);
 char	**ft_matrix_dup(char **matrix, int row);
 char	*ft_strdup_char(const char *s1);
 // int		ft_isalnum(int c);

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/20 20:05:23 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:09:01 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count)
 
 	if (args_count > 2)
 	{
-		printf("exit: too many arguments\n");
+		// printf("exit: too many arguments\n");
+		error_cmd(1, "bash", "exit", MANY_ARGS);
 		return ;
 	}
 	else

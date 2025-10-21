@@ -6,9 +6,11 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:56:30 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/28 22:46:05 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:13:02 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_isalpha(int c)
 {

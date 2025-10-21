@@ -6,12 +6,15 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 16:47:16 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/22 16:49:12 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:46:13 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-void	ft_putchar_fd(char c, int fd)
+int	ft_putchar_fd(char c, int fd)
 {
-	write(fd, &c, 1);
+	if (write(fd, &c, 1) == -1)
+		return (-1);
+	return (1);
 }

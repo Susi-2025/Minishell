@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 19:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/29 09:32:57 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:14:35 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static size_t	len_str(const char *str)

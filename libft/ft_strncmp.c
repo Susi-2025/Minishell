@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 14:58:27 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/29 09:08:18 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:14:50 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)

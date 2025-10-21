@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:13:42 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/29 08:41:20 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:13:31 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)

@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 19:10:33 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/07/24 20:45:30 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:13:17 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static unsigned int	count_int(long n)

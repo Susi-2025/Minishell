@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:04:20 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/28 21:49:05 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:15:00 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strtrim(char const *str, char const *set)
