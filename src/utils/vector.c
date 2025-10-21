@@ -21,6 +21,13 @@ int	vector_setup(t_vector *vector)
 	vector->args = malloc(sizeof(char *) * vector->args_capacity);
 	if (!vector->args)
 		return (VECTOR_ERROR);
+	vector->type = malloc(sizeof(t_token_type) * vector->args_capacity);
+	if (!vector->type)
+	{
+		free(vector->args);
+		return (VECTOR_ERROR);
+
+	}
 	return (VECTOR_SUCCESS);
 }
 
@@ -39,6 +46,8 @@ void	vector_destroy_heredocs(t_vector *vector)
 	}
 	if (vector->args)
 		free(vector->args);
+	if (vector->type)
+		free(vector->type);
 	free(vector);
 }
 
@@ -54,8 +63,11 @@ void	vector_destroy(t_vector *vector)
 		free(vector->args[i]);
 		i++;
 	}
+
 	if (vector->args)
 		free(vector->args);
+	if (vector->type)
+		free(vector->type);
 	free(vector);
 }
 
@@ -67,8 +79,13 @@ int	vector_grow(t_vector *vector)
 			sizeof(char *) * vector->args_capacity * 2);
 	if (!tmp)
 		return (VECTOR_ERROR);
-	vector->args_capacity *= 2;
 	vector->args = tmp;
+	tmp = ft_realloc(vector->type, vector->args_capacity * sizeof(t_token_type), vector->args_capacity * 2 * sizeof(t_token_type));
+	if (!tmp)
+		return (VECTOR_ERROR);
+	vector->type = tmp;
+	vector->args_capacity *= 2;
+
 	return (VECTOR_SUCCESS);
 }
 

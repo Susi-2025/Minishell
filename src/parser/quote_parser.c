@@ -53,8 +53,16 @@ static int	append_variable(char **result, char *line, int *i, char *env[])
 	char	*temp;
 	int		var_len;
 
-	(*i)++;
 	var_len = len_until_delim(line + *i);
+	if (var_len == 0)
+	{
+		temp = ft_strjoin(*result, "$");
+		free(*result);
+		if (!temp)
+			return (-1);
+		*result = temp;
+		return (0);
+	}
 	var_value = expand_single_var(line + *i, env);
 	if (!var_value)
 		return (free(*result), -1);
@@ -68,7 +76,7 @@ static int	append_variable(char **result, char *line, int *i, char *env[])
 	return (0);
 }
 
-char	*parse_dquote(char *line, int *j, char *env[])
+char	*parse_dquote(char *line, int *j, char *env[], int exit_code)
 {
 	char	*result;
 	int		i;
@@ -85,7 +93,15 @@ char	*parse_dquote(char *line, int *j, char *env[])
 		{
 			if (append_literal(&result, line, start, i) == -1)
 				return (NULL);
-			if (append_variable(&result, line, &i, env) == -1)
+			i++;
+			if (line[i] == '?')
+			{
+				result = ft_strjoin_and_free(result, ft_itoa(exit_code));
+				if (!result)
+					return (NULL);
+				i++;
+			}
+			else if (append_variable(&result, line, &i, env) == -1)
 				return (NULL);
 			start = i;
 		}
@@ -93,7 +109,10 @@ char	*parse_dquote(char *line, int *j, char *env[])
 			i++;
 	}
 	if (line[i] == '\0')
+	{
+		free(result);
 		return (NULL);
+	}
 	if (append_literal(&result, line, start, i) == -1)
 		return (NULL);
 	(*j) += i;

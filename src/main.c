@@ -93,48 +93,76 @@ int handle_heredoc(t_vector *here_docs, char *delimiter)
 	}
 	return (0);
 }
-
-int syntax_checker(t_token *tokens, int token_count, t_vector *here_docs)
+static int  check_initial_syntax(t_token *tokens, int token_count)
 {
-	int	i;
-
 	if (token_count == 0)
 		return (ERROR);
+
+	if (token_count == 1 && tokens[0].type == TOKEN_EOF)
+		return (SUCCESS);
+
 	if (tokens[0].type == PIPE)
 	{
 		error_syntax(tokens[0].value);
 		return (ERROR);
 	}
+
+	return (SUCCESS);
+}
+
+static int  syntax_error_at_token(t_token *token)
+{
+    if (token->type == TOKEN_EOF)
+        error_syntax("newline");
+    else
+        error_syntax(token->value);
+    return (ERROR);
+}
+
+static int  is_redirection(t_token_type type)
+{
+    return (type == HERE_DOC || type == REDIR_IN ||
+            type == REDIR_OUT || type == REDIR_APPEND);
+}
+
+static int  check_token_in_loop(t_token *tokens, int i)
+{
+    if (is_redirection(tokens[i].type))
+    {
+        if (tokens[i + 1].type != WORD)
+            return (syntax_error_at_token(&tokens[i + 1]));
+    }
+
+    if (tokens[i].type == PIPE)
+    {
+        if (tokens[i + 1].type == PIPE || tokens[i + 1].type == TOKEN_EOF)
+            return (syntax_error_at_token(&tokens[i + 1]));
+    }
+    return (SUCCESS);
+}
+
+int syntax_checker(t_token *tokens, int token_count, t_vector *here_docs)
+{
+	int	i;
+
 	i = 0;
+	if (check_initial_syntax(tokens, token_count) == ERROR)
+        return (ERROR);
 	while (i < token_count && tokens[i].type != TOKEN_EOF)
 	{
+		if (check_token_in_loop(tokens, i) == ERROR)
+            return (ERROR);
 		if (tokens[i].type == HERE_DOC)
 		{
-			if (tokens[i + 1].type != WORD)
-			{
-				error_syntax(tokens[i + 1].value);
-				return (ERROR);
-			}
 			if (handle_heredoc(here_docs, tokens[i + 1].value) == -1)
 				return (ERROR);
-		}
-		if (tokens[i].type == PIPE)
-		{
-			if (tokens[i + 1].type == TOKEN_EOF || tokens[i + 1].type == PIPE)
-			{
-				if (tokens[i + 1].type == TOKEN_EOF)
-					error_syntax("newline");
-				else
-					error_syntax(tokens[i + 1].value);
-				return (ERROR);
-			}
 		}
 		i++;
 	}
 	return SUCCESS;
 }
 
-t_cmd	*ft_prepare_command(char *line, char *env[])
+t_cmd	*ft_prepare_command(char *line, char *env[], int error_code)
 {
 	int			token_count;
 	t_token		*tokens;
@@ -143,7 +171,8 @@ t_cmd	*ft_prepare_command(char *line, char *env[])
 	cmds = malloc(sizeof(t_cmd));
 	if (!cmds)
 		return (NULL);
-		
+	cmds->err_code = error_code;
+
 	cmds->heredoc_files = malloc(sizeof(t_vector));
     if (!cmds->heredoc_files)
     {
@@ -245,11 +274,11 @@ static	int	check_rl(char *rl)
 	no_s_quote = count_symbol(rl, '\'');
 	// printf("Value of rl: %s\n", rl);
 	// printf("Value of no_double_quote and single_quote: %i and %i \n", no_d_quote, no_s_quote);
-	if (no_d_quote % 2 != 0 || no_s_quote % 2 != 0)
-	{
-		printf("minishell: syntax error\n");
-		return (1);
-	}
+	// if (no_d_quote % 2 != 0 || no_s_quote % 2 != 0)
+	// {
+	// 	printf("minishell: syntax error\n");
+	// 	return (1);
+	// }
 	return (0);
 }
 
@@ -284,7 +313,8 @@ int	main(int argc, char *argv[], char *init_env[])
 		if (check_rl(rl))
 		{}
 		g_interactive = 0;
-		cmds = ft_prepare_command(rl, temp_env);
+		
+		cmds = ft_prepare_command(rl, temp_env, code);
 		// 1. segmation fault when typing: 
 		// echo "hello -> maybe just showed syntax error or something
 		// 2. for case: 
@@ -293,7 +323,7 @@ int	main(int argc, char *argv[], char *init_env[])
 		if (cmds)
 		{
 			cmd_print(cmds);
-			cmds->err_code = code;
+			
 			code = ft_pipex(cmds, &temp_env); //for updating temp_env inside the function
 			// printf("Return code from previous command is: %d\n", code);
 			if (cmds)

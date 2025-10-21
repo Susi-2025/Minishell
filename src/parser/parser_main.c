@@ -22,13 +22,14 @@ char *ft_strjoin_and_free(char *s1, char *s2)
 {
     char    *new_str;
 
-    if (!s1 && !s2)
-        return (ft_strdup(""));
-    if (!s1)
-        return (s2); // s2 is already allocated, just return it
-    if (!s2)
-        return (s1); // s1 is already allocated, just return it
-
+	if (!s1 || !s2)
+    {
+        if (s1)
+            free(s1);
+        if (s2)
+            free(s2);
+        return (NULL);
+    }
     new_str = ft_strjoin(s1, s2);
     free(s1);
     free(s2);
@@ -65,18 +66,20 @@ char *ft_strjoin_and_free(char *s1, char *s2)
 ** This function correctly builds *one* string by processing quotes
 ** and variables in a single pass.
 */
-static int process_word_expansion(char *str, t_simple_cmd **current_cmd, char *env[])
+static int process_word_expansion(t_token *token, t_simple_cmd **current_cmd, char *env[], int exit_code)
 {
     int     i;
     int     start;
     char    *final_cmd;
     char    *tmp;
+	char	*str;
 
     i = 0;
     start = 0;
     final_cmd = ft_strdup(""); // Start with an empty, allocated string
     if (!final_cmd)
 		return (ERROR);
+	str = token->value;
     while (str[i])
     {
         if (str[i] == '\'')
@@ -84,251 +87,221 @@ static int process_word_expansion(char *str, t_simple_cmd **current_cmd, char *e
             // 1. Append the unquoted part before this
             tmp = ft_substr(str, start, i - start);
             final_cmd = ft_strjoin_and_free(final_cmd, tmp);
+			if (!final_cmd)
+				return (MEM_ERROR);
+			
             
             // 2. Find the closing quote and append the literal content
             i++; // Move past opening '
             start = i;
             while (str[i] && str[i] != '\'')
                 i++;
-            if (!str[i]) return (ERROR); // Unclosed quote error
-            
+            if (!str[i])
+			{
+				free(final_cmd);
+				return (ERROR);
+			}            
             tmp = ft_substr(str, start, i - start);
             final_cmd = ft_strjoin_and_free(final_cmd, tmp);
+			if (!final_cmd)
+				return (MEM_ERROR);
             
             i++; // Move past closing '
             start = i;
         }
         else if (str[i] == '\"')
         {
-			printf("---PROCESSING DOUBLE QUOTES-----\n");
 			// 1. Append the unquoted part before this
             tmp = ft_substr(str, start, i - start);
             final_cmd = ft_strjoin_and_free(final_cmd, tmp);
+			if (!final_cmd)
+				return (MEM_ERROR);
             
 			i++;
-			tmp = parse_dquote(str + i, &i, env);
+			tmp = parse_dquote(str + i, &i, env, exit_code);
 			if (tmp == NULL)
+			{
+				free(final_cmd);
 				return (ERROR);
+			}
 			final_cmd = ft_strjoin_and_free(final_cmd, tmp);
-
-            // // 2. Enter "double-quote" mode
-            // i++; // Move past opening "
-            // start = i;
-            // while (str[i] && str[i] != '\"')
-            // {
-            //     if (str[i] == '$')
-            //     {
-            //         // Append part before $
-            //         tmp = ft_substr(str, start, i - start);
-            //         final_cmd = ft_strjoin_and_free(final_cmd, tmp);
-                    
-            //         i++; // Move past $
-            //         // handle_variable expands and updates 'i'
-            //         tmp = handle_variable(str, &i, env); 
-            //         final_cmd = ft_strjoin_and_free(final_cmd, tmp);
-            //         start = i;
-            //     }
-            //     else
-            //         i++;
-            // }
-            // if (!str[i]) return (NULL); // Unclosed quote error
-
-            // // Append final part inside quotes
-            // tmp = ft_substr(str, start, i - start);
-            // final_cmd = ft_strjoin_and_free(final_cmd, tmp);
-            
+			if (!final_cmd)
+				return (MEM_ERROR);
             i++; // Move past closing "
             start = i;
         }
         else if (str[i] == '$')
         {
-			printf("---PROCESSING VAR---\n");
 			tmp = ft_substr(str, start, i - start);
             final_cmd = ft_strjoin_and_free(final_cmd, tmp);
+			if (!final_cmd)
+				return (MEM_ERROR);
+
 			i++;
 			int var_start = i;
+			int var_len = len_until_delim(str + var_start);
+			if (str[i] != '?' && var_len == 0)
+				continue ;
+
 			char *env_value = find_env_value(str + var_start, env, len_until_delim(str + var_start));
-            
-			i += len_until_delim(str + i);
-			
-			final_cmd = handle_var_exp(final_cmd, env_value, current_cmd);
+
+			if (str[i] == '?')
+			{
+				final_cmd = ft_strjoin_and_free(final_cmd, ft_itoa(exit_code));
+				if (!final_cmd)
+					return (MEM_ERROR);
+				i++;
+			}
+			else if (env_value == NULL || env_value[0] =='\0')
+				free(env_value);
+			else
+			{
+				char *var_name = ft_substr(str, var_start, len_until_delim(str + var_start));
+				if (!var_name)
+				{
+					free(env_value);
+					free(final_cmd);
+					return (MEM_ERROR);
+				}
+				final_cmd = handle_var_exp(final_cmd, env_value, current_cmd, var_name);
+				free(var_name);
+				if (!final_cmd)
+					return (MEM_ERROR);
+			}
+			i = i + var_len; 
             start = i;
         }
         else
-        {
             i++;
-        }
     }
 
-    // Append any remaining normal characters at the end
     tmp = ft_substr(str, start, i - start);
     final_cmd = ft_strjoin_and_free(final_cmd, tmp);
-	printf("final_cmd: %s\n", final_cmd);
-	parse_word(final_cmd, current_cmd);
-	free(final_cmd);
+	if (!final_cmd)
+		return (MEM_ERROR);
+
+	if (current_cmd != NULL && final_cmd[0] == '\0')
+    {
+        // If the final string is empty, we check if the *original*
+        // token was an explicit quoted empty string.
+        if (ft_strcmp(token->value, "\"\"") != 0 && ft_strcmp(token->value, "''") != 0)
+        {
+            // The original was NOT "" or ''.
+            // It must have been an expansion like $non.
+            // So, we discard it, just like bash.
+            free(final_cmd);
+            return (SUCCESS);
+        }
+		else
+		{
+			free(final_cmd);
+			final_cmd = ft_strdup("''");
+			if (!final_cmd)
+				return (MEM_ERROR);
+		}
+        // If the original *was* "" or '', we fall through
+        // and let it be added as a valid empty argument.
+    }
+	if (current_cmd == NULL)
+	{
+		free(token->value);
+		token->value = final_cmd;
+	}
+	else
+	{	
+		parse_word(final_cmd, current_cmd);
+		free(final_cmd);
+	}
+
     return (SUCCESS);
 }
 
-// static int	process_word(char *str, t_simple_cmd **current_cmd, char *env[])
+// static int	handle_word_tokens(t_token *token, t_simple_cmd **current_cmd, char *env[])
 // {
-// 	int	start;
-// 	int	i;
-// 	char	*tmp;
-// 	char	*tmp2;
-// 	char	*cmd;
-
-// 	i = 0;
-// 	start = 0;
-// 	tmp = NULL;
-// 	tmp2 = NULL;
-// 	cmd = NULL;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '\"')
-// 		{
-// 			i++;
-// 			tmp = parse_dquote(str + i, env);
-// 			tmp2 = ft_strjoin(cmd, tmp);
-// 			free(tmp);
-// 			free(cmd);
-// 			cmd = tmp2;
-// 		}
-// 		if (str[i] == '\'')
-// 		{
-// 			tmp = ft_substr(str,start, i - start);
-// 			start = i;
-// 			while (str[i] && str[i] !='\'')
-// 				i++;
-// 			if (!str[i])
-// 				return(-1);
-// 			tmp2 = ft_substr(str, start, i - start);
-// 			cmd = ft_strjoin(tmp, tmp2);
-// 			free(tmp);
-// 			free(tmp2);
-// 		}
-// 		if (str[i] == '\'')
-// 		{
-
-// 		}
-// 		i++;
-// 	}
-// 	i = 0;
-
+// 	if (token->type == WORD)
+// 		return (process_word_expansion(token->value, current_cmd, env));
+// 	return (0);
 // }
 
-/*
-	while (i < ft_strlen(str))
-	{
-	// handle for double quote
-		if (dquote == 0 && squote == 0)
-			temp = expand_normal(&stri])
-		else if (dquote == 0 && squote == 0 && str[i] == '\"')
-		{
-			dquote = 1;
-			expand_ignore(&str[i+1],''');
-		}
-		else if (dquote == 1 && str[i] == '\"')
-			dquote = 0; //close dquote flag
-		// handle for single quote
-		else if (dquote == 0 && squote == 0 && str[i] == '\'')
-		{
-			squote = 1;
-			temp = ft_strjoin(temp, &str[i + 1]);
-		}
-		else if (dquote == 0 && squote == 1 && str[i] == '\'')
-			squote = 0;
-		i++;
-	}
-*/
-static int	handle_word_tokens(t_token *token, t_simple_cmd **current_cmd, char *env[])
+static int	process_word(t_token *token, t_simple_cmd **current_cmd, char *env[], int exit_status)
 {
-	// char	*dquote;
-
-	// int		act;
-
+	// if (handle_word_tokens(token, current_cmd, env) == -1)
+	// 	return (-1);
+	int	return_num;
 	if (token->type == WORD)
-		return (process_word_expansion(token->value, current_cmd, env));
-	// if (token->type == VAR_WORD)
-	// 	return (handle_var_expansion(token->value, current_cmd, env));
-	// if (token->type == DQUOTE_WORD)
-	// {
-	// 	dquote = parse_dquote(token->value, env);
-	// 	act = parse_word(dquote, current_cmd);
-	// 	free(dquote);
-	// 	return (act);
-	// }
-	// if (token->type == SQUOTE_WORD)
-	// 	return (parse_word(token->value, current_cmd));
-	return (0);
-}
-
-static int	process_word_and_pipe(t_token *token, t_simple_cmd **current_cmd, char *env[])
-{
-	if (handle_word_tokens(token, current_cmd, env) == -1)
-		return (-1);
-	if (token->type == PIPE)
-		*current_cmd = NULL;
-	return (0);
-}
-
-int	handle_redir_var_expansion(t_token *token, char *env[])
-{
-	char	**var_expansion;
-	int		i;
-
-	var_expansion = expand_var(token->value, env);
-	if (var_expansion == NULL)
-		return (error_redir(token->value));
-	i = 0;
-	while (var_expansion[i] != NULL)
-		i++;
-	if (i > 1)
 	{
-		free_split(var_expansion);
-		return (error_redir(token->value));
+		return_num = process_word_expansion(token, current_cmd, env, exit_status);
+		if (return_num == MEM_ERROR)
+		{
+			printf("minishell: memory error\n");
+			return (ERROR);
+		}
+		else if (return_num == ERROR)
+		{
+			printf("minishell: syntax error\n");
+			return (ERROR);
+		}
 	}
-	free(token->value);
-	token->type = WORD;
-	token->value = ft_strdup(var_expansion[0]);
-	free_split(var_expansion);
-	if (!token->value)
-		return (ERROR);
-	return (0);
+	return (SUCCESS);
 }
 
-static int	handle_redir_word_tokens(t_token *token, t_cmd *cmds)
-{
-	// char	*dquote;
-	char	**env;
+// int	handle_redir_var_expansion(t_token *token, char *env[])
+// {
+// 	char	**var_expansion;
+// 	int		i;
 
-	env = cmds->envp;
+// 	var_expansion = expand_var(token->value, env);
+// 	if (var_expansion == NULL)
+// 		return (error_redir(token->value));
+// 	i = 0;
+// 	while (var_expansion[i] != NULL)
+// 		i++;
+// 	if (i > 1)
+// 	{
+// 		free_split(var_expansion);
+// 		return (error_redir(token->value));
+// 	}
+// 	free(token->value);
+// 	token->type = WORD;
+// 	token->value = ft_strdup(var_expansion[0]);
+// 	free_split(var_expansion);
+// 	if (!token->value)
+// 		return (ERROR);
+// 	return (0);
+// }
 
-	if (token->type == VAR_WORD)
-		return (handle_redir_var_expansion(token,  env));
-	// if (token->type == DQUOTE_WORD)
-	// {
-	// 	dquote = parse_dquote(token->value, env);
-	// 	free(token->value);
-	// 	token->type = WORD;
-	// 	token->value = ft_strdup(dquote);
-	// 	free(dquote);
-	// 	if (!token->value)
-	// 		return (-1);
-	// }
-	if (token->type == SQUOTE_WORD)
-		token->type = WORD;
-	return (0);
-}
+// static int	handle_redir_word_tokens(t_token *token, t_cmd *cmds)
+// {
+// 	// char	*dquote;
+// 	char	**env;
+
+// 	env = cmds->envp;
+
+// 	if (token->type == VAR_WORD)
+// 		return (handle_redir_var_expansion(token,  env));
+// 	// if (token->type == DQUOTE_WORD)
+// 	// {
+// 	// 	dquote = parse_dquote(token->value, env);
+// 	// 	free(token->value);
+// 	// 	token->type = WORD;ERROR
+// 	// 	token->value = ft_strdup(dquote);
+// 	// 	free(dquote);
+// 	// 	if (!token->value)
+// 	// 		return (-1);
+// 	// }
+// 	if (token->type == SQUOTE_WORD)
+// 		token->type = WORD;
+// 	return (0);
+// }
 
 static int	handle_redirection(t_token *tokens, int token_count,
 	int *i, t_cmd *cmds)
 {
 	if (is_redirect_token(tokens[*i].type))
 	{
-		if (tokens[*i + 1].type != TOKEN_EOF && (tokens[*i + 1].type == DQUOTE_WORD ||
-			tokens[*i + 1].type == VAR_WORD || tokens[*i + 1].type == SQUOTE_WORD))
+		if (tokens[*i + 1].type != TOKEN_EOF && tokens[*i + 1].type == WORD)
 		{
-			if (handle_redir_word_tokens(&tokens[*i + 1], cmds) != SUCCESS)
+			if (process_word(&tokens[*i + 1], NULL, cmds->envp, cmds->err_code) != SUCCESS)
 				return (ERROR);
 		}
 		return (parse_redir(tokens, token_count, i, cmds));
@@ -370,7 +343,6 @@ static int	cmd_init(t_cmd *cmds, char *env[])
 {
 	cmds->cmds_capacity = 2;
 	cmds->cmds_count = 0;
-	cmds->err_code = 0; // vietadd for err_code control
 	cmds->heredoc_idx = 0;
 	cmds->envp = env;
 	cmds->err_file = NULL;
@@ -397,12 +369,13 @@ int	parse_tokens(t_cmd *cmds, t_token *tokens, int token_count, char *env[])
 		{
 			if (create_current_cmd(&current_cmd, cmds) == -1)
 				return (ERROR);
-		}
-		printf("TYPE: %d\n", tokens[i].type);
-		if (process_word_and_pipe(&tokens[i], &current_cmd, env) == -1)
+		}	
+		if (process_word(&tokens[i], &current_cmd, env, cmds->err_code) == -1)
 			return (ERROR);
 		if (handle_redirection(tokens, token_count, &i, cmds) == -1)
 			return (ERROR);
+		if (tokens[i].type == PIPE)
+			current_cmd = NULL;
 		i++;
 	}
 	return (SUCCESS);

@@ -18,33 +18,8 @@ void	error_token(t_token *token)
 	token->value = NULL;
 }
 
-// static int	count_token(char *l)
-// {
-// 	int	i;
-// 	int	out;
-// 	int	start;
-
-// 	i = 0;
-// 	start = 0;
-// 	out = 0;
-// 	while (l[i])
-// 	{
-// 		if (is_space(l[i]) == 0 && start == 0) //detect word
-// 		{
-// 			start = 1;
-// 			out++;
-// 		}
-// 		else if (start == 1 && is_space(l[i])) //finish word
-// 			start = 0;
-// 		i++;
-// 	}
-// 	return (out);
-// }
-
 static	void	process_next_token(t_token *token, char *l, int *i)
 {
-	// if (l[*i] == '"' || l[*i] == '\'')
-	// 	quote_word_token(token, i, l);
 	if (l[*i] == '<' || l[*i] == '>')
 		redir_token(token, i, l);
 	else if (l[*i] == '|')
@@ -65,8 +40,7 @@ t_token	*tokenize(char *l, int *token_count)
 	count = 0;
 	i = 0;
 	capacity = 2;
-	// tokens = malloc(sizeof(t_token) * 100);
-	tokens = malloc(sizeof(t_token) * (capacity)); // token1, token2
+	tokens = malloc(sizeof(t_token) * (capacity));
 	
 	if (!tokens)
 		return (NULL);
@@ -78,11 +52,6 @@ t_token	*tokenize(char *l, int *token_count)
 		process_next_token(&tokens[count], l, &i);
 		if (tokens[count].type == ERROR_TOKEN)
 			return (free_tokens(tokens, count), NULL);
-		if (tokens[count].type == WORD)
-		{
-			printf("--WORD--\n");
-			printf("TOKEN VALUE: %s\n", tokens[count].value);
-		}
 		count++;
 		if (count == capacity)
 		{

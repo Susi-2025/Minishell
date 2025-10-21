@@ -136,7 +136,12 @@ int open_last_file(t_vector *files, int flags, t_cmd *cmds, char *env[])
 
         // Open the current file.
         if (flags & O_CREAT)
-            last_fd = open(files->args[i], flags, 0644);
+		{
+			if (files->type[i] == REDIR_APPEND)
+            	last_fd = open(files->args[i], O_WRONLY | O_CREAT | O_APPEND, 0644);
+			else if (files->type[i] == REDIR_OUT)
+				last_fd = open(files->args[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		}
         else
             last_fd = open(files->args[i], flags);
 
@@ -156,7 +161,7 @@ int open_last_file(t_vector *files, int flags, t_cmd *cmds, char *env[])
 // This function runs INSIDE the child to set up its STDIN and STDOUT.
 void handle_io_redirection(t_simple_cmd *cmd, t_object *pipex, t_cmd *cmds, char *env[])
 {
-   	pipex->outfile_fd = open_last_file(cmd->out_file, O_WRONLY | O_CREAT | O_TRUNC, cmds, env);
+	pipex->outfile_fd = open_last_file(cmd->out_file, O_WRONLY | O_CREAT | O_TRUNC, cmds, env);
     
     if (pipex->outfile_fd != -1)
     {

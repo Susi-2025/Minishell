@@ -37,5 +37,6 @@
 # include "vector.h"
 
 # define ERROR -1
+# define MEM_ERROR -2
 # define SUCCESS 0
 #endif

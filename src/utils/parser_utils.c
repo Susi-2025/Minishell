@@ -19,8 +19,12 @@ int	len_until_delim(char *word)
 	if (!word)
 		return (0);
 	i = 0;
-	while (word[i] && ft_isalnum(word[i]))
-		i++;
+	if (ft_isalpha(word[i]) || word[i] == '_')
+    {
+        i++;
+        while (word[i] && (ft_isalnum(word[i]) || word[i] == '_'))
+            i++;
+    }
 	return (i);
 }
 

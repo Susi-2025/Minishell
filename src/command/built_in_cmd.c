@@ -85,7 +85,7 @@ static	void	exec_exit(t_cmd *cmds, char *s, char **temp_env)
 {
 	int	status;
 
-	printf("exit\n");
+	// printf("exit\n");
 	if (s && ft_is_numeric(s))
 		status = ft_atoi(s);
 	else if (s)

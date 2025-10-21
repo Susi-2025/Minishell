@@ -25,13 +25,13 @@ void	free_strings(char **str)
 	free(str);
 }
 
-int	error_redir(char *argv)
+char	*error_redir(char *argv)
 {
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("bash: $", 2);
 	ft_putstr_fd(argv, 2);
     ft_putstr_fd(": ambiguous redirect", 2);
     ft_putstr_fd("'\n", 2);
-	return (ERROR);
+	return (NULL);
 }
 
 void	error_string(char *argv)

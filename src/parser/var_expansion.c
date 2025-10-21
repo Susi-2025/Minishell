@@ -89,7 +89,7 @@ char	**expand_var(char *line_value, char *env[])
 }
 
 
-char	*handle_var_exp(char *prefix, char *env_value, t_simple_cmd **current_cmd)
+char	*handle_var_exp(char *prefix, char *env_value, t_simple_cmd **current_cmd, char *var_name)
 {
 	char	**result;
 	char	*last;
@@ -100,7 +100,15 @@ char	*handle_var_exp(char *prefix, char *env_value, t_simple_cmd **current_cmd)
 	if (!result)
 		return (NULL);
 	result[0] = ft_strjoin_and_free(prefix, result[0]);
+	if (result[0] == NULL)
+		return (NULL);
 	i = 0;
+	if (current_cmd == NULL && result[i + 1] != NULL)
+	{
+		free_split(result);
+		return (error_redir(var_name));
+	}
+
 	while (result[i + 1] != NULL)
 	{
 		if (parse_word(result[i], current_cmd) == -1)

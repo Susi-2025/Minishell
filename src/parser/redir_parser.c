@@ -28,6 +28,8 @@
 int	redir_in_out(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 {
 	int	idx;
+	int	out_index;
+	int	token_index;
 
 	idx = cmds->cmds_count - 1;
 	if (tokens[*i].type == REDIR_IN)
@@ -38,7 +40,11 @@ int	redir_in_out(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 			if (!cmds->simple_cmds[idx]->in_file)
 				return (-1);
 			if (vector_setup(cmds->simple_cmds[idx]->in_file) == VECTOR_ERROR)
-				return (-1);
+            {
+                free(cmds->simple_cmds[idx]->in_file);
+                cmds->simple_cmds[idx]->in_file = NULL;
+                return (-1);
+            }
 		}
 		(*i)++;
 		if (*i < token_count && tokens[*i].type == WORD)
@@ -47,22 +53,31 @@ int	redir_in_out(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 				return (-1);
 		}
 	}
-	else if (tokens[*i].type == REDIR_OUT)
+	else if (tokens[*i].type == REDIR_OUT || tokens[*i].type == REDIR_APPEND)
 	{
+		
 		if (cmds->simple_cmds[idx]->out_file == NULL)
 		{
 			cmds->simple_cmds[idx]->out_file = malloc(sizeof(t_vector));
 			if (!cmds->simple_cmds[idx]->out_file)
 				return (-1);
 			if (vector_setup(cmds->simple_cmds[idx]->out_file) == VECTOR_ERROR)
-				return (-1);
+            {
+                free(cmds->simple_cmds[idx]->out_file);
+                cmds->simple_cmds[idx]->out_file = NULL;
+                return (-1);
+            }
 		}
+		out_index = cmds->simple_cmds[idx]->out_file->args_count;
+		token_index = *i;
 		(*i)++;
 		if (*i < token_count && tokens[*i].type == WORD)
 		{
 			if (vector_push_back(cmds->simple_cmds[idx]->out_file, ft_strdup(tokens[*i].value)) == VECTOR_ERROR)
 				return (-1);
+			cmds->simple_cmds[idx]->out_file->type[out_index] = tokens[token_index].type;
 		}
+
 	}
 	return (0);
 }
@@ -106,7 +121,7 @@ int	redir_special(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 
 int	parse_redir(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 {
-	if (tokens[*i].type == REDIR_IN || tokens[*i].type == REDIR_OUT)
+	if (tokens[*i].type == REDIR_IN || tokens[*i].type == REDIR_OUT || tokens[*i].type == REDIR_APPEND)
 		return (redir_in_out(tokens, token_count, i, cmds));
 	else
 		return (redir_special(tokens, token_count, i, cmds));
