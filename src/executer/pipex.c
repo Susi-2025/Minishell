@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:41:08 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/21 15:49:19 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 19:11:22 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 		if (cmds->cmds_count == 1 && check_built_in(args[0]) == 1)
 		{
 			cmds->err_code = exec_parent(cmds, args, env, args_count);
+			return (cmds->err_code);
 			// ft_printf_fd(2, "Return from parent exec: %d\n", cmds->err_code);
 		}
 		else
