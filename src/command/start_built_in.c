@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 12:57:18 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:39:55 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,35 @@ int	check_built_in(char *cmd)
 	return (0);
 }
 
-void	exec_parent(t_cmd *cmds, char **args, char **env[], int args_count)
+int	exec_parent(t_cmd *cmds, char **args, char **env[], t_object *pipex)
 {
 	int	exit_code;
+	int	args_count;
+	int orig_stdin;
+    int orig_stdout;
 
-	if ((ft_strcmp(args[0], "exit") == 0) && (args_count <= 2))
+    // 1. SAVE the original terminal FDs
+    orig_stdin = dup(STDIN_FILENO);
+    orig_stdout = dup(STDOUT_FILENO);
+    if (orig_stdin == -1 || orig_stdout == -1)
+    {
+        perror("dup");
+        return (1); // Failed to save, exit
+    }
+	args_count = cmds->simple_cmds[0]->args_count;
+	if (handle_io_redirection(cmds->simple_cmds[0], pipex, cmds, *env) == -2)
 	{
-		exit_code = exec_built_in(cmds, args, env, args_count);
-		free_and_exit(cmds, *env, exit_code);
-	}
-	else
-		exec_built_in(cmds, args, env, args_count);
+        // 3a. RESTORE FDs even on redirection failure
+        dup2(orig_stdin, STDIN_FILENO);
+        dup2(orig_stdout, STDOUT_FILENO);
+        close(orig_stdin);
+        close(orig_stdout);
+        return (1); // Return the failure code
+    }
+	exit_code = exec_built_in(cmds, args, env, args_count);
+	dup2(orig_stdin, STDIN_FILENO);
+    dup2(orig_stdout, STDOUT_FILENO);
+    close(orig_stdin);
+    close(orig_stdout);
+	return (exit_code);
 }

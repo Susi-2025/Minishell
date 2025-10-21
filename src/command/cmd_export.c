@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 14:47:17 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 15:29:53 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,31 @@
 
 int	exec_export(t_cmd *cmds, char **args, char ***temp_env)
 {
-	int		i;
+	int	i;
+	int	status;
 
 	if (args[1] == NULL)
 		return (exec_export_only(cmds));
 	i = 1;
+	status = 0;
 	while (args[i])
 	{
 		if (invalid_args(args[i]))
 		{
-			ft_printf_fd(2, "invalid happen\n");
+			// ft_printf_fd(2, "invalid happen\n");
 			error_string_export(args[i]);
 			i++;
+			status++;
 		}
 		if (export_with_args(cmds, args[i], temp_env) == 1)
-			return (1);
+		{
+			if (status == 0)
+				status++;
+			return (status);
+		}
 		i++;
 	}
-	return (0);
+	return (status);
 }
 
 int	export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env)
@@ -39,14 +46,14 @@ int	export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env)
 	char	*args_heads;
 	char	*value;
 
-	ft_printf_fd(2, "Start export with args\n");
+	// ft_printf_fd(2, "Start export with args\n");
 	if (ft_strchr(arg_str, '='))
 		args_heads = ft_strhead(arg_str, '=');
 	else
 		args_heads = arg_str;
 	if (check_var_env(*temp_env, args_heads) == 0)
 	{
-		ft_printf_fd(2,"No found var, start to insert\n");
+		// ft_printf_fd(2,"No found var, start to insert\n");
 		if (insert_env(cmds, arg_str, temp_env) == 1)
 			return (1);
 	}
@@ -54,7 +61,7 @@ int	export_with_args(t_cmd *cmds, char *arg_str, char ***temp_env)
 		&& check_var_env(*temp_env, args_heads) == 1)
 	{
 		value = ft_strtail(arg_str, '=');
-		ft_printf_fd(2, "found and start to update\n");
+		// ft_printf_fd(2, "found and start to update\n");
 		if (update_env(cmds, args_heads, value) == 1)
 			return (1);
 		if (value)

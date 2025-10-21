@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:07:22 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/16 16:35:46 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 19:59:01 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*correct_path(char *cmd, char *env[]);
 void	fd_init(int *infile_fd, int *outfile_fd, t_object *pipex, t_simple_cmd *cmds);
 void	last_close(t_object *pipex);
 void	fire_up_pipeinator(t_object *pipex, t_cmd *cmds);
+int 	handle_io_redirection(t_simple_cmd *cmd, t_object *pipex, t_cmd *cmds, char *env[]);
 void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[]);
 void	child_process(t_object *pipex, int i, t_cmd *cmds, char *env[]);
 void	parent_process(t_object *pipex, int i);

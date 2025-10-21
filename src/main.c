@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/21 11:58:42 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 19:55:48 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -405,19 +405,15 @@ int	main(int argc, char *argv[], char *init_env[])
 		g_interactive = 0;
 		
 		cmds = ft_prepare_command(rl, temp_env, code);
-		// 1. segmation fault when typing: 
-		// echo "hello -> maybe just showed syntax error or something
-		// 2. for case: 
-		// echo $? -> the value of args[1] will be empty, could we store it as: $? ?
-		// I think we need a err_code value for storing -> I put in structs.h
 		if (cmds)
 		{
-			// cmd_print(cmds);
+			// ft_printf_fd(2, "Value of previous err code: %d\n", cmds->err_code);
+			cmd_print(cmds);
 			// error_cmd_fd(0, "exec", "test print fd", "success");
-			cmds->err_code = code;
-			
-			code = ft_pipex(cmds, &temp_env); //for updating temp_env inside the function
-			// printf("Return code from previous command is: %d\n", code);
+			//cmds->err_code = code;
+			ft_pipex(cmds, &temp_env); //updating cmd->err_code inside
+			code = cmds->err_code; //store for temporary
+			// ft_printf_fd(2, "Value of current err code: %d\n", code);
 			if (cmds)
 				free_cmd(cmds);
 		}

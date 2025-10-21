@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:31:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/13 17:30:41 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 20:52:34 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,9 @@ int open_last_file(t_vector *files, int flags, t_cmd *cmds, char *env[])
     int i = 0;
     int last_fd = -1;
 
+	(void) cmds;
+	(void) env;
+	
     if (!files)
         return (-1); // No files to open.
 
@@ -149,9 +152,10 @@ int open_last_file(t_vector *files, int flags, t_cmd *cmds, char *env[])
         if (last_fd == -1)
         {
 			error_string(files->args[i]);
-			free_cmd(cmds);
-			ft_free_triptr(&env);
-			exit(1);
+			// free_cmd(cmds);
+			// ft_free_triptr(&env);
+			// exit(1);
+			return (-2);
         }
         i++;
     }
@@ -159,22 +163,27 @@ int open_last_file(t_vector *files, int flags, t_cmd *cmds, char *env[])
 }
 
 // This function runs INSIDE the child to set up its STDIN and STDOUT.
-void handle_io_redirection(t_simple_cmd *cmd, t_object *pipex, t_cmd *cmds, char *env[])
+int handle_io_redirection(t_simple_cmd *cmd, t_object *pipex, t_cmd *cmds, char *env[])
 {
-	pipex->outfile_fd = open_last_file(cmd->out_file, O_WRONLY | O_CREAT | O_TRUNC, cmds, env);
-    
-    if (pipex->outfile_fd != -1)
-    {
-        dup2(pipex->outfile_fd, STDOUT_FILENO);
-        close(pipex->outfile_fd);
-    }
-
     pipex->infile_fd = open_last_file(cmd->in_file, O_RDONLY, cmds, env);
+	if (pipex->infile_fd == -2) // couldn't open file
+		return (-2);
     if (pipex->infile_fd != -1)
     {
         dup2(pipex->infile_fd, STDIN_FILENO);
         close(pipex->infile_fd);
     }
+
+	
+	pipex->outfile_fd = open_last_file(cmd->out_file, O_WRONLY | O_CREAT | O_TRUNC, cmds, env);
+    if (pipex->outfile_fd == -2) // couldn't open file
+		return (-2);
+    if (pipex->outfile_fd != -1)
+    {
+        dup2(pipex->outfile_fd, STDOUT_FILENO);
+        close(pipex->outfile_fd);
+    }
+	return (0);
 }
 
 void	child_process(t_object *pipex, int i, t_cmd *cmds, char *env[])
@@ -202,7 +211,12 @@ void	child_process(t_object *pipex, int i, t_cmd *cmds, char *env[])
     	close(pipex->pipefd[0]);
     	close(pipex->pipefd[1]);
 	}
-    handle_io_redirection(cmds->simple_cmds[i], pipex, cmds, env);
+    if (handle_io_redirection(cmds->simple_cmds[i], pipex, cmds, env) == -2)
+	{
+		free_cmd(cmds);
+		ft_free_triptr(&env);
+		exit(1);
+	}
 	if (cmds->simple_cmds[i]->args[0] != NULL)
 		run_cmd(pipex, i, cmds, env);
 	else
