@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 15:44:35 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/28 15:03:22 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:13:24 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)

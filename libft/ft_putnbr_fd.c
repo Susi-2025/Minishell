@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:47:01 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/22 18:08:44 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:14:08 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 void	ft_putnbr_fd(int n, int fd)

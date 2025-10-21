@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:51:17 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/28 20:06:01 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:14:57 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strrchr(const char *s, int c)

@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 16:29:22 by vinguyen          #+#    #+#              #
-#    Updated: 2025/09/07 16:50:51 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/10/21 11:56:59 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,6 @@ SRCS = ft_bzero.c ft_calloc.c ft_free_triptr.c \
 	   ft_isascii.c ft_isalpha.c ft_isdigit.c ft_isprint.c \
        ft_atoi.c ft_itoa.c \
 	   ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
-	   ft_putchar_fd.c ft_putendl_fd.c \
-       ft_putnbr_fd.c ft_putstr_fd.c \
 	   ft_striteri.c ft_strlcat.c \
        ft_strmapi.c ft_strcmp.c ft_strnstr.c \
        ft_strrchr.c \
@@ -30,6 +28,12 @@ SRCS = ft_bzero.c ft_calloc.c ft_free_triptr.c \
 	   ft_matrix_dup.c \
 	   ft_strchr_char.c \
 	   ft_strdup_char.c \
+	   ft_printf_fd.c \
+	   ft_putnbr_base_fd.c \
+	   ft_putnbr_base_unsigned_fd.c \
+	   ft_putnbr_fd.c ft_putstr_fd_v.c \
+	   ft_putchar_fd.c ft_putendl_fd.c \
+	   ft_putptr_fd.c \
 	   # ft_isalnum.c \
 	   # ft_strlen.c \
 	   # ft_strlcpy.c \

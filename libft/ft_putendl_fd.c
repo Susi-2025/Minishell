@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:34:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/22 18:14:46 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:14:01 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 void	ft_putendl_fd(char *s, int fd)

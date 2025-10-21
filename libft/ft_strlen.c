@@ -6,9 +6,10 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 10:11:02 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/04/28 22:53:26 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 11:14:41 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 size_t	ft_strlen(const char *s)

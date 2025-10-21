@@ -1,20 +1,16 @@
 NEXT ACTION
-4. Size of token arry in tokenize function which is inside tokenizer.c is not correct.
-5. Check memory leak again -> leak relating to free_cmd
-6. Norminette -> src/command folder
-7. Test with online tester
-
-UPDATED FEATURE BUT NOT YET DONE
-2. Handle echo $? -> viet will did it -> add already but need to wait from parsing
-3. Input echo " -> need to have error syntax -> syntax_check needed -> already added but not sure
-4. Pipe works well with 1 commands, 2 commands but memory leak relating to uninitialised.
-
-DONE- 23/9
-1. Heredoc -> on the way -> cristi simplified it from viet -> good job
-2. Realloc function not allow in create_current_cmd/parse_word which in inside command_builder.c of parser folder -> cristi did it
-3. Handle unset again -> ok
-
-
-DEADLINE
-24/9 -> handle echo $
-
+1. Test with echo 
+	-> we need expand ~
+	-> we need to expand $? to errcode
+	-> in case only $, we need to pass it
+	-> case: 
+		echo $"42$" -> the result in bash is: 42$ but minishell is 42
+		echo "$ " -> must show $ but we have empty
+		echo '$?' -> must show $? but we show 0$?
+		echo "'$?'" -> must show '0' but we show '?'
+		echo "cat lol.c '|' cat > lol.c" must show cat lol.c '|' cat > lol.c but we show empty
+		echo '$USER' "$USER" "text  ' text" must show $USER vinguyen text  ' text but we show empty
+		echo $USER$TESTNOTFOUND$HOME$ must show vinguyen/home/vinguyen$ but we show empty
+2. Test with export
+	-> case:
+		export TEST+=100 -> must add but we have not a valid identifier.
