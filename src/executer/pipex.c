@@ -60,7 +60,8 @@ int	wait_for_children(t_object *pipex)
 			exit_code = WEXITSTATUS(status);
 			// printf("last pid: %d, exit status: %d\n", pipex->last_child_pid, exit_code);
 		}
-		exit_code = WEXITSTATUS(status);
+		// exit_code = WEXITSTATUS(status);
+		
 	}
 	return (exit_code);
 }

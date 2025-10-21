@@ -408,11 +408,12 @@ int	main(int argc, char *argv[], char *init_env[])
 		if (cmds)
 		{
 			// ft_printf_fd(2, "Value of previous err code: %d\n", cmds->err_code);
-			cmd_print(cmds);
+			// cmd_print(cmds);
 			// error_cmd_fd(0, "exec", "test print fd", "success");
 			//cmds->err_code = code;
-			ft_pipex(cmds, &temp_env); //updating cmd->err_code inside
-			code = cmds->err_code; //store for temporary
+			code = ft_pipex(cmds, &temp_env); //updating cmd->err_code inside
+			//printf("EXIT CODE %d\n", code);
+			
 			// ft_printf_fd(2, "Value of current err code: %d\n", code);
 			if (cmds)
 				free_cmd(cmds);
