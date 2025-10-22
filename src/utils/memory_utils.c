@@ -6,45 +6,11 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 19:28:21 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/20 13:59:09 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 16:01:16 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_cmd(t_cmd *cmds)
-{
-	int	i;
-	int	j;
-
-	if (!cmds)
-		return ;
-	i = 0;
-	while (i < cmds->cmds_count)
-	{
-		if (cmds->simple_cmds[i])
-		{
-			j = 0;
-			while (j < cmds->simple_cmds[i]->args_count)
-			{
-				free(cmds->simple_cmds[i]->args[j]);
-				j++;
-			}
-			vector_destroy(cmds->simple_cmds[i]->in_file);
-			vector_destroy(cmds->simple_cmds[i]->out_file);
-			free(cmds->simple_cmds[i]->args);
-			free(cmds->simple_cmds[i]);
-		}
-		i++;
-	}
-	if (cmds->heredoc_files)
-		vector_destroy_heredocs(cmds->heredoc_files);
-	free(cmds->simple_cmds);
-	free(cmds->err_file);
-	free(cmds->file_append);
-	free(cmds);
-	cmds = NULL;
-}
 
 void	free_tokens(t_token *tokens, int count)
 {

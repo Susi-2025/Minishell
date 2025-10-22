@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/16 12:30:39 by vinguyen          #+#    #+#              #
-#    Updated: 2025/10/22 14:42:20 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/10/22 15:56:02 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ HERE_FILES = handle_heredoc.c parse_heredoc.c heredoc_quotes.c
 PARS_FILES = command_builder.c parser_main.c quote_parser.c redir_parser.c var_expansion.c syntax_checker.c 
 TOKEN_FILES = cmd_tokens.c redir_tokens.c tokenizer.c
 UTIL_FILES = err_utils.c char_utils.c cmd_print_utils.c ft_split.c memory_utils.c parser_utils.c str_copying.c \
-			str_utils.c vector.c char_check_utils.c
+			str_utils.c vector.c char_check_utils.c free_cmd.c
 
 SRC =	$(addprefix $(SRC_DIR)/, $(MAIN_FILES)) \
 		$(addprefix $(CMD_DIR)/, $(CMD_FILES)) \
