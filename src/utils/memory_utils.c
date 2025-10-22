@@ -99,10 +99,7 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 	size_t	copy_size;
 
 	if (new_size == 0)
-	{
-		free(ptr);
 		return (NULL);
-	}
 	if (ptr == NULL)
 		return (malloc(new_size));
 	new_ptr = malloc(new_size);
