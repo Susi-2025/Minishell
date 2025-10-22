@@ -44,8 +44,9 @@ typedef struct s_simple_cmd
 	int			args_capacity;
 	int			args_count;
 	char		**args;
-	t_vector	*out_file;
-	t_vector	*in_file;
+	// t_vector	*out_file;
+	// t_vector	*in_file;
+	t_vector	*redirections;
 }	t_simple_cmd;
 
 typedef struct s_cmd
