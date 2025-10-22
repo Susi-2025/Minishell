@@ -48,7 +48,7 @@ int	redir_in(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 	return (0);
 }
 
-int redir_out(t_token *tokens, int token_count, int *i, t_cmd *cmds)
+int	redir_out(t_token *tokens, int token_count, int *i, t_cmd *cmds)
 {
 	t_vector		*vec;
 	t_simple_cmd	*cmd;

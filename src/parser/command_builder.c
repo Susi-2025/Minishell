@@ -12,26 +12,34 @@
 
 #include "minishell.h"
 
-
-int	parse_word(char *word, t_simple_cmd **current_cmd)
+static int	ensure_arg_capacity(t_simple_cmd *cmd)
 {
 	void	*tmp;
 
+	if (cmd->args_count < cmd->args_capacity - 1)
+		return (0);
+	tmp = ft_realloc(cmd->args, sizeof(char *) * cmd->args_capacity,
+			sizeof(char *) * cmd->args_capacity * 2);
+	if (!tmp)
+		return (-1);
+	cmd->args_capacity *= 2;
+	cmd->args = tmp;
+	return (0);
+}
+
+int	parse_word(char *word, t_simple_cmd **current_cmd)
+{
+	t_simple_cmd	*cmd;
+
 	if (word == NULL)
 		return (-1);
-	if ((*current_cmd)->args_count >= (*current_cmd)->args_capacity - 1)
-	{
-		tmp = ft_realloc((*current_cmd)->args, sizeof(char *) * (*current_cmd)->args_capacity, sizeof(char *)
-				* (*current_cmd)->args_capacity * 2);
-		if (!tmp)
-			return (-1);
-		(*current_cmd)->args_capacity *= 2;
-		(*current_cmd)->args = tmp;
-	}
-	(*current_cmd)->args[(*current_cmd)->args_count] = ft_strdup(word);
-	if ((*current_cmd)->args[(*current_cmd)->args_count] == NULL)
+	cmd = *current_cmd;
+	if (ensure_arg_capacity(cmd) == -1)
 		return (-1);
-	(*current_cmd)->args_count++;
-	(*current_cmd)->args[(*current_cmd)->args_count] = NULL;
+	cmd->args[cmd->args_count] = ft_strdup(word);
+	if (cmd->args[cmd->args_count] == NULL)
+		return (-1);
+	cmd->args_count++;
+	cmd->args[cmd->args_count] = NULL;
 	return (0);
 }

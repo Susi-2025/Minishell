@@ -28,93 +28,63 @@ char	*expand_single_var(char *var, char *env[])
 	return (ft_strdup(""));
 }
 
-int	append_literal(char **result, char *line, int start, int end)
+static int	parse_dquote_dollar(t_expansion_state *st, char *line,
+		t_expansion_context *ctx)
 {
-	char	*literal;
-	char	*temp;
-
-	if (start >= end)
-		return (0);
-	literal = ft_substr(line, start, end - start);
-	if (!literal)
-		return (free(*result), -1);
-	temp = ft_strjoin(*result, literal);
-	free(literal);
-	if (!temp)
-		return (free(*result), -1);
-	free(*result);
-	*result = temp;
-	return (0);
-}
-
-int	append_variable(char **result, char *line, int *i, char *env[])
-{
-	char	*var_value;
-	char	*temp;
-	int		var_len;
-
-	var_len = len_until_delim(line + *i);
-	if (var_len == 0)
+	st->i++;
+	if (line[st->i] == '?')
 	{
-		temp = ft_strjoin(*result, "$");
-		free(*result);
-		if (!temp)
+		st->final_str = ft_strjoin_and_free(st->final_str,
+				ft_itoa(ctx->exit_code));
+		if (!st->final_str)
 			return (-1);
-		*result = temp;
-		return (0);
+		st->i++;
 	}
-	var_value = expand_single_var(line + *i, env);
-	if (!var_value)
-		return (free(*result), -1);
-	temp = ft_strjoin(*result, var_value);
-	free(var_value);
-	if (!temp)
-		return (free(*result), -1);
-	free(*result);
-	*result = temp;
-	*i += var_len;
+	else if (append_variable(&st->final_str, line, &st->i, ctx->env) == -1)
+		return (-1);
 	return (0);
 }
 
-char	*parse_dquote(char *line, int *j, char *env[], int exit_code)
+static int	parse_dquote_loop(t_expansion_state *st, char *line,
+		t_expansion_context *ctx)
 {
-	char	*result;
-	int		i;
-	int		start;
-
-	i = 0;
-	start = 0;
-	result = ft_strdup("");
-	if (!result)
-		return (NULL);
-	while (line[i] && line[i] != '\"')
+	while (line[st->i] && line[st->i] != '\"')
 	{
-		if (line[i] == '$')
+		if (line[st->i] == '$')
 		{
-			if (append_literal(&result, line, start, i) == -1)
-				return (NULL);
-			i++;
-			if (line[i] == '?')
-			{
-				result = ft_strjoin_and_free(result, ft_itoa(exit_code));
-				if (!result)
-					return (NULL);
-				i++;
-			}
-			else if (append_variable(&result, line, &i, env) == -1)
-				return (NULL);
-			start = i;
+			if (append_literal(&st->final_str, line, st->start, st->i) == -1)
+				return (-1);
+			if (parse_dquote_dollar(st, line, ctx) == -1)
+				return (-1);
+			st->start = st->i;
 		}
 		else
-			i++;
+			st->i++;
 	}
-	if (line[i] == '\0')
-	{
-		free(result);
+	return (0);
+}
+
+char	*free_final_str(char *final_str)
+{
+	free(final_str);
+	return (NULL);
+}
+
+char	*parse_dquote(char *line, int *j, t_expansion_context *ctx)
+{
+	t_expansion_state	st;
+
+	st.i = 0;
+	st.start = 0;
+	st.final_str = ft_strdup("");
+	if (!st.final_str)
 		return (NULL);
-	}
-	if (append_literal(&result, line, start, i) == -1)
-		return (NULL);
-	(*j) += i;
-	return (result);
+	if (parse_dquote_loop(&st, line, ctx) == -1)
+		return (free_final_str(st.final_str));
+	if (line[st.i] == '\0')
+		return (free_final_str(st.final_str));
+	if (append_literal(&st.final_str, line, st.start, st.i) == -1)
+		return (free_final_str(st.final_str));
+	(*j) += st.i;
+	return (st.final_str);
 }

@@ -40,3 +40,51 @@ int	handle_redirection(t_token *tokens, int token_count, int *i,
 	}
 	return (0);
 }
+
+int	append_literal(char **result, char *line, int start, int end)
+{
+	char	*literal;
+	char	*temp;
+
+	if (start >= end)
+		return (0);
+	literal = ft_substr(line, start, end - start);
+	if (!literal)
+		return (free(*result), -1);
+	temp = ft_strjoin(*result, literal);
+	free(literal);
+	if (!temp)
+		return (free(*result), -1);
+	free(*result);
+	*result = temp;
+	return (0);
+}
+
+int	append_variable(char **result, char *line, int *i, char *env[])
+{
+	char	*var_value;
+	char	*temp;
+	int		var_len;
+
+	var_len = len_until_delim(line + *i);
+	if (var_len == 0)
+	{
+		temp = ft_strjoin(*result, "$");
+		free(*result);
+		if (!temp)
+			return (-1);
+		*result = temp;
+		return (0);
+	}
+	var_value = expand_single_var(line + *i, env);
+	if (!var_value)
+		return (free(*result), -1);
+	temp = ft_strjoin(*result, var_value);
+	free(var_value);
+	if (!temp)
+		return (free(*result), -1);
+	free(*result);
+	*result = temp;
+	*i += var_len;
+	return (0);
+}

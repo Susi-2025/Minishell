@@ -48,7 +48,7 @@ int	handle_double_quote(t_expansion_state *st, char *str,
 	if (!st->final_str)
 		return (MEM_ERROR);
 	st->i++;
-	tmp = parse_dquote(str + st->i, &st->i, ctx->env, ctx->exit_code);
+	tmp = parse_dquote(str + st->i, &st->i, ctx);
 	if (tmp == NULL)
 	{
 		free(st->final_str);
