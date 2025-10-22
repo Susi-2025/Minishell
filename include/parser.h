@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:20:20 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 14:19:52 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 20:03:05 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 typedef struct s_expansion_state
 {
-	int i;
-	int start;
-	char *final_str;
+	int		i;
+	int		start;
+	char	*final_str;
 }	t_expansion_state;
 
 typedef struct s_expansion_context
@@ -56,20 +56,19 @@ int		read_heredoc_to_file(char *del, char *filename, t_cmd *cmds);
 char	*create_heredoc_file(void);
 int		handle_heredoc(t_cmd *cmds, char *del);
 int		syntax_checker(t_token *tokens, int t_count, t_cmd *cmds);
-int	process_word(t_token *token, t_simple_cmd **current_cmd,
-		char *env[], int exit_status);
-
+int		process_word(t_token *token, t_simple_cmd **current_cmd,
+			char *env[], int exit_status);
 char	*parse_dquote(char *line, int *j, t_expansion_context *ctx);
 int		handle_single_quote(t_expansion_state *st, char *str);
 int		handle_double_quote(t_expansion_state *st, char *str,
-		t_expansion_context *ctx);
+			t_expansion_context *ctx);
 int		var_expansion_helper(char *env_value, t_expansion_state *st,
-	char *str, t_expansion_context *ctx);
+			char *str, t_expansion_context *ctx);
 int		handle_regular_var(t_expansion_state *st, char *str,
-		t_expansion_context *ctx);
+			t_expansion_context *ctx);
 int		handle_dollar_expansion(t_expansion_state *st, char *str,
-		t_expansion_context *ctx);
+			t_expansion_context *ctx);
 int		handle_redirection(t_token *tokens, int token_count, int *i,
-		t_cmd *cmds);
+			t_cmd *cmds);
 int		is_redirect_token(int type);
 #endif

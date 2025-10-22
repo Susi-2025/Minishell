@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 16:25:20 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/22 15:33:53 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 20:01:43 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@
 # define SUCCESS 0
 # define DISCARD_TOKEN -3
 
-t_cmd   *ft_prepare_command(char *line, char *env[], int error_code);
+t_cmd	*ft_prepare_command(char *line, char *env[], int error_code);
 #endif
