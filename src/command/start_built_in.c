@@ -6,11 +6,13 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 20:39:55 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:32:46 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static	void	dup_std(int orig_stdin, int orig_stdout);
 
 int	check_built_in(char *cmd)
 {
@@ -37,31 +39,31 @@ int	exec_parent(t_cmd *cmds, char **args, char **env[], t_object *pipex)
 {
 	int	exit_code;
 	int	args_count;
-	int orig_stdin;
-    int orig_stdout;
+	int	orig_stdin;
+	int	orig_stdout;
 
-    // 1. SAVE the original terminal FDs
-    orig_stdin = dup(STDIN_FILENO);
-    orig_stdout = dup(STDOUT_FILENO);
-    if (orig_stdin == -1 || orig_stdout == -1)
-    {
-        perror("dup");
-        return (1); // Failed to save, exit
-    }
+	orig_stdin = dup(STDIN_FILENO);
+	orig_stdout = dup(STDOUT_FILENO);
+	if (orig_stdin == -1 || orig_stdout == -1)
+	{
+		perror("dup");
+		return (1);
+	}
 	args_count = cmds->simple_cmds[0]->args_count;
 	if (handle_io_redirection(cmds->simple_cmds[0], pipex, cmds, *env) == -2)
 	{
-        // 3a. RESTORE FDs even on redirection failure
-        dup2(orig_stdin, STDIN_FILENO);
-        dup2(orig_stdout, STDOUT_FILENO);
-        close(orig_stdin);
-        close(orig_stdout);
-        return (1); // Return the failure code
-    }
+		dup_std(orig_stdin, orig_stdout);
+		return (1);
+	}
 	exit_code = exec_built_in(cmds, args, env, args_count);
-	dup2(orig_stdin, STDIN_FILENO);
-    dup2(orig_stdout, STDOUT_FILENO);
-    close(orig_stdin);
-    close(orig_stdout);
+	dup_std(orig_stdin, orig_stdout);
 	return (exit_code);
+}
+
+static	void	dup_std(int orig_stdin, int orig_stdout)
+{
+	dup2(orig_stdin, STDIN_FILENO);
+	dup2(orig_stdout, STDOUT_FILENO);
+	close(orig_stdin);
+	close(orig_stdout);
 }

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:07:22 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/21 19:59:01 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:17:15 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/types.h>
 # include <string.h>
 # include <errno.h>
+# include <sys/stat.h>  //for lstat
 
 # include "structs.h"
 
@@ -80,4 +81,13 @@ int		handle_io_redirection(t_simple_cmd *cmd,
 void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[]);
 void	child_process(t_object *pipex, int i, t_cmd *cmds, char *env[]);
 void	parent_process(t_object *pipex, int i);
+
+void	exec_external(t_cmd *cmds, char **args, char *env[]);
+
+// code handling
+void	handle_no_file(t_cmd *cmds, char *arg, char *env[], int exit_code);
+void	handle_cmd_path_err(t_cmd *cmds, char *msg, char *env[], int exit_code);
+void	print_error(char *str, char *msg);
+void	handle_exec_error(t_cmd *cmd, char *cmd_path, char *env[]);
+void	handle_cmd_error(t_cmd *cmds, char *arg, char *env[], int exit_code);
 #endif

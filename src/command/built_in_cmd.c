@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 19:30:07 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:46:55 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static	int	exec_pwd(t_cmd *cmds);
 static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env);
-static	int	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count);
 
 int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 {
@@ -43,7 +42,7 @@ static	int	exec_pwd(t_cmd *cmds)
 
 	out = find_var(cmds->envp, "PWD=");
 	if (out)
-		ft_printf_fd(1, "%s\n", out);
+		printf("%s\n", out);
 	else
 		return (error_msg(1, "pwd"));
 	return (0);
@@ -57,14 +56,13 @@ int	exec_env(t_cmd *cmds, char *arg, int args_count)
 	if (!cmds->envp)
 		return (error_msg(1, "envp"));
 	if (args_count != 1)
-		return (error_cmd(127, "env", arg, NO_SUCH_FILE ));
-	//int	error_env(int code, char *str_cmd, char *arg, char *message)
+		return (error_cmd(127, "env", arg, NO_SUCH_FILE));
 	i = 0;
 	len = ft_len_2d(cmds->envp);
 	while (i < len)
 	{
 		if (ft_strchr(cmds->envp[i], '=') && cmds->envp[i])
-			ft_printf_fd(1, "%s\n", cmds->envp[i]);
+			printf("%s\n", cmds->envp[i]);
 		i++;
 	}
 	return (0);
@@ -72,47 +70,13 @@ int	exec_env(t_cmd *cmds, char *arg, int args_count)
 
 static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 {
-	// if (!temp_env || !args[1])
 	if (!temp_env)
 	{
-		ft_printf_fd(2, "Error:\n");
+		printf("Error:\n");
 		return (1);
 	}
 	else if (!args[1])
-		return (1);
+		return (0);
 	else
-	{
-		// printf("Execute unset\n");
 		return (reduce_env(cmds, args[1], temp_env));
-	}
-}
-
-static	int	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count)
-{
-	int	status;
-
-	status = cmds->err_code;
-	if (args_count > 2)
-	{
-		if (ft_is_numeric(s) == 0)
-		{
-			ft_printf_fd(2, "exit\n");
-			status = error_cmd_fd(2, "exit", s, NUM_ARG); // will exit
-			free_and_exit(cmds, temp_env, status);
-		}
-		else
-			return(error_cmd_fd(1, "bash", "exit", MANY_ARGS)); // no exit
-	}
-	else
-	{
-		ft_printf_fd(2, "exit\n");
-		if (s && ft_is_numeric(s))
-			status = ft_atoi(s);
-		else if (s)
-			status = error_cmd_fd(2, "exit", s, NUM_ARG);
-		else
-			status = 0;
-		free_and_exit(cmds, temp_env, status);
-	}
-	return (status);
 }

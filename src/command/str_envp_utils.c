@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/20 18:33:22 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:34:52 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	invalid_args(char *str)
 	invalid = 0;
 	while (str[i] && str[i] != '=')
 	{
-		if (!(ft_isalnum(str[i]) || str[i] == '"' || str[i] == '\'' || str[i] == '_'))
+		if (!(ft_isalnum(str[i]) || str[i] == '"'
+				|| str[i] == '\'' || str[i] == '_'))
 			invalid++;
 		i++;
 	}

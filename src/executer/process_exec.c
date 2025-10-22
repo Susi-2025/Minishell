@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:31:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/21 20:52:34 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 11:58:44 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 {
 	char	**args;
-	char	*path;
+	// char	*path;
 	int		args_count;
 	int		exit_code;
 	//Eliminate this struct
@@ -38,34 +38,48 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 	else 
 	// if (check_built_in(args[0]) != 1)
 	{
+		exec_external(cmds, args, env);
+		// free_cmd(cmds);
+		// ft_free_triptr(&env);
+		free_and_exit(cmds, env, 127);
+		// exit(127);
 		// printf("Execute external in pipex\n");
-		path = correct_path(args[0], env);
-		if (path != NULL)
-		{
-			free(args[0]);
-			args[0] = path;
-		}
-		// printf("args[0]: %s\n", args[0]);
-		// if (!args[0])
+		// path = correct_path(args[0], env);
+		// if (path != NULL)
 		// {
-		// 	printf("we are here");
-		// 	error_string(args[0]);
-		// 	exit(127);
+		// 	free(args[0]);
+		// 	args[0] = path;
 		// }
-		// STDIN -> {grep, -a, by, NULL}-> STDOUT
-		execve(args[0], args, env);
-		if (errno == ENOENT)
-		{
-			if (!path_exists(env))
-				error_string(args[0]);
-			else
-				failed_exec(args[0]);
-		}
-		else
-			error_string(args[0]);
-		free_cmd(cmds);
-		ft_free_triptr(&env);
-		exit(127);
+		// if (path == NULL) // not found path with args[0]
+		// // printf("args[0]: %s\n", args[0]);
+		// // if (!args[0])
+		// // {
+		// // 	printf("we are here");
+		// // 	error_string(args[0]);
+		// // 	exit(127);
+		// // }
+		// // STDIN -> {grep, -a, by, NULL}-> STDOUT
+		// execve(args[0], args, env);
+		// if (errno == ENOENT)
+		// {
+		// 	if (!path_exists(env))
+		// 		error_string(args[0]);
+		// 	else
+		// 		failed_exec(args[0]);
+		// }
+		// else
+		// {
+
+		// 	error_string(args[0]);
+		// 	free_cmd(cmds);
+		// 	ft_free_triptr(&env);
+		// 	exit(126);
+			
+		// }
+
+		// free_cmd(cmds);
+		// ft_free_triptr(&env);
+		// exit(127);
 	}
 }
 
