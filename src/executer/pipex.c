@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:41:08 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 17:58:06 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 18:12:08 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ void	pipe_and_fork_logic(t_object *pipex, int i, t_cmd *cmds, char *env[])
 }
 
 int	wait_for_children(t_object *pipex)
-{ 
-	int	status;
-	int	exit_code;
+{
+	int		status;
+	int		exit_code;
 	pid_t	pid;
+
 	exit_code = 0;
 	pid = wait(&status);
 	while (pid > 0)
@@ -49,7 +50,6 @@ int	wait_for_children(t_object *pipex)
 	}
 	return (exit_code);
 }
-
 
 int	ft_pipex(t_cmd *cmds, char **env[])
 {
@@ -77,4 +77,3 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 	last_close(&pipex);
 	return (wait_for_children(&pipex));
 }
-
