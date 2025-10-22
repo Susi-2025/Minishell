@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:55:28 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/16 14:57:17 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:17:47 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@
 int		vector_setup(t_vector *vector);
 int		vector_push_back(t_vector *vector, char *element);
 void	vector_destroy(t_vector *vector);
-void	vector_destroy_heredocs(t_vector* vector);
-
+void	vector_destroy_heredocs(t_vector *vector);
 #endif

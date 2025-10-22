@@ -1,15 +1,15 @@
 
 #include "minishell.h"
 
-static	char	*check_cmd_only(t_cmd *cmds, char *arg, char *env[]);
+static char	*check_cmd_only(t_cmd *cmds, char *arg, char *env[]);
 // static	int		check_path_envp(char **envp);
 // static	char	*get_path(char **envp, char *cmd);
 // static	char	*find_path_envp(char **envp);
 // static	char	*check_execution(char **path_parts, char *cmd);
 
 void	exec_external(t_cmd *cmds, char **args, char *env[])
-{	
-	char	*path;
+{
+	char		*path;
 	struct stat	st;
 
 	path = check_cmd_only(cmds, args[0], env);
@@ -64,7 +64,7 @@ void	exec_external(t_cmd *cmds, char **args, char *env[])
 	// handle_exec_error(cmds, path, env);
 }
 
-static	char	*check_cmd_only(t_cmd *cmds, char *arg, char *env[])
+static char	*check_cmd_only(t_cmd *cmds, char *arg, char *env[])
 {
 	char	*out;
 

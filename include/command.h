@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 20:26:34 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:13:12 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # define NUM_ARG "numeric argument required"
 # define MANY_ARGS "too many arguments"
 # define NO_SUCH_FILE "No such file or directory"
-# define ERR_EMPTY_FOLDER "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory"
+# define ERR_EMPTY_FOLDER "cd: error retrieving current directory:\
+getcwd: cannot access parent directories: No such file or directory"
 // command
 // int		exec_parent(t_cmd *cmds, char **args, char **env[], int args_count);
 int		exec_parent(t_cmd *cmds, char **args, char **env[], t_object *pipex);

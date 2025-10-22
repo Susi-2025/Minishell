@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 20:58:51 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:09:48 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	exec_env(t_cmd *cmds, char *arg, int args_count)
 		return (error_msg(1, "envp"));
 	if (args_count != 1)
 		return (error_cmd(127, "env", arg, NO_SUCH_FILE ));
-	//int	error_env(int code, char *str_cmd, char *arg, char *message)
 	i = 0;
 	len = ft_len_2d(cmds->envp);
 	while (i < len)
@@ -72,7 +71,6 @@ int	exec_env(t_cmd *cmds, char *arg, int args_count)
 
 static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 {
-	// if (!temp_env || !args[1])
 	if (!temp_env)
 	{
 		ft_printf_fd(2, "Error:\n");
@@ -81,10 +79,7 @@ static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 	else if (!args[1])
 		return (0);
 	else
-	{
-		// printf("Execute unset\n");
 		return (reduce_env(cmds, args[1], temp_env));
-	}
 }
 
 static	int	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count)

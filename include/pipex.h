@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:07:22 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 13:05:12 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:17:15 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@
 # include <sys/types.h>
 # include <string.h>
 # include <errno.h>
-#include <sys/stat.h>  //for lstat
+# include <sys/stat.h>  //for lstat
 
 # include "structs.h"
 
-typedef enum s_status {
-    FILE_NONE = 0,      // no infile
-    FILE_ERROR = -1,    // open failed
-    FILE_VALID = 1      // valid fd
-} t_status;
+typedef enum s_status
+{
+	FILE_NONE = 0,	// no infile
+	FILE_ERROR = -1,// open failed
+	FILE_VALID = 1	// valid fd
+}	t_status;
 
 typedef struct s_object
 {
@@ -38,10 +39,9 @@ typedef struct s_object
 	int			outfile_fd;
 	int			file_flags[2];
 	char		**cmd;
-	// int		status;
-	int		num_commands;
-	int		last_status;
-	t_status status;
+	int			num_commands;
+	int			last_status;
+	t_status	status;
 }	t_object;
 
 // viet add for here_doc
@@ -72,11 +72,12 @@ char	*error_redir(char *argv);
 
 int		path_exists(char *env[]);
 char	*correct_path(char *cmd, char *env[]);
-// char	**parse_cmd(char *argv, char *env[]);
-void	fd_init(int *infile_fd, int *outfile_fd, t_object *pipex, t_simple_cmd *cmds);
+void	fd_init(int *infile_fd, int *outfile_fd, t_object *pipex,
+			t_simple_cmd *cmds);
 void	last_close(t_object *pipex);
 void	fire_up_pipeinator(t_object *pipex, t_cmd *cmds);
-int 	handle_io_redirection(t_simple_cmd *cmd, t_object *pipex, t_cmd *cmds, char *env[]);
+int		handle_io_redirection(t_simple_cmd *cmd, t_object *pipex,
+			t_cmd *cmds, char *env[]);
 void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[]);
 void	child_process(t_object *pipex, int i, t_cmd *cmds, char *env[]);
 void	parent_process(t_object *pipex, int i);
@@ -85,10 +86,8 @@ void	exec_external(t_cmd *cmds, char **args, char *env[]);
 
 // code handling
 void	handle_no_file(t_cmd *cmds, char *arg, char *env[], int exit_code);
-// void	handle_envp_error(t_cmd *cmds, char *arg, char *env[], int exit_code);
 void	handle_cmd_path_err(t_cmd *cmds, char *msg, char *env[], int exit_code);
 void	print_error(char *str, char *msg);
 void	handle_exec_error(t_cmd *cmd, char *cmd_path, char *env[]);
 void	handle_cmd_error(t_cmd *cmds, char *arg, char *env[], int exit_code);
 #endif
-
