@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 19:27:52 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/14 19:15:56 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 21:49:59 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ static t_simple_cmd	*init_simple_cmd(void)
 		return (NULL);
 	}
 	new_cmd->args[0] = NULL;
-	new_cmd->in_file = NULL;
-	new_cmd->out_file = NULL;
+	new_cmd->redirections = NULL;
 	return (new_cmd);
 }
 

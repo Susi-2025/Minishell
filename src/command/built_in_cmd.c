@@ -6,13 +6,13 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 15:19:59 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 22:34:22 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	exec_pwd(t_cmd *cmds);
+// static	int	exec_pwd(t_cmd *cmds);
 static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env);
 
 int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
@@ -36,7 +36,7 @@ int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 	return (0);
 }
 
-static	int	exec_pwd(t_cmd *cmds)
+int	exec_pwd(t_cmd *cmds)
 {
 	char	*out;
 

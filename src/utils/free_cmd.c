@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:59:25 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 16:00:37 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 21:49:45 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ static	void	free_simple_cmds(t_cmd *cmds)
 				free(cmds->simple_cmds[i]->args[j]);
 				j++;
 			}
-			vector_destroy(cmds->simple_cmds[i]->in_file);
-			vector_destroy(cmds->simple_cmds[i]->out_file);
+			vector_destroy(cmds->simple_cmds[i]->redirections);
 			free(cmds->simple_cmds[i]->args);
 			free(cmds->simple_cmds[i]);
 		}
