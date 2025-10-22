@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:07:22 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 14:17:15 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 17:04:22 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ char	*ft_strcpy(char *dest, char *src);
 /* Memory and error*/
 void	free_strings(char **str);
 void	error_string(char *argv);
-void	error_string_export(char *argv);
 void	failed_exec(char *argv);
 char	**cmd_error(char *argv);
 void	error_syntax(char *argv);
@@ -86,8 +85,5 @@ void	exec_external(t_cmd *cmds, char **args, char *env[]);
 
 // code handling
 void	handle_no_file(t_cmd *cmds, char *arg, char *env[], int exit_code);
-void	handle_cmd_path_err(t_cmd *cmds, char *msg, char *env[], int exit_code);
-void	print_error(char *str, char *msg);
-void	handle_exec_error(t_cmd *cmd, char *cmd_path, char *env[]);
 void	handle_cmd_error(t_cmd *cmds, char *arg, char *env[], int exit_code);
 #endif
