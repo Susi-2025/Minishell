@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:31:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 18:10:14 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 18:29:07 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,65 +38,6 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		exec_external(cmds, args, env);
 		free_and_exit(cmds, env, 127);
 	}
-}
-
-int	open_last_file(t_vector *files, int flags, t_cmd *cmds, char *env[])
-{
-	int	i;
-	int	last_fd;
-
-	(void)cmds;
-	(void)env;
-	if (!files)
-		return (-1);
-	i = 0;
-	last_fd = -1;
-	while (i < files->args_count)
-	{
-		if (last_fd != -1)
-			close(last_fd);
-		if (flags & O_CREAT)
-		{
-			if (files->type[i] == REDIR_APPEND)
-				last_fd = open(files->args[i], O_WRONLY | O_CREAT | O_APPEND,
-						0644);
-			else if (files->type[i] == REDIR_OUT)
-				last_fd = open(files->args[i], O_WRONLY | O_CREAT | O_TRUNC,
-						0644);
-		}
-		else
-			last_fd = open(files->args[i], flags);
-		if (last_fd == -1)
-		{
-			error_string(files->args[i]);
-			return (-2);
-		}
-		i++;
-	}
-	return (last_fd);
-}
-
-int	handle_io_redirection(t_simple_cmd *cmd, t_object *pipex, t_cmd *cmds,
-		char *env[])
-{
-	pipex->infile_fd = open_last_file(cmd->in_file, O_RDONLY, cmds, env);
-	if (pipex->infile_fd == -2)
-		return (-2);
-	if (pipex->infile_fd != -1)
-	{
-		dup2(pipex->infile_fd, STDIN_FILENO);
-		close(pipex->infile_fd);
-	}
-	pipex->outfile_fd = open_last_file(cmd->out_file,
-			O_WRONLY | O_CREAT | O_TRUNC, cmds, env);
-	if (pipex->outfile_fd == -2)
-		return (-2);
-	if (pipex->outfile_fd != -1)
-	{
-		dup2(pipex->outfile_fd, STDOUT_FILENO);
-		close(pipex->outfile_fd);
-	}
-	return (0);
 }
 
 void	child_process(t_object *pipex, int i, t_cmd *cmds, char *env[])
