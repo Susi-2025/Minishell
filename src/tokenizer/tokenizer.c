@@ -18,7 +18,7 @@ void	error_token(t_token *token)
 	token->value = NULL;
 }
 
-static	void	process_next_token(t_token *token, char *l, int *i)
+static void	process_next_token(t_token *token, char *l, int *i)
 {
 	if (l[*i] == '<' || l[*i] == '>')
 		redir_token(token, i, l);
@@ -41,7 +41,6 @@ t_token	*tokenize(char *l, int *token_count)
 	i = 0;
 	capacity = 2;
 	tokens = malloc(sizeof(t_token) * (capacity));
-	
 	if (!tokens)
 		return (NULL);
 	while (l[i])
@@ -55,7 +54,8 @@ t_token	*tokenize(char *l, int *token_count)
 		count++;
 		if (count == capacity)
 		{
-			tokens = ft_realloc(tokens, capacity * sizeof(t_token), capacity * 2 * sizeof(t_token));
+			tokens = ft_realloc(tokens, capacity * sizeof(t_token), capacity * 2
+					* sizeof(t_token));
 			capacity *= 2;
 		}
 	}
@@ -63,4 +63,3 @@ t_token	*tokenize(char *l, int *token_count)
 	*token_count = count;
 	return (tokens);
 }
-

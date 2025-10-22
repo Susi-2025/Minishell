@@ -33,10 +33,10 @@ typedef struct s_token
 
 typedef struct s_vector
 {
-	int		args_capacity;
-	int		args_count;
-	t_token_type *type;
-	char	**args;
+	int				args_capacity;
+	int				args_count;
+	t_token_type	*type;
+	char			**args;
 }	t_vector;
 
 typedef struct s_simple_cmd
@@ -48,17 +48,14 @@ typedef struct s_simple_cmd
 	t_vector	*in_file;
 }	t_simple_cmd;
 
-
 typedef struct s_cmd
 {
 	int				cmds_capacity;
 	int				cmds_count;
-	int				err_code; //vietadd for handle error code
-	t_simple_cmd	**simple_cmds; // cmd1(in, out) cmd2(in, out) cmd3(in,out)
-
-	t_vector        *heredoc_files;
+	int				err_code;
+	t_simple_cmd	**simple_cmds;
+	t_vector		*heredoc_files;
 	int				heredoc_idx;
-
 	char			*err_file;
 	char			*file_append;
 	char			**envp;

@@ -39,4 +39,7 @@
 # define ERROR -1
 # define MEM_ERROR -2
 # define SUCCESS 0
+
+
+t_cmd   *ft_prepare_command(char *line, char *env[], int error_code);
 #endif

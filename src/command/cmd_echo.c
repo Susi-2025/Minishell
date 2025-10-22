@@ -41,7 +41,7 @@ int	exec_echo(t_cmd *cmds, char **args, int args_count)
         }
 		echo_args(args[i], &stop_check, &no_nl);
 		if ((check_n_cd(args[i]) == 1) && (i < (args_count - 1)))
-			ft_printf_fd(1, " ");
+			printf(" ");
 		i++;
 	}
 	if (no_nl == 0)

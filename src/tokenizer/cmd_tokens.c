@@ -25,32 +25,8 @@ void	eof_token(t_token *tokens, int *count)
 	tokens[*count].value = NULL;
 }
 
-void	word_token(t_token *token, char *l, int *i)
+void	token_assignment(int len, t_token *token, int start, char *l)
 {
-	int	start;
-	int	len;
-	int quote_flag;
-	char	c;
-
-	start = *i;
-	quote_flag = 0; 
-	while (l[*i] && (quote_flag != 0 || (!is_space(l[*i]) && !is_delimiter(l[*i]))))
-	{
-		c = l[*i];
-		if (quote_flag == 0)
-        {
-            // Not inside quotes: check for a new opening quote
-            if (c == '\"' || c == '\'')
-                quote_flag = c; // Set the *active* quote
-        }
-        else if (c == quote_flag)
-        {
-            // Inside quotes: check for the *matching* closing quote
-            quote_flag = 0; // Close it
-        }
-		(*i)++;
-	}	
-	len = *i - start;
 	if (len > 0)
 	{
 		token->value = malloc(len + 1);
@@ -59,4 +35,32 @@ void	word_token(t_token *token, char *l, int *i)
 		ft_strlcpy(token->value, l + start, len + 1);
 		token->type = WORD;
 	}
+}
+
+void	word_token(t_token *token, char *l, int *i)
+{
+	int		start;
+	int		len;
+	int		quote_flag;
+	char	c;
+
+	start = *i;
+	quote_flag = 0;
+	while (l[*i] && (quote_flag != 0 || (!is_space(l[*i])
+				&& !is_delimiter(l[*i]))))
+	{
+		c = l[*i];
+		if (quote_flag == 0)
+		{
+			if (c == '\"' || c == '\'')
+				quote_flag = c;
+		}
+		else if (c == quote_flag)
+		{
+			quote_flag = 0;
+		}
+		(*i)++;
+	}
+	len = *i - start;
+	token_assignment(len, token, start, l);
 }

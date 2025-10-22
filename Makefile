@@ -23,13 +23,13 @@ PARS_DIR = $(SRC_DIR)/parser
 TOKEN_DIR = $(SRC_DIR)/tokenizer
 UTIL_DIR = $(SRC_DIR)/utils
 
-MAIN_FILES = main.c
+MAIN_FILES = main.c prepare_cmd.c
 CMD_FILES = built_in_cmd.c cmd_cd.c cmd_echo.c cmd_export.c \
 			envp_utils.c free_mem_utils.c init_envp.c start_built_in.c array_utils.c \
 			built_in_cmd_utils.c print_utils.c str_envp_utils.c
 EXE_FILES = error_handling.c init_and_close.c path_expansion.c pipex.c process_exec.c
-HERE_FILES = heredoc_exec.c heredoc_pipe.c heredoc_utility.c
-PARS_FILES = command_builder.c parser_main.c quote_parser.c redir_parser.c var_expansion.c 
+HERE_FILES = handle_heredoc.c parse_heredoc.c heredoc_quotes.c
+PARS_FILES = command_builder.c parser_main.c quote_parser.c redir_parser.c var_expansion.c syntax_checker.c 
 TOKEN_FILES = cmd_tokens.c redir_tokens.c tokenizer.c
 UTIL_FILES = err_utils.c char_utils.c cmd_print_utils.c ft_split.c memory_utils.c parser_utils.c str_copying.c \
 			str_utils.c vector.c char_check_utils.c
