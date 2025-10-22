@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 14:45:39 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 14:46:22 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:57:42 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count)
 			free_and_exit(cmds, temp_env, status);
 		}
 		else
-			return (error_cmd_fd(1, "bash", "exit", MANY_ARGS));
+			return (error_cmd_fd(1, "exit", "", MANY_ARGS));
 	}
 	else
 	{
