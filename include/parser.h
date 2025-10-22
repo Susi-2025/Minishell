@@ -15,6 +15,20 @@
 /* Needed in order to use the type definitions */
 # include "structs.h"
 
+typedef struct s_expansion_state
+{
+	int i;
+	int start;
+	char *final_str;
+}	t_expansion_state;
+
+typedef struct s_expansion_context
+{
+	char			**env;
+	int				exit_code;
+	t_simple_cmd	**current_cmd;
+}	t_expansion_context;
+
 void	free_cmd(t_cmd *cmds);
 int		parse_tokens(t_cmd *cmds, t_token *tokens,
 			int token_count, char *env[]);
@@ -42,4 +56,16 @@ int		read_heredoc_to_file(char *del, char *filename, t_cmd *cmds);
 char	*create_heredoc_file(void);
 int		handle_heredoc(t_cmd *cmds, char *del);
 int		syntax_checker(t_token *tokens, int t_count, t_cmd *cmds);
+int	process_word(t_token *token, t_simple_cmd **current_cmd,
+		char *env[], int exit_status);
+
+int		handle_single_quote(t_expansion_state *st, char *str);
+int		handle_double_quote(t_expansion_state *st, char *str,
+		t_expansion_context *ctx);
+int		var_expansion_helper(char *env_value, t_expansion_state *st,
+	char *str, t_expansion_context *ctx);
+int		handle_regular_var(t_expansion_state *st, char *str,
+		t_expansion_context *ctx);
+int		handle_dollar_expansion(t_expansion_state *st, char *str,
+		t_expansion_context *ctx);
 #endif

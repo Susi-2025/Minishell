@@ -28,6 +28,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin_and_free(char *s1, char *s2);
 
 /* Array utilities */
 char	**ft_split(char const *str, char c);

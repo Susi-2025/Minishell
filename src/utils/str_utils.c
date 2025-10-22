@@ -60,3 +60,21 @@ int	skip_whitespace(char *l, int i)
 		i++;
 	return (i);
 }
+
+char	*ft_strjoin_and_free(char *s1, char *s2)
+{
+	char	*new_str;
+
+	if (!s1 || !s2)
+	{
+		if (s1)
+			free(s1);
+		if (s2)
+			free(s2);
+		return (NULL);
+	}
+	new_str = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (new_str);
+}
