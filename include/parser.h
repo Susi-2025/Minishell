@@ -68,4 +68,7 @@ int		handle_regular_var(t_expansion_state *st, char *str,
 		t_expansion_context *ctx);
 int		handle_dollar_expansion(t_expansion_state *st, char *str,
 		t_expansion_context *ctx);
+int		handle_redirection(t_token *tokens, int token_count, int *i,
+		t_cmd *cmds);
+int		is_redirect_token(int type);
 #endif
