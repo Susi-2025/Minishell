@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 21:13:40 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/21 21:22:24 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ int	exec_echo(t_cmd *cmds, char **args, int args_count)
 		echo_args(args[i], &stop_check, &no_nl);
 		if ((check_n_cd(args[i]) == 1) && (i < (args_count - 1)))
 		{
-			
-			ft_printf_fd(STDIN_FILENO, " ");
+			// printf("need to jump here\n");
+			printf(" ");
+			// ft_printf_fd(1, " ");
 		}
 		i++;
 	}
