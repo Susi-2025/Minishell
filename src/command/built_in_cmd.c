@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 14:46:55 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:19:59 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	exec_env(t_cmd *cmds, char *arg, int args_count)
 	if (!cmds->envp)
 		return (error_msg(1, "envp"));
 	if (args_count != 1)
-		return (error_cmd(127, "env", arg, NO_SUCH_FILE));
+		return (error_cmd_fd(127, "env", arg, NO_SUCH_FILE));
 	i = 0;
 	len = ft_len_2d(cmds->envp);
 	while (i < len)

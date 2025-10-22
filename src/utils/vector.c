@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:59:27 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/20 14:08:33 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:41:15 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	vector_setup(t_vector *vector)
 	{
 		free(vector->args);
 		return (VECTOR_ERROR);
-
 	}
 	return (VECTOR_SUCCESS);
 }
@@ -63,7 +62,6 @@ void	vector_destroy(t_vector *vector)
 		free(vector->args[i]);
 		i++;
 	}
-
 	if (vector->args)
 		free(vector->args);
 	if (vector->type)
@@ -80,12 +78,12 @@ int	vector_grow(t_vector *vector)
 	if (!tmp)
 		return (VECTOR_ERROR);
 	vector->args = tmp;
-	tmp = ft_realloc(vector->type, vector->args_capacity * sizeof(t_token_type), vector->args_capacity * 2 * sizeof(t_token_type));
+	tmp = ft_realloc(vector->type, vector->args_capacity * sizeof(t_token_type),
+			vector->args_capacity * 2 * sizeof(t_token_type));
 	if (!tmp)
 		return (VECTOR_ERROR);
 	vector->type = tmp;
 	vector->args_capacity *= 2;
-
 	return (VECTOR_SUCCESS);
 }
 

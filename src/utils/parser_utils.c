@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 16:00:46 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 10:36:43 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:42:44 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	len_until_delim(char *word)
 		return (0);
 	i = 0;
 	if (ft_isalpha(word[i]) || word[i] == '_')
-    {
-        i++;
-        while (word[i] && (ft_isalnum(word[i]) || word[i] == '_'))
-            i++;
-    }
+	{
+		i++;
+		while (word[i] && (ft_isalnum(word[i]) || word[i] == '_'))
+			i++;
+	}
 	return (i);
 }
 

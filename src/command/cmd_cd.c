@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/20 13:47:44 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:38:07 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exec_cd(t_cmd *cmds, char **args)
 	if (!cmds)
 		return (error_msg(1, "cmds"));
 	if (args[1] && args[2])
-		return (error_string_cd_1("too many arguments", 1));
+		return (error_cmd_fd(1, "cd", "", "too many arguments"));
 	next_wd = NULL;
 	next_wd = find_next_wd(cmds, args);
 	if (!next_wd)
@@ -43,7 +43,7 @@ static	char	*find_next_wd(t_cmd *cmds, char **args)
 		next_wd = find_var(cmds->envp, "HOME");
 		if (!next_wd)
 		{
-			error_string_cd("HOME", 1);
+			error_cmd_fd(1, "cd", "HOME", "not set");
 			return (NULL);
 		}
 	}
@@ -52,7 +52,7 @@ static	char	*find_next_wd(t_cmd *cmds, char **args)
 		next_wd = find_var(cmds->envp, "OLDPWD");
 		if (!next_wd)
 		{
-			error_string_cd("OLDPWD", 1);
+			error_cmd_fd(1, "cd", "OLDPWD", "not set");
 			return (NULL);
 		}
 	}
@@ -91,13 +91,13 @@ static	int	change_dir(t_cmd *cmds, char *next_wd)
 		return (1);
 	if (chdir(next_wd) != 0)
 	{
-		error_string_cd_2(next_wd, 1);
+		error_cmd_fd(1, "cd", next_wd, NO_SUCH_FILE);
 		return (free_2_mem(old_wd, NULL, 1));
 	}
 	temp_wd = getcwd(NULL, 0);
 	if (!temp_wd)
 	{
-		printf("%s\n", ERR_EMPTY_FOLDER);
+		ft_putstr_fd(ERR_EMPTY_FOLDER, 2);
 		temp_wd = get_parent_dir(cmds->envp);
 		if (!temp_wd)
 			return (free_2_mem(old_wd, NULL, 1));
