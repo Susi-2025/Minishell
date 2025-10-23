@@ -79,6 +79,8 @@ static	void	run_line(char ***temp_env, int *code)
 	rl = readline("Prompt: ");
 	if (!rl)
 	{
+		if (temp_env)
+			ft_free_triptr(temp_env);
 		printf("exit\n");
 		exit(*code);
 	}

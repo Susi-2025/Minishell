@@ -44,8 +44,7 @@ static t_simple_cmd	*init_simple_cmd(void)
 		return (NULL);
 	}
 	new_cmd->args[0] = NULL;
-	new_cmd->in_file = NULL;
-	new_cmd->out_file = NULL;
+	new_cmd->redirections = NULL;
 	return (new_cmd);
 }
 

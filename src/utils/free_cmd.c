@@ -45,8 +45,7 @@ static	void	free_simple_cmds(t_cmd *cmds)
 				free(cmds->simple_cmds[i]->args[j]);
 				j++;
 			}
-			vector_destroy(cmds->simple_cmds[i]->in_file);
-			vector_destroy(cmds->simple_cmds[i]->out_file);
+			vector_destroy(cmds->simple_cmds[i]->redirections);
 			free(cmds->simple_cmds[i]->args);
 			free(cmds->simple_cmds[i]);
 		}
