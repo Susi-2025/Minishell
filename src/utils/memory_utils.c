@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 19:28:21 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 16:01:16 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 18:29:17 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_split(char **split)
 	int	i;
 
 	i = 0;
-	if (!split) 
+	if (!split)
 		return ;
 	while (split[i])
 	{

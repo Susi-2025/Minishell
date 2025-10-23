@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:34:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 18:17:28 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 18:26:53 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,4 @@ bash: asfdasd: No such file or directory
 ==3046173==    by 0x404A00: ft_pipex (in /home/vinguyen/Documents/Minishell/minishell)
 ==3046173==    by 0x40151B: run_line (in /home/vinguyen/Documents/Minishell/minishell)
 ==3046173==    by 0x401458: main (in /home/vinguyen/Documents/Minishell/minishell)
-
 */

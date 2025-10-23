@@ -1,15 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/23 18:32:01 by vinguyen          #+#    #+#             */
+/*   Updated: 2025/10/23 18:32:54 by vinguyen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
-//GETNEXT LINE
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 10
+#endif
 
-// char	*get_next_line(int fd);
-// char	*ft_readfile(int fd, char *temp);
-// char	*ft_line(char *temp);
-// char	*ft_remain(char *temp);
 char	*get_next_line(int fd)
 {
 	static char	*temp;
@@ -18,7 +24,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!temp)
-		temp =ft_strdup_char("");
+		temp = ft_strdup_char("");
 	temp = ft_readfile(fd, temp);
 	if (!temp)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 18:02:33 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 07:54:54 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 18:29:27 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	error_malloc(t_cmd *cmds, int code)
 
 int	error_msg(int code, char *str)
 {
-	// ft_printf_fd(2, "%s\n", str);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("\n", 2);
 	return (code);

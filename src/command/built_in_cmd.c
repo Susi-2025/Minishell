@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 16:58:45 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 18:27:22 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static	int	is_valid_dir(char *dir);
 
 int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 {
-	// if (!cmds || !cmds->simple_cmds || !args[0])
 	if (!args[0])
 		return (error_msg(1, "cmds"));
 	if (ft_strcmp(args[0], "pwd") == 0)
