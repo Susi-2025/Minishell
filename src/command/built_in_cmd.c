@@ -6,14 +6,13 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 15:38:28 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 16:58:45 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static	int	is_valid_dir(char *dir);
-static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env);
 
 int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 {
@@ -33,7 +32,7 @@ int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 	else if (ft_strcmp(args[0], "export") == 0)
 		return (exec_export(cmds, args, temp_env));
 	else if (ft_strcmp(args[0], "unset") == 0)
-		return (exec_unset(cmds, args, temp_env));
+		return (exec_unset(cmds, args, temp_env, args_count));
 	return (0);
 }
 
@@ -93,17 +92,4 @@ static	int	is_valid_dir(char *dir)
 	if (lstat(dir, &st) == 0 && S_ISDIR(st.st_mode))
 		return (1);
 	return (0);
-}
-
-static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
-{
-	if (!temp_env || !args || !cmds)
-	{
-		printf("Error:\n");
-		return (1);
-	}
-	else if (!args[1])
-		return (0);
-	else
-		return (reduce_env(cmds, args[1], temp_env));
 }
