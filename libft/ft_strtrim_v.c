@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_strtrim_v.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:04:20 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/21 11:15:00 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:27:28 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *str, char const *set)
+char	*ft_strtrim_v(char const *str, char const *set)
 {
 	unsigned int	start;
 	unsigned int	end;
@@ -20,9 +20,9 @@ char	*ft_strtrim(char const *str, char const *set)
 	char			*out;
 
 	start = 0;
-	while (str[start] && ft_strchr(set, str[start]))
+	while (str[start] && ft_strchr_char(set, str[start]))
 		start++;
-	end = ft_strlen(str);
+	end = ft_strlen_v(str);
 	while (end > start && ft_strrchr(set, str[end - 1]))
 		end--;
 	out = (char *)malloc(end - start + 1);

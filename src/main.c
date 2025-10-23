@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 20:04:32 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:31:30 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,18 @@ static	void	run_line(char ***temp_env, int *code)
 	t_cmd	*cmds;
 
 	g_interactive = 1;
-	rl = readline("Prompt: ");
+	//for running 2800 test case
+	char *line;
+	line = get_next_line(fileno(stdin));
+	if (!line)
+	{
+		// printf("exit\n");
+		exit(*code);
+	}
+	rl = ft_strtrim_v(line, "\n");
+	free(line);
+	// official running
+	// rl = readline("Prompt: ");
 	if (!rl)
 	{
 		if (temp_env)
@@ -94,5 +105,7 @@ static	void	run_line(char ***temp_env, int *code)
 		if (cmds)
 			free_cmd(cmds);
 	}
+	if (!cmds)
+		*code = 2;
 	free(rl);
 }

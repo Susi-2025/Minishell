@@ -6,13 +6,13 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 15:19:59 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:04:01 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	exec_pwd(t_cmd *cmds);
+static	int	is_valid_dir(char *dir);
 static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env);
 
 int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
@@ -36,11 +36,12 @@ int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 	return (0);
 }
 
-static	int	exec_pwd(t_cmd *cmds)
+int	exec_pwd(t_cmd *cmds)
 {
 	char	*out;
 
-	out = find_var(cmds->envp, "PWD=");
+	(void) cmds;
+	out = getcwd(NULL, 0);
 	if (out)
 		printf("%s\n", out);
 	else
@@ -56,7 +57,12 @@ int	exec_env(t_cmd *cmds, char *arg, int args_count)
 	if (!cmds->envp)
 		return (error_msg(1, "envp"));
 	if (args_count != 1)
-		return (error_cmd_fd(127, "env", arg, NO_SUCH_FILE));
+	{
+		if (is_valid_dir(arg))
+			return (error_cmd_fd_no_bash(126, "env", arg, PERM_DENIED));
+		else
+			return (error_cmd_fd(127, "env", arg, NO_SUCH_FILE));
+	}
 	i = 0;
 	len = ft_len_2d(cmds->envp);
 	while (i < len)
@@ -65,6 +71,15 @@ int	exec_env(t_cmd *cmds, char *arg, int args_count)
 			printf("%s\n", cmds->envp[i]);
 		i++;
 	}
+	return (0);
+}
+
+static	int	is_valid_dir(char *dir)
+{
+	struct stat	st;
+
+	if (lstat(dir, &st) == 0 && S_ISDIR(st.st_mode))
+		return (1);
 	return (0);
 }
 

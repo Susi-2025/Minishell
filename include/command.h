@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 15:29:29 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 07:55:17 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "structs.h"
 
+# define PERM_DENIED "Permission denied"
 # define NUM_ARG "numeric argument required"
 # define MANY_ARGS "too many arguments"
 # define NO_SUCH_FILE "No such file or directory"
@@ -33,6 +34,7 @@ int		exec_echo(t_cmd *shell, char **args, int args_count);
 int		exec_cd(t_cmd *shell, char **args);
 int		exec_env(t_cmd *cmds, char *arg, int args_count);
 int		exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count);
+int		exec_pwd(t_cmd *cmds);
 
 // command utilities
 int		ft_len_2d(char **strs);
@@ -62,6 +64,7 @@ int		error_msg(int code, char *str);
 // int		error_string_cd_2(char *argv, int code);
 // int		error_cmd(int code, char *str_cmd, char *arg, char *message);
 int		error_cmd_fd(int code, char *str_cmd, char *arg, char *message);
+int		error_cmd_fd_no_bash(int code, char *str_cmd, char *arg, char *message);
 // free_mem
 int		free_2_mem(char *old_wd, char *next_wd, int exit_code);
 void	free_and_exit(t_cmd *cmds, char **temp_env, int status);

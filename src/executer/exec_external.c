@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:57:04 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 16:57:24 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:06:38 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static char	*find_path(t_cmd *cmds, char **args, char *env[]);
 static char	*check_cmd_only(t_cmd *cmds, char *arg, char *env[]);
+static	int	is_valid_command(char *arg);
 
 void	exec_external(t_cmd *cmds, char **args, char *env[])
 {
@@ -52,7 +53,8 @@ static char	*find_path(t_cmd *cmds, char **args, char *env[])
 		handle_cmd_error(cmds, args[0], env, 127);
 	if (lstat(args[0], &st) == 0 && S_ISDIR(st.st_mode))
 	{
-		fprintf(stderr, "%s: Is a directory\n", args[0]);
+		ft_putstr_fd(args[0], 2);
+		ft_putstr_fd(": Is a directory\n", 2);
 		free_and_exit(cmds, env, 126);
 	}
 	return (args[0]);
@@ -64,7 +66,7 @@ static char	*check_cmd_only(t_cmd *cmds, char *arg, char *env[])
 
 	if (!arg || !cmds)
 		return (NULL);
-	if (arg[0] == '/' || (arg[0] == '.' && arg[1] == '/'))
+	if (is_valid_command(arg) == 1)
 	{
 		if (access(arg, X_OK) == 0)
 		{
@@ -83,4 +85,17 @@ static char	*check_cmd_only(t_cmd *cmds, char *arg, char *env[])
 		handle_no_file(cmds, arg, env, 127);
 	}
 	return (NULL);
+}
+
+static	int	is_valid_command(char *arg)
+{
+	if (!arg)
+		return (0);
+	if ((ft_strcmp(arg, ".") == 0) || (ft_strcmp(arg, "..") == 0))
+		return (0);
+	if (arg[0] == '/')
+		return (1);
+	if ((arg[0] == '.' && arg[1] == '/'))
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:21:19 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 14:21:06 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 10:33:06 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct s_cmd
 	char			*err_file;
 	char			*file_append;
 	char			**envp;
+	int				orig_stdin;
+	int				orig_stdout;
 }	t_cmd;
 
 #endif
