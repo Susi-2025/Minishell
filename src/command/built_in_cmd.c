@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 14:56:22 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:38:28 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,18 @@ int	exec_pwd(t_cmd *cmds)
 	(void) cmds;
 	out = getcwd(NULL, 0);
 	if (out)
+	{
 		printf("%s\n", out);
+		free(out);
+	}
 	else
-		return (error_msg(1, "pwd"));
+	{
+		out = find_var(cmds->envp, "PWD=");
+		if (out)
+			printf("%s\n", out);
+		else
+			return (error_msg(1, "pwd"));
+	}
 	return (0);
 }
 
