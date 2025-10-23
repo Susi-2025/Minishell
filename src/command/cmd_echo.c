@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 23:36:26 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 07:27:04 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static	void	print_echo(char **args, int i)
 
 	no_nl = 0;
 	while (args[i] && is_valid_n_option(args[i]))
-    {
-        no_nl = 1;
-        i++;
-    }
+	{
+		no_nl = 1;
+		i++;
+	}
 	while (args[i])
 	{
 		if (!detect_quote(args[i]))

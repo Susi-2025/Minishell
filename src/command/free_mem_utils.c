@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:34:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 14:34:17 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 10:32:29 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ int	free_2_mem(char *old_wd, char *next_wd, int exit_code)
 
 void	free_and_exit(t_cmd *cmds, char **temp_env, int status)
 {
+	if (cmds->orig_stdin > 2)
+    	close(cmds->orig_stdin);
+	if (cmds->orig_stdout > 2)
+   		close(cmds->orig_stdout);
 	free_cmd(cmds);
 	ft_free_triptr(&temp_env);
 	exit((unsigned char)status);

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 14:32:46 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 10:35:10 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	exec_parent(t_cmd *cmds, char **args, char **env[], t_object *pipex)
 {
 	int	exit_code;
 	int	args_count;
-	int	orig_stdin;
-	int	orig_stdout;
+	// int	orig_stdin;
+	// int	orig_stdout;
 
-	orig_stdin = dup(STDIN_FILENO);
-	orig_stdout = dup(STDOUT_FILENO);
-	if (orig_stdin == -1 || orig_stdout == -1)
+	cmds->orig_stdin = dup(STDIN_FILENO);
+	cmds->orig_stdout = dup(STDOUT_FILENO);
+	if (cmds->orig_stdin == -1 || cmds->orig_stdout == -1)
 	{
 		perror("dup");
 		return (1);
@@ -52,11 +52,11 @@ int	exec_parent(t_cmd *cmds, char **args, char **env[], t_object *pipex)
 	args_count = cmds->simple_cmds[0]->args_count;
 	if (handle_io_redirection(cmds->simple_cmds[0], pipex, cmds, *env) == -2)
 	{
-		dup_std(orig_stdin, orig_stdout);
+		dup_std(cmds->orig_stdin, cmds->orig_stdout);
 		return (1);
 	}
 	exit_code = exec_built_in(cmds, args, env, args_count);
-	dup_std(orig_stdin, orig_stdout);
+	dup_std(cmds->orig_stdin, cmds->orig_stdout);
 	return (exit_code);
 }
 

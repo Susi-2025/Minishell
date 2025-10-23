@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 14:58:39 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 15:03:19 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/10/23 10:38:51 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 static t_token	*handle_tokenization(char *line, int *token_count, t_cmd *cmds)
@@ -58,6 +59,8 @@ static t_cmd	*init_cmd_struct(char *env[], int error_code)
 	if (!cmds)
 		return (NULL);
 	cmds->err_code = error_code;
+	cmds->orig_stdin = -1;
+	cmds->orig_stdout = -1;
 	cmds->envp = env;
 	cmds->heredoc_files = malloc(sizeof(t_vector));
 	if (!cmds->heredoc_files)

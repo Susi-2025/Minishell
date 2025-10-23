@@ -6,14 +6,35 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:32:23 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 17:48:53 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:22:15 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	char	**make_path(char *cmd, char *env[]);
+static	char	**make_path(char *env[]);
 static	char	*free_for_path(char *temp, char **paths, char *path);
+
+char *try_current_path(char *cmd)
+{	
+	char *get_path;
+	char *try_path;
+
+	get_path = getcwd(NULL, 0);
+	try_path = ft_strjoin(get_path, cmd);
+	if (!try_path)
+		return (NULL);
+	
+	if (access(try_path, F_OK) == 0)
+	{
+		free(get_path);
+		return (try_path);
+	}
+	free(get_path);
+	free(try_path);
+	return (NULL);
+	
+}
 
 char	*correct_path(char *cmd, char *env[])
 {
@@ -25,9 +46,12 @@ char	*correct_path(char *cmd, char *env[])
 	temp = ft_strjoin("/", cmd);
 	if (!temp)
 		return (NULL);
-	paths = make_path(cmd, env);
+	try_path = try_current_path(temp);
+	if (try_path != NULL)
+		return (free_for_path(temp, NULL, try_path));
+	paths = make_path(env);
 	if (!paths)
-		return (NULL);
+		return (free_for_path(temp, NULL, NULL));
 	i = -1;
 	while (paths[++i])
 	{
@@ -39,10 +63,9 @@ char	*correct_path(char *cmd, char *env[])
 	return (free_for_path(temp, paths, NULL));
 }
 
-static	char	**make_path(char *cmd, char *env[])
+static	char	**make_path(char *env[])
 {
 	char	**paths;
-	char	*temp;
 	int		i;
 
 	i = 0;
@@ -50,21 +73,17 @@ static	char	**make_path(char *cmd, char *env[])
 		i++;
 	if (!env[i])
 		return (NULL);
-	temp = ft_strjoin("/", cmd);
-	if (!temp)
-		return (NULL);
 	paths = ft_split(env[i] + 5, ':');
 	if (!paths)
-	{
-		free(temp);
 		return (NULL);
-	}
 	return (paths);
 }
 
 static	char	*free_for_path(char *temp, char **paths, char *path)
 {
-	free(temp);
-	free_strings(paths);
+	if (temp)
+		free(temp);
+	if (paths)
+		free_strings(paths);
 	return (path);
 }

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 14:45:39 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 15:57:42 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 10:33:44 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count)
 	}
 	else
 	{
-		ft_printf_fd(2, "exit\n");
+		printf("exit\n");
 		status = set_exit_code(s);
 		free_and_exit(cmds, temp_env, status);
 	}
