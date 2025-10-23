@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 18:26:18 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 18:57:33 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define COMMAND_H
 
 # include "structs.h"
+# include "limits.h"
 
 # define PERM_DENIED "Permission denied"
 # define NUM_ARG "numeric argument required"
