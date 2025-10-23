@@ -17,6 +17,8 @@ int	ft_strlcpy(char *dst, const char *src, int size)
 	int	i;
 
 	i = 0;
+	if (!dst || !src)
+		return (0);
 	if (size > 0)
 	{
 		while (i < size - 1 && src[i] != '\0')

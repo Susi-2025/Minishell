@@ -44,6 +44,8 @@ char	*ft_strcat(char *dest, char *src)
 
 	j = 0;
 	i = 0;
+	if (!dest || !src)
+		return (NULL);
 	while (dest[i] != '\0')
 	{
 		i++;
@@ -62,6 +64,8 @@ void	ft_putstr_fd(char *s, int fd)
 {
 	int	len;
 
+	if (s == NULL)
+		return ;
 	len = ft_strlen(s);
 	write(fd, s, len);
 }
@@ -70,6 +74,8 @@ char	*ft_strcpy(char *dest, char *src)
 {
 	char	*dest_cpy;
 
+	if (!dest || !src)
+		return (NULL);
 	dest_cpy = dest;
 	while (*src != '\0')
 	{

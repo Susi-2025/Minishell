@@ -17,9 +17,12 @@ void	free_tokens(t_token *tokens, int count)
 	int	i;
 
 	i = 0;
+	if (!tokens)
+		return ;
 	while (i < count)
 	{
-		free(tokens[i].value);
+		if (tokens[i].value)
+			free(tokens[i].value);
 		i++;
 	}
 	free(tokens);
@@ -30,7 +33,7 @@ void	free_split(char **split)
 	int	i;
 
 	i = 0;
-	if (!split)
+	if (!split) 
 		return ;
 	while (split[i])
 	{
@@ -46,6 +49,8 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	unsigned char	*src1;
 	size_t			i;
 
+	if (!dest || !src)
+		return (NULL);
 	if (n == 0)
 		return (dest);
 	dest1 = (unsigned char *)dest;
@@ -75,7 +80,11 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 		copy_size = old_size;
 	else
 		copy_size = new_size;
-	ft_memcpy(new_ptr, ptr, copy_size);
+	if (!ft_memcpy(new_ptr, ptr, copy_size))
+	{
+		free(new_ptr);
+		return (NULL);
+	}
 	free(ptr);
 	return (new_ptr);
 }

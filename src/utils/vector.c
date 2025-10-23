@@ -73,6 +73,8 @@ int	vector_grow(t_vector *vector)
 {
 	void	*tmp;
 
+	if (!vector)
+		return (VECTOR_ERROR);
 	tmp = ft_realloc(vector->args, sizeof(char *) * vector->args_capacity,
 			sizeof(char *) * vector->args_capacity * 2);
 	if (!tmp)

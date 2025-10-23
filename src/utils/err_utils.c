@@ -20,7 +20,9 @@ int	error_malloc(t_cmd *cmds, int code)
 
 int	error_msg(int code, char *str)
 {
-	ft_printf_fd(2, "%s\n", str);
+	// ft_printf_fd(2, "%s\n", str);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
 	return (code);
 }
 

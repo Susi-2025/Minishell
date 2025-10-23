@@ -35,6 +35,8 @@ static	void	free_simple_cmds(t_cmd *cmds)
 	int	j;
 
 	i = 0;
+	if (!cmds)
+		return ;
 	while (i < cmds->cmds_count)
 	{
 		if (cmds->simple_cmds[i])

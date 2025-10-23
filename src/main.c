@@ -77,17 +77,17 @@ static	void	run_line(char ***temp_env, int *code)
 
 	g_interactive = 1;
 	//for running 2800 test case
-	char *line;
-	line = get_next_line(fileno(stdin));
-	if (!line)
-	{
-		// printf("exit\n");
-		exit(*code);
-	}
-	rl = ft_strtrim_v(line, "\n");
-	free(line);
+	// char *line;
+	// line = get_next_line(fileno(stdin));
+	// if (!line)
+	// {
+	// 	// printf("exit\n");
+	// 	exit(*code);
+	// }
+	// rl = ft_strtrim_v(line, "\n");
+	// free(line);
 	// official running
-	// rl = readline("Prompt: ");
+	rl = readline("Prompt: ");
 	if (!rl)
 	{
 		if (temp_env)
