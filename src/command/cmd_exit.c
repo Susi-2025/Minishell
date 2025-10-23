@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 14:45:39 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 10:33:44 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 18:23:22 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,17 @@ static int	set_exit_code(char *s)
 {
 	int	status;
 
-	if (s && ft_is_numeric(s))
-		status = ft_atoi(s);
-	else if (s)
+	// if (s && ft_is_numeric(s))
+	// 	status = ft_atoi(s);
+	// else if (s)
+	// 	status = error_cmd_fd(2, "exit", s, NUM_ARG);
+	if (s && ft_is_numeric(s) == 0)
 		status = error_cmd_fd(2, "exit", s, NUM_ARG);
+	// else if (ft_is_numeric(s) && ft_atoi(s) < 9223372036854775807)
+	else if (s && ft_is_numeric(s))
+		status = ft_atoi(s);
+	// else if (ft_is_numeric(s) && ft_atoi(s) > 9223372036854775807)
+	// 	status = error_cmd_fd(2, "exit", s, NUM_ARG);
 	else
 		status = 0;
 	return (status);
