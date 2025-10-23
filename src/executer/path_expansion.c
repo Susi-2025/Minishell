@@ -6,25 +6,24 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:32:23 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/23 11:22:15 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:07:23 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	char	**make_path(char *env[]);
-static	char	*free_for_path(char *temp, char **paths, char *path);
+static char	**make_path(char *env[]);
+static char	*free_for_path(char *temp, char **paths, char *path);
 
-char *try_current_path(char *cmd)
-{	
-	char *get_path;
-	char *try_path;
+char	*try_current_path(char *cmd)
+{
+	char	*get_path;
+	char	*try_path;
 
 	get_path = getcwd(NULL, 0);
 	try_path = ft_strjoin(get_path, cmd);
 	if (!try_path)
 		return (NULL);
-	
 	if (access(try_path, F_OK) == 0)
 	{
 		free(get_path);
@@ -33,7 +32,6 @@ char *try_current_path(char *cmd)
 	free(get_path);
 	free(try_path);
 	return (NULL);
-	
 }
 
 char	*correct_path(char *cmd, char *env[])
@@ -63,7 +61,7 @@ char	*correct_path(char *cmd, char *env[])
 	return (free_for_path(temp, paths, NULL));
 }
 
-static	char	**make_path(char *env[])
+static char	**make_path(char *env[])
 {
 	char	**paths;
 	int		i;
@@ -79,7 +77,7 @@ static	char	**make_path(char *env[])
 	return (paths);
 }
 
-static	char	*free_for_path(char *temp, char **paths, char *path)
+static char	*free_for_path(char *temp, char **paths, char *path)
 {
 	if (temp)
 		free(temp);

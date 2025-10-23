@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 10:35:10 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:04:14 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	exec_parent(t_cmd *cmds, char **args, char **env[], t_object *pipex)
 {
 	int	exit_code;
 	int	args_count;
-	// int	orig_stdin;
-	// int	orig_stdout;
 
 	cmds->orig_stdin = dup(STDIN_FILENO);
 	cmds->orig_stdout = dup(STDOUT_FILENO);
