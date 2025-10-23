@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/16 12:30:39 by vinguyen          #+#    #+#              #
-#    Updated: 2025/10/23 16:58:59 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/10/23 19:21:58 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ CMD_FILES = built_in_cmd.c cmd_cd.c cmd_echo.c cmd_export.c cmd_exit.c cmd_unset
 			built_in_cmd_utils.c print_utils.c str_envp_utils.c 
 EXE_FILES = error_handling.c init_and_close.c path_expansion.c pipex.c process_exec.c \
 			exec_external.c code_handling.c err_print.c handle_io_redirect.c
-HERE_FILES = handle_heredoc.c parse_heredoc.c heredoc_quotes.c
+HERE_FILES = handle_heredoc.c parse_heredoc.c heredoc_quotes.c heredoc_support.c
 PARS_FILES = command_builder.c parser_main.c quote_parser.c redir_parser.c var_expansion.c syntax_checker.c \
 			expander_main.c expansion_handlers.c parsing_helpers.c
 TOKEN_FILES = cmd_tokens.c redir_tokens.c tokenizer.c

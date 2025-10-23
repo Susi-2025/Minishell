@@ -3,13 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:07:07 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 13:35:49 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/10/23 20:41:10 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
+
+extern volatile sig_atomic_t	g_interactive;
 
 static int	is_delimiter_heredoc(char *input, char *del)
 {
@@ -30,8 +33,9 @@ static int	heredoc_read_loop(int fd, char *del, int quote_found, t_cmd *cmds)
 		if (!input)
 		{
 			ft_putstr_fd("minishell: warning: here-document delimited"
-				" by end-of-file\n", 2);
-			return (0);
+							" by end-of-file\n",
+							2);
+			return (-1);
 		}
 		if (is_delimiter_heredoc(input, del))
 		{
@@ -47,7 +51,7 @@ static int	heredoc_read_loop(int fd, char *del, int quote_found, t_cmd *cmds)
 	return (0);
 }
 
-int	read_heredoc_to_file(char *del, char *filename, t_cmd *cmds)
+int	read_heredoc_to_file(char *del, char *filename, t_cmd *cmds, int *e_code)
 {
 	int	fd;
 	int	quote_found;
@@ -59,7 +63,18 @@ int	read_heredoc_to_file(char *del, char *filename, t_cmd *cmds)
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		return (-1);
+	g_interactive = 2;
+	setup_heredoc_signals();
 	loop_status = heredoc_read_loop(fd, del, quote_found, cmds);
+	reset_signals();
+	g_interactive = 0;
+	if (loop_status == -1)
+	{
+		close(fd);
+		*e_code = 130;
+		unlink(filename);
+		return (-1);
+	}
 	close(fd);
 	return (0);
 }
@@ -92,16 +107,15 @@ char	*create_heredoc_file(void)
 	return (path);
 }
 
-int	handle_heredoc(t_cmd *cmds, char *del)
+int	handle_heredoc(t_cmd *cmds, char *del, int *error_code)
 {
 	char	*filename;
 
 	filename = create_heredoc_file();
 	if (!filename)
 		return (-1);
-	if (read_heredoc_to_file(del, filename, cmds) == -1)
+	if (read_heredoc_to_file(del, filename, cmds, error_code) == -1)
 	{
-		error_syntax("newline");
 		free(filename);
 		return (-1);
 	}

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 16:25:20 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/23 14:50:53 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:56:56 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,10 @@
 # define SUCCESS 0
 # define DISCARD_TOKEN -3
 
-t_cmd	*ft_prepare_command(char *line, char *env[], int error_code);
+extern	volatile sig_atomic_t	g_interactive;
+
+void	handle_sigint(int sig);
+void	setup_signals(void);
+
+t_cmd	*ft_prepare_command(char *line, char *env[], int *e_code);
 #endif

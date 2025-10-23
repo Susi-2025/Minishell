@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:15:35 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 13:31:21 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:57:30 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	check_initial_syntax(t_token *tokens, int token_count)
@@ -55,7 +56,7 @@ static int	check_token_in_loop(t_token *tokens, int i)
 	return (SUCCESS);
 }
 
-int	syntax_checker(t_token *tokens, int t_count, t_cmd *cmds)
+int	syntax_checker(t_token *tokens, int t_count, t_cmd *cmds, int *e_code)
 {
 	int	i;
 
@@ -68,7 +69,7 @@ int	syntax_checker(t_token *tokens, int t_count, t_cmd *cmds)
 			return (ERROR);
 		if (tokens[i].type == HERE_DOC)
 		{
-			if (handle_heredoc(cmds, tokens[i + 1].value) == -1)
+			if (handle_heredoc(cmds, tokens[i + 1].value, e_code) == -1)
 				return (ERROR);
 		}
 		i++;

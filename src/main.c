@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/23 13:59:38 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 20:44:45 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@ volatile sig_atomic_t	g_interactive = 1;
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	if (g_interactive)
+	if (g_interactive == 1)
 	{
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+	}
+	else if (g_interactive == 2)
+	{
+		close(STDIN_FILENO);
 	}
 }
 
@@ -43,11 +47,13 @@ void	setup_signals(void)
 	sa_int.sa_handler = handle_sigint;
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa_int, NULL);
+	if (sigaction(SIGINT, &sa_int, NULL) == -1)
+		perror("sigaction");
 	sa_quit.sa_handler = handle_sigquit;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = SA_RESTART;
-	sigaction(SIGQUIT, &sa_quit, NULL);
+	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
+		perror("sigaction");
 }
 
 int	main(int argc, char *argv[], char *init_env[])
@@ -67,7 +73,7 @@ int	main(int argc, char *argv[], char *init_env[])
 	rl_clear_history();
 	if (temp_env)
 		ft_free_triptr(&temp_env);
-	return (0);
+	return (code);
 }
 
 static	void	run_line(char ***temp_env, int *code)
@@ -95,17 +101,17 @@ static	void	run_line(char ***temp_env, int *code)
 		printf("exit\n");
 		exit(*code);
 	}
-	if (*rl)
-		add_history(rl);
+	add_history(rl);
 	g_interactive = 0;
-	cmds = ft_prepare_command(rl, *temp_env, *code);
+	cmds = ft_prepare_command(rl, *temp_env, code);
 	if (cmds)
 	{
 		*code = ft_pipex(cmds, temp_env);
 		if (cmds)
 			free_cmd(cmds);
 	}
-	if (!cmds)
+	if (!cmds && *code != 130)
 		*code = 2;
+	printf("CODE: %d\n", *code);
 	free(rl);
 }

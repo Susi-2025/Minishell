@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 14:58:39 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/23 14:42:42 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 20:12:53 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static t_token	*handle_tokenization(char *line, int *token_count, t_cmd *cmds)
 }
 
 static int	handle_syntax_checking(t_token *tokens, int token_count,
-		t_cmd *cmds)
+		t_cmd *cmds, int *e_code)
 {
-	if (syntax_checker(tokens, token_count, cmds) == ERROR)
+	if (syntax_checker(tokens, token_count, cmds, e_code) == ERROR)
 	{
 		free_tokens(tokens, token_count);
 		vector_destroy_heredocs(cmds->heredoc_files);
@@ -77,19 +77,19 @@ static t_cmd	*init_cmd_struct(char *env[], int error_code)
 	return (cmds);
 }
 
-t_cmd	*ft_prepare_command(char *line, char *env[], int error_code)
+t_cmd	*ft_prepare_command(char *line, char *env[], int *e_code)
 {
 	int		token_count;
 	t_token	*tokens;
 	t_cmd	*cmds;
 
-	cmds = init_cmd_struct(env, error_code);
+	cmds = init_cmd_struct(env, *e_code);
 	if (!cmds)
 		return (NULL);
 	tokens = handle_tokenization(line, &token_count, cmds);
 	if (!tokens)
 		return (NULL);
-	if (handle_syntax_checking(tokens, token_count, cmds) == ERROR)
+	if (handle_syntax_checking(tokens, token_count, cmds, e_code) == ERROR)
 		return (NULL);
 	if (handle_parsing(cmds, tokens, token_count, env) == ERROR)
 		return (NULL);

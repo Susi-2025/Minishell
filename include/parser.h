@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:20:20 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 20:03:05 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:59:08 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,14 @@ int		append_variable(char **result, char *line, int *i, char *env[]);
 
 char	*parse_heredoc(char *line, char *env[], int exit_code);
 int		contains_quotes(char *delimiter);
-int		read_heredoc_to_file(char *del, char *filename, t_cmd *cmds);
+int		read_heredoc_to_file(char *del, char *filename, t_cmd *cmds, int *e_code);
 char	*create_heredoc_file(void);
-int		handle_heredoc(t_cmd *cmds, char *del);
-int		syntax_checker(t_token *tokens, int t_count, t_cmd *cmds);
+int		handle_heredoc(t_cmd *cmds, char *del, int *e_code);
+// viet add for ctrl c
+void	setup_heredoc_signals(void);
+void	reset_signals(void);
+// remain
+int		syntax_checker(t_token *tokens, int t_count, t_cmd *cmds, int *e_code);
 int		process_word(t_token *token, t_simple_cmd **current_cmd,
 			char *env[], int exit_status);
 char	*parse_dquote(char *line, int *j, t_expansion_context *ctx);
