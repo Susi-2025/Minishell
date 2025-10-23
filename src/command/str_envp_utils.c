@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 14:34:52 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:15:59 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char	*ft_strhead(char *str, char c)
 	char	*out;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	while (str[i] && str[i] != c)
 		i++;
 	out = malloc(i + 1);
@@ -67,6 +69,8 @@ char	*ft_strtail(char *str, char c)
 	char	*out;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	while (str[i] && str[i] != c)
 		i++;
 	i++;
@@ -90,6 +94,8 @@ char	*create_new_str(char *key, char *value)
 	int		len_key;
 	int		len_value;
 
+	if (!key)
+		return (NULL);
 	len_key = ft_strlen(key);
 	if (value == NULL)
 		len_value = 0;
@@ -107,6 +113,8 @@ void	ft_copy_str(char *origin, char *key, char *value)
 	int	j;
 	int	k;
 
+	if (!origin || !key)
+		return ;
 	j = 0;
 	while (key[j])
 	{

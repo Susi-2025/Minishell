@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:21:19 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/23 10:33:06 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:03:28 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ typedef struct s_simple_cmd
 	int			args_capacity;
 	int			args_count;
 	char		**args;
-	// t_vector	*out_file;
-	// t_vector	*in_file;
 	t_vector	*redirections;
 }	t_simple_cmd;
 

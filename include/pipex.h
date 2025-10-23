@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:07:22 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 17:04:22 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:53:55 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,6 @@
 
 # include "structs.h"
 
-typedef enum s_status
-{
-	FILE_NONE = 0,
-	FILE_ERROR = -1,
-	FILE_VALID = 1
-}	t_status;
-
 typedef struct s_object
 {
 	int			pipefd[2];
@@ -37,21 +30,20 @@ typedef struct s_object
 	pid_t		pid;
 	int			infile_fd;
 	int			outfile_fd;
-	int			file_flags[2];
-	char		**cmd;
+	// int			file_flags[2];
+	// char		**cmd;
 	int			num_commands;
-	int			last_status;
-	t_status	status;
+	// int			last_status;
 }	t_object;
 
 // viet add for here_doc
-typedef struct s_pipe
-{
-	int		pipefd[2];
-	pid_t	pid;
-	int		infile_fd;
-	int		outfile_fd;
-}	t_pipe_simple;
+// typedef struct s_pipe
+// {
+// 	int		pipefd[2];
+// 	pid_t	pid;
+// 	int		infile_fd;
+// 	int		outfile_fd;
+// }	t_pipe_simple;
 
 /* Main function*/
 int		ft_pipex(t_cmd *cmds, char **env[]);
@@ -71,12 +63,10 @@ char	*error_redir(char *argv);
 
 int		path_exists(char *env[]);
 char	*correct_path(char *cmd, char *env[]);
-void	fd_init(int *infile_fd, int *outfile_fd,
-			t_object *pipex, t_simple_cmd *cmds);
 void	last_close(t_object *pipex);
 void	fire_up_pipeinator(t_object *pipex, t_cmd *cmds);
 int		handle_io_redirection(t_simple_cmd *cmd,
-			t_object *pipex, t_cmd *cmds, char *env[]);
+			t_object *pipex);
 void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[]);
 void	child_process(t_object *pipex, int i, t_cmd *cmds, char *env[]);
 void	parent_process(t_object *pipex, int i);

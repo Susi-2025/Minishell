@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utility_array.c                                    :+:      :+:    :+:   */
+/*   array_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/16 17:00:26 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 13:39:52 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	ft_len_2d(char **strs)
 {
 	int	len;
 
+	if (!strs)
+		return (0);
 	len = 0;
 	while (strs[len])
 		len++;
@@ -55,6 +57,8 @@ static	int	ft_cmp_strs(char *s1, char *s2)
 	int	i;
 
 	i = 0;
+	if (!s1 || !s2)
+		return (0);
 	while (s1[i] && s2[i] && s1[i] != '=' && s2[i] != '=')
 	{
 		if (s1[i] != s2[i])

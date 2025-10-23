@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 11:29:35 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:00:14 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	exec_cd(t_cmd *cmds, char **args)
 {
 	char	*next_wd;
 
-	if (!cmds)
-		return (error_msg(1, "cmds"));
 	if (args[1] && args[2])
 		return (error_cmd_fd(1, "cd", "", "too many arguments"));
 	next_wd = find_next_wd(cmds, args);
@@ -72,6 +70,8 @@ static	char	*get_parent_dir(char **envp)
 	char	*dup;
 	char	*par_pwd;
 
+	if (!envp)
+		return (NULL);
 	pwd = find_var(envp, "PWD");
 	if (!pwd)
 		return (NULL);

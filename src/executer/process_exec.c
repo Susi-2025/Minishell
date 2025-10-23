@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:31:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 18:29:07 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:45:51 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ void	run_cmd(t_object *pipex, int i, t_cmd *cmds, char *env[])
 	if (check_built_in(args[0]) == 1)
 	{
 		exit_code = exec_built_in(cmds, args, &env, args_count);
-		free_cmd(cmds);
-		ft_free_triptr(&env);
-		exit(exit_code);
+		// free_cmd(cmds);
+		// ft_free_triptr(&env);
+		// exit(exit_code);
+		free_and_exit(cmds, env, exit_code);
 	}
 	else
 	{
@@ -54,7 +55,7 @@ void	child_process(t_object *pipex, int i, t_cmd *cmds, char *env[])
 		close(pipex->pipefd[0]);
 		close(pipex->pipefd[1]);
 	}
-	if (handle_io_redirection(cmds->simple_cmds[i], pipex, cmds, env) == -2)
+	if (handle_io_redirection(cmds->simple_cmds[i], pipex) == -2)
 		free_and_exit(cmds, env, 1);
 	if (cmds->simple_cmds[i]->args[0] != NULL)
 		run_cmd(pipex, i, cmds, env);

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 17:41:08 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 18:12:08 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:52:28 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ int	ft_pipex(t_cmd *cmds, char **env[])
 	int			i;
 	char		**args;
 
-	if (!cmds)
+	if (!cmds || !cmds->simple_cmds)
 		return (1);
 	fire_up_pipeinator(&pipex, cmds);
 	i = 0;
-	while (i < pipex.num_commands)
+	while (i < pipex.num_commands && cmds->simple_cmds[i])
 	{
+		if (!cmds->simple_cmds[i]->args)
+			return (1);
 		args = cmds->simple_cmds[i]->args;
 		if (cmds->cmds_count == 1 && check_built_in(args[0]) == 1)
 		{

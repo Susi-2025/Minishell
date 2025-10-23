@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 12:04:01 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:56:22 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env);
 
 int	exec_built_in(t_cmd *cmds, char **args, char ***temp_env, int args_count)
 {
-	if (!cmds || !cmds->simple_cmds || !args[0])
+	// if (!cmds || !cmds->simple_cmds || !args[0])
+	if (!args[0])
 		return (error_msg(1, "cmds"));
 	if (ft_strcmp(args[0], "pwd") == 0)
 		return (exec_pwd(cmds));
@@ -78,6 +79,8 @@ static	int	is_valid_dir(char *dir)
 {
 	struct stat	st;
 
+	if (!dir)
+		return (0);
 	if (lstat(dir, &st) == 0 && S_ISDIR(st.st_mode))
 		return (1);
 	return (0);
@@ -85,7 +88,7 @@ static	int	is_valid_dir(char *dir)
 
 static	int	exec_unset(t_cmd *cmds, char **args, char ***temp_env)
 {
-	if (!temp_env)
+	if (!temp_env || !args || !cmds)
 	{
 		printf("Error:\n");
 		return (1);

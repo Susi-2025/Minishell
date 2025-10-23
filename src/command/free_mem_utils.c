@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 10:34:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 12:06:04 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:12:48 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	free_and_exit(t_cmd *cmds, char **temp_env, int status)
 		close(cmds->orig_stdin);
 	if (cmds->orig_stdout > 2)
 		close(cmds->orig_stdout);
-	free_cmd(cmds);
-	ft_free_triptr(&temp_env);
+	if (cmds)
+		free_cmd(cmds);
+	if (temp_env)
+		ft_free_triptr(&temp_env);
 	exit((unsigned char)status);
 }

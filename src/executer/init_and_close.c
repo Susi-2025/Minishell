@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:29:14 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 17:27:14 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:53:43 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	fire_up_pipeinator(t_object *pipex, t_cmd *cmds)
 	pipex->infile_fd = -1;
 	pipex->outfile_fd = -1;
 	pipex->prev_pipe_in = pipex->infile_fd;
-	pipex->last_status = 0;
-	pipex->status = FILE_NONE;
 }
 
 char	*ft_strcat(char *dest, char *src)

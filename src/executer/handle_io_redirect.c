@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 18:30:34 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 07:29:41 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:06:09 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	open_all_redirections(t_vector *redirs, t_object *pipex)
 	int	type;
 
 	i = 0;
-	while (i < redirs->args_count)
+	while (i < redirs->args_count && redirs->args[i])
 	{
 		type = redirs->type[i];
 		if (type == REDIR_IN)
@@ -59,13 +59,10 @@ static int	open_all_redirections(t_vector *redirs, t_object *pipex)
 	return (0);
 }
 
-int	handle_io_redirection(t_simple_cmd *cmd, t_object *pipex, t_cmd *cmds,
-		char *env[])
+int	handle_io_redirection(t_simple_cmd *cmd, t_object *pipex)
 {
 	t_vector	*redirs;
 
-	(void)cmds;
-	(void)env;
 	redirs = cmd->redirections;
 	if (!redirs)
 		return (0);

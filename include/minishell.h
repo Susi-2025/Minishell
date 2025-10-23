@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 16:25:20 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 20:01:43 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:50:53 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # include "parser.h"
 # include "pipex.h"
 # include "command.h"
-# include "heredoc.h"
 # include "vector.h"
 
 # define ERROR -1

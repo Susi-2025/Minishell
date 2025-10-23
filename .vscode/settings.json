@@ -65,7 +65,8 @@
     "vector.h": "c",
     "command.h": "c",
     "sstream": "c",
-    "system_error": "c"
+    "system_error": "c",
+    "tokenizer.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

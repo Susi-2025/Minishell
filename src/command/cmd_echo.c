@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 07:27:04 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:08:01 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static	void	print_echo(char **args, int i)
 
 static	int	detect_quote(char *str)
 {
+	if (!str)
+		return (0);
 	if (ft_strlen(str) != 2)
 		return (0);
 	if ((ft_strcmp(str, "''") == 0) || (ft_strcmp(str, "\"\"") == 0))
@@ -63,7 +65,9 @@ static	int	detect_quote(char *str)
 static	int	is_valid_n_option(char *str)
 {
 	int	i;
-
+	
+	if (!str)
+		return (0);
 	if (!((str[0] == '-') && (str[1] == 'n')))
 		return (0);
 	i = 2;
