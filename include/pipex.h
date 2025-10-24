@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:07:22 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/23 14:53:55 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 18:49:00 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <sys/types.h>
 # include <string.h>
 # include <errno.h>
-# include <sys/stat.h>  //for lstat
+# include <sys/stat.h>
 
 # include "structs.h"
 
@@ -35,15 +35,6 @@ typedef struct s_object
 	int			num_commands;
 	// int			last_status;
 }	t_object;
-
-// viet add for here_doc
-// typedef struct s_pipe
-// {
-// 	int		pipefd[2];
-// 	pid_t	pid;
-// 	int		infile_fd;
-// 	int		outfile_fd;
-// }	t_pipe_simple;
 
 /* Main function*/
 int		ft_pipex(t_cmd *cmds, char **env[]);

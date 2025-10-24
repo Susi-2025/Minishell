@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/16 12:30:39 by vinguyen          #+#    #+#              #
-#    Updated: 2025/10/23 19:21:58 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/10/24 11:21:50 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ PARS_DIR = $(SRC_DIR)/parser
 TOKEN_DIR = $(SRC_DIR)/tokenizer
 UTIL_DIR = $(SRC_DIR)/utils
 
-MAIN_FILES = main.c prepare_cmd.c
+MAIN_FILES = main.c prepare_cmd.c sig_handle.c
 CMD_FILES = built_in_cmd.c cmd_cd.c cmd_echo.c cmd_export.c cmd_exit.c cmd_unset.c \
 			envp_utils.c free_mem_utils.c init_envp.c start_built_in.c array_utils.c \
 			built_in_cmd_utils.c print_utils.c str_envp_utils.c 

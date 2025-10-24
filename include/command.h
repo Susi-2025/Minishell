@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 18:57:33 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 18:47:11 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define NO_SUCH_FILE "No such file or directory"
 # define ERR_EMPTY_FOLDER "cd: error retrieving current directory:\
 getcwd: cannot access parent directories: No such file or directory\n"
+# define HERE_DOC_DELIM "minishell: warning: here-document delimited\
+by end-of-file (wanted `EOF')\n"
 // command
 int		exec_parent(t_cmd *cmds, char **args, char **env[], t_object *pipex);
 int		init_envp(t_cmd *cmds, char **envp);
@@ -45,8 +47,6 @@ int		ft_is_numeric(char *s);
 int		update_env(t_cmd *shell, char *key, char *value);
 int		reduce_env(t_cmd *cmds, char *str, char ***env);
 int		insert_env(t_cmd *cmds, char *str, char ***temp_env);
-// void	envp_print(char **envp);
-// void	cmd_print(t_cmd *cmds);
 
 char	*find_var(char **envp, char *str);
 int		check_var_env(char **envp, char *str);
@@ -62,10 +62,6 @@ void	printf_for_export(char *str);
 // handle_error
 int		error_malloc(t_cmd *shell, int code);
 int		error_msg(int code, char *str);
-// int		error_string_cd(char *argv, int code);
-// int		error_string_cd_1(char *argv, int code);
-// int		error_string_cd_2(char *argv, int code);
-// int		error_cmd(int code, char *str_cmd, char *arg, char *message);
 int		error_cmd_fd(int code, char *str_cmd, char *arg, char *message);
 int		error_cmd_fd_no_bash(int code, char *str_cmd, char *arg, char *message);
 // free_mem

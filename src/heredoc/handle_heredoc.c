@@ -6,13 +6,13 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:07:07 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/23 20:41:10 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 18:43:20 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern volatile sig_atomic_t	g_interactive;
+// extern volatile sig_atomic_t	g_signal;
 
 static int	is_delimiter_heredoc(char *input, char *del)
 {
@@ -27,15 +27,23 @@ static int	heredoc_read_loop(int fd, char *del, int quote_found, t_cmd *cmds)
 {
 	char	*input;
 
+	g_signal = 0;
 	while (1)
 	{
 		input = readline("> ");
+		// input = get_next_line_prompt(STDIN_FILENO, "> ");
+	
+		// printf("We are here\n");
+		if (g_signal == SIGINT)
+		{	
+			if (input)
+				free(input);
+			return (-1); 
+		}
 		if (!input)
 		{
-			ft_putstr_fd("minishell: warning: here-document delimited"
-							" by end-of-file\n",
-							2);
-			return (-1);
+			ft_putstr_fd(HERE_DOC_DELIM, 2);
+			return (0); // stop by ctrl d-> EOF
 		}
 		if (is_delimiter_heredoc(input, del))
 		{
@@ -60,23 +68,24 @@ int	read_heredoc_to_file(char *del, char *filename, t_cmd *cmds, int *e_code)
 	quote_found = contains_quotes(del);
 	if (quote_found == -1)
 		return (-1);
+	setup_heredoc_signals();
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		return (-1);
-	g_interactive = 2;
-	setup_heredoc_signals();
+
 	loop_status = heredoc_read_loop(fd, del, quote_found, cmds);
+
 	reset_signals();
-	g_interactive = 0;
+	close(fd);
+	
 	if (loop_status == -1)
 	{
-		close(fd);
 		*e_code = 130;
 		unlink(filename);
 		return (-1);
 	}
-	close(fd);
-	return (0);
+	else
+		return (0);
 }
 
 char	*create_heredoc_file(void)

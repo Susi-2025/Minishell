@@ -6,7 +6,7 @@
 #    By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 16:29:22 by vinguyen          #+#    #+#              #
-#    Updated: 2025/10/23 12:26:28 by vinguyen         ###   ########.fr        #
+#    Updated: 2025/10/24 18:46:47 by vinguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,6 @@ SRCS = ft_bzero.c ft_calloc.c ft_free_triptr.c \
 	   ft_putptr_fd.c \
 	   ft_strtrim_v.c \
 	   ft_strlen_v.c \
-	   get_next_line.c \
 	   # ft_isalnum.c \
 	   # ft_strlen.c \
 	   # ft_strlcpy.c \

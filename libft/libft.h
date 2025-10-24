@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 13:04:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 18:17:57 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 18:46:41 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <signal.h>
 
 typedef struct s_list
 {
@@ -81,14 +82,4 @@ char	**ft_matrix_dup(char **matrix, int row);
 char	*ft_strdup_char(const char *s1);
 size_t	ft_strlen_v(const char *s);
 
-char	*get_next_line(int fd);
-char	*ft_readfile(int fd, char *temp);
-char	*ft_line(char *temp);
-char	*ft_remain(char *temp);
-
-// int		ft_isalnum(int c);
-// size_t	ft_strlcpy(char *dest, const char *src, size_t size);
-// int		ft_strncmp(const char *s1, const char *s2, size_t n);
-// char	*ft_substr(char const *s, unsigned int start, size_t len);
-//char	**ft_split(char const *s, char c);
 #endif
