@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 14:45:39 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 19:03:15 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:55:27 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count)
 	int	status;
 
 	status = cmds->err_code;
+	dup_std(cmds->orig_stdin, cmds->orig_stdout);
 	if (args_count > 2)
 	{
 		if (ft_is_numeric(s) == 0)
@@ -34,7 +35,8 @@ int	exec_exit(t_cmd *cmds, char *s, char **temp_env, int args_count)
 	}
 	else
 	{
-		printf("exit\n");
+		if (cmds->cmds_count == 1)
+			printf("exit\n");
 		status = set_exit_code(s);
 		free_and_exit(cmds, temp_env, status);
 	}

@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:53:17 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/09/09 10:35:53 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:32:29 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	parse_dquote_loop(t_expansion_state *st, char *line,
 
 char	*free_final_str(char *final_str)
 {
+	error_syntax("\"");
 	free(final_str);
 	return (NULL);
 }

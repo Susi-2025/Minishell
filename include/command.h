@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/24 18:47:11 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:49:15 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,6 @@ int		error_cmd_fd_no_bash(int code, char *str_cmd, char *arg, char *message);
 // free_mem
 int		free_2_mem(char *old_wd, char *next_wd, int exit_code);
 void	free_and_exit(t_cmd *cmds, char **temp_env, int status);
+void	dup_std(int orig_stdin, int orig_stdout);
+
 #endif

@@ -6,13 +6,11 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:07:07 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/24 18:43:20 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:15:21 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// extern volatile sig_atomic_t	g_signal;
 
 static int	is_delimiter_heredoc(char *input, char *del)
 {
@@ -31,25 +29,15 @@ static int	heredoc_read_loop(int fd, char *del, int quote_found, t_cmd *cmds)
 	while (1)
 	{
 		input = readline("> ");
-		// input = get_next_line_prompt(STDIN_FILENO, "> ");
-	
-		// printf("We are here\n");
 		if (g_signal == SIGINT)
-		{	
-			if (input)
-				free(input);
-			return (-1); 
-		}
+			return (free_return(&input, -1));
 		if (!input)
 		{
 			ft_putstr_fd(HERE_DOC_DELIM, 2);
-			return (0); // stop by ctrl d-> EOF
-		}
-		if (is_delimiter_heredoc(input, del))
-		{
-			free(input);
 			return (0);
 		}
+		if (is_delimiter_heredoc(input, del))
+			return (free_return(&input, 0));
 		if (quote_found)
 			input = parse_heredoc(input, cmds->envp, cmds->err_code);
 		write(fd, input, ft_strlen(input));
@@ -72,12 +60,9 @@ int	read_heredoc_to_file(char *del, char *filename, t_cmd *cmds, int *e_code)
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		return (-1);
-
 	loop_status = heredoc_read_loop(fd, del, quote_found, cmds);
-
 	reset_signals();
 	close(fd);
-	
 	if (loop_status == -1)
 	{
 		*e_code = 130;

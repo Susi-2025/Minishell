@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 16:25:20 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/24 18:48:01 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:40:05 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@
 # define SUCCESS 0
 # define DISCARD_TOKEN -3
 
-extern	volatile sig_atomic_t	g_signal;
+extern volatile sig_atomic_t	g_signal;
 
-// void	handle_sigint(int sig);
-// void	setup_signals(void);
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
 void	setup_signals(void);

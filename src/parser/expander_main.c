@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:55:42 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 16:55:42 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:33:22 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,7 @@ int	process_word(t_token *token, t_simple_cmd **current_cmd,
 			return (ERROR);
 		}
 		else if (return_num == ERROR)
-		{
-			printf("minishell: syntax error\n");
 			return (ERROR);
-		}
 	}
 	return (SUCCESS);
 }

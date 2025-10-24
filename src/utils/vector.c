@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 13:59:27 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 18:28:56 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:06:41 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,5 @@ int	vector_push_back(t_vector *vector, char *element)
 			return (VECTOR_ERROR);
 	}
 	vector->args[vector->args_count++] = element;
-	// vector->args[vector->args_count] = NULL;
-	//--> memory leak with cat readline.supp  < asdfas > papdf
 	return (VECTOR_SUCCESS);
 }

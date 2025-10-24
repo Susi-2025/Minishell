@@ -6,13 +6,19 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:54 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 18:27:05 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:49:30 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	void	dup_std(int orig_stdin, int orig_stdout);
+void	dup_std(int orig_stdin, int orig_stdout)
+{
+	dup2(orig_stdin, STDIN_FILENO);
+	dup2(orig_stdout, STDOUT_FILENO);
+	close(orig_stdin);
+	close(orig_stdout);
+}
 
 int	check_built_in(char *cmd)
 {
@@ -56,12 +62,4 @@ int	exec_parent(t_cmd *cmds, char **args, char **env[], t_object *pipex)
 	exit_code = exec_built_in(cmds, args, env, args_count);
 	dup_std(cmds->orig_stdin, cmds->orig_stdout);
 	return (exit_code);
-}
-
-static	void	dup_std(int orig_stdin, int orig_stdout)
-{
-	dup2(orig_stdin, STDIN_FILENO);
-	dup2(orig_stdout, STDOUT_FILENO);
-	close(orig_stdin);
-	close(orig_stdout);
 }

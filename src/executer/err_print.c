@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 17:26:06 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 17:26:18 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:25:16 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	error_string(char *argv)
 void	error_syntax(char *argv)
 {
 	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-	ft_putstr_fd(argv, 2);
+	if (argv)
+		ft_putstr_fd(argv, 2);
 	ft_putstr_fd("'\n", 2);
 }

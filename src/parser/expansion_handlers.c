@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_handlers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:55:53 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 16:55:53 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:34:08 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	handle_single_quote(t_expansion_state *st, char *str)
 		st->i++;
 	if (!str[st->i])
 	{
+		error_syntax("\'");
 		free(st->final_str);
 		return (ERROR);
 	}

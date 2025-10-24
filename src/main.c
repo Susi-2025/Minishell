@@ -6,13 +6,13 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/24 18:51:45 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 21:15:56 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	void	run_line(char ***temp_env, int *code);
+static	int	run_line(char ***temp_env, int *code);
 
 volatile sig_atomic_t	g_signal;
 
@@ -29,28 +29,35 @@ int	main(int argc, char *argv[], char *init_env[])
 		return (1);
 	code = 0;
 	while (1)
-		run_line(&temp_env, &code);
+	{
+		if (run_line(&temp_env, &code) == -1)
+			break ;
+	}
 	rl_clear_history();
 	if (temp_env)
 		ft_free_triptr(&temp_env);
+	printf("exit\n");
 	return (code);
 }
 
-static	void	run_line(char ***temp_env, int *code)
+static	int	run_line(char ***temp_env, int *code)
 {
 	char	*rl;
 	t_cmd	*cmds;
 
+	rl = readline("Prompt: ");
 	if (!rl)
-	{
-		if (temp_env)
-			ft_free_triptr(temp_env);
-		printf("exit\n");
-		exit(*code);
-	}
+		return (-1);
 	add_history(rl);
 	g_signal = 0;
+	if (ft_strlen(rl) > 4096)
+	{
+		printf("ARG_MAX exceeded\n");
+		free(rl);
+		return (0);
+	}
 	cmds = ft_prepare_command(rl, *temp_env, code);
+	free(rl);
 	if (cmds)
 	{
 		*code = ft_pipex(cmds, temp_env);
@@ -59,5 +66,5 @@ static	void	run_line(char ***temp_env, int *code)
 	}
 	if (!cmds && *code != 130)
 		*code = 2;
-	free(rl);
+	return (0);
 }

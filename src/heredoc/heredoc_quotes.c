@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_quotes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 14:44:35 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/22 14:44:36 by cdohanic         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:35:16 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	cq_handle_outside(char *delimiter, int i, int *j_ptr,
@@ -42,7 +43,10 @@ static void	cq_handle_inside(char *delimiter, int i, int *j_ptr,
 static int	quotes_return(int quote_char, int quote_found)
 {
 	if (quote_char != 0)
+	{
+		error_syntax(NULL);
 		return (-1);
+	}
 	if (quote_found)
 		return (0);
 	return (1);

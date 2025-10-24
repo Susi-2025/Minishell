@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 18:30:34 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 16:02:30 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:06:09 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,7 @@ int	handle_io_redirection(t_simple_cmd *cmd, t_object *pipex)
 	pipex->infile_fd = -1;
 	pipex->outfile_fd = -1;
 	if (open_all_redirections(redirs, pipex) == -2)
-	{
-		//Warning: invalid file descriptor -1 in syscall close()
-		close(pipex->infile_fd);
-		close(pipex->outfile_fd);
 		return (-2);
-	}
 	if (pipex->infile_fd != -1)
 	{
 		dup2(pipex->infile_fd, STDIN_FILENO);

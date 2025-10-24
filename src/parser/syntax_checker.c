@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:15:35 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/23 19:57:30 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/24 19:01:25 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ static int	check_initial_syntax(t_token *tokens, int token_count)
 	if (token_count == 1 && tokens[0].type == TOKEN_EOF)
 		return (SUCCESS);
 	if (tokens[0].type == PIPE)
+	{
+		error_syntax(tokens[0].value);
+		return (ERROR);
+	}
+	if (tokens[0].type == WORD && ft_strcmp(tokens[0].value, ".") == 0)
 	{
 		error_syntax(tokens[0].value);
 		return (ERROR);
