@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/24 21:15:56 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 12:52:12 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static	int	run_line(char ***temp_env, int *code)
 		if (cmds)
 			free_cmd(cmds);
 	}
-	if (!cmds && *code != 130)
+	if (!cmds && *code != 130 && *code != 0)
 		*code = 2;
 	return (0);
 }

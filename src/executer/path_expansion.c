@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:32:23 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/23 12:07:23 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 12:33:40 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static char	**make_path(char *env[]);
 static char	*free_for_path(char *temp, char **paths, char *path);
+static int	is_directory(char *path);
 
 char	*try_current_path(char *cmd)
 {
@@ -24,8 +25,10 @@ char	*try_current_path(char *cmd)
 	try_path = ft_strjoin(get_path, cmd);
 	if (!try_path)
 		return (NULL);
-	if (access(try_path, F_OK) == 0)
+	if (access(try_path, F_OK) == 0 && (access(try_path, X_OK) == 0)
+		&& !is_directory(try_path))
 	{
+		printf("why\n");
 		free(get_path);
 		return (try_path);
 	}
@@ -84,4 +87,13 @@ static char	*free_for_path(char *temp, char **paths, char *path)
 	if (paths)
 		free_strings(paths);
 	return (path);
+}
+
+static int	is_directory(char *path)
+{
+	struct stat	st;
+
+	if (lstat(path, &st) == 0 && S_ISDIR(st.st_mode))
+		return (1);
+	return (0);
 }

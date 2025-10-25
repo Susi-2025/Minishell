@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:57:04 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/24 19:57:29 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 12:33:48 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static char	*find_path(t_cmd *cmds, char **args, char *env[]);
 static char	*check_cmd_only(t_cmd *cmds, char *arg, char *env[]);
-static	int	is_valid_command(char *arg);
+static int	is_valid_command(char *arg);
 
 void	exec_external(t_cmd *cmds, char **args, char *env[])
 {
-	char		*path;
+	char	*path;
 
 	path = find_path(cmds, args, env);
 	execve(path, args, env);
@@ -87,7 +87,7 @@ static char	*check_cmd_only(t_cmd *cmds, char *arg, char *env[])
 	return (NULL);
 }
 
-static	int	is_valid_command(char *arg)
+static int	is_valid_command(char *arg)
 {
 	if (!arg)
 		return (0);
