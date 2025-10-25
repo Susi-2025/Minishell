@@ -6,17 +6,18 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/25 18:15:49 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 18:57:15 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int				run_line(char ***temp_env, int *code);
-static int				valid_len(char *rl);
-static int				ferror_stdout(char *rl, char ***temp_env);
+static int	run_line(char ***temp_env, int *code);
+static int	valid_len(char *rl);
+static int	ferror_stdout(char *rl, char ***temp_env);
+static int	err_rl(int *code);
 
-volatile sig_atomic_t	g_signal;
+	volatile sig_atomic_t g_signal;
 
 int	main(int argc, char *argv[], char *init_env[])
 {
@@ -53,7 +54,8 @@ static int	run_line(char ***temp_env, int *code)
 	if (ferror(stdout))
 		return (ferror_stdout(rl, temp_env));
 	if (!rl)
-		return (-1);
+		return (err_rl(code));
+	// return (-1);
 	add_history(rl);
 	g_signal = 0;
 	if (!valid_len(rl) || ft_strcmp(rl, "") == 0)
@@ -88,5 +90,17 @@ static int	ferror_stdout(char *rl, char ***temp_env)
 		free(rl);
 	if (temp_env)
 		ft_free_triptr(temp_env);
+	return (-1);
+}
+
+static int	err_rl(int *code)
+{
+	if (g_signal == SIGINT)
+	{
+		printf("\n");
+		*code = 130;
+		g_signal = 0;
+		return (0);
+	}
 	return (-1);
 }
