@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 13:04:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/24 18:46:41 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 18:28:45 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <signal.h>
 
 typedef struct s_list
 {

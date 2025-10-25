@@ -6,19 +6,12 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:07:22 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/24 18:49:00 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 18:43:20 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-
-# include <fcntl.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <string.h>
-# include <errno.h>
-# include <sys/stat.h>
 
 # include "structs.h"
 
@@ -30,10 +23,7 @@ typedef struct s_object
 	pid_t		pid;
 	int			infile_fd;
 	int			outfile_fd;
-	// int			file_flags[2];
-	// char		**cmd;
 	int			num_commands;
-	// int			last_status;
 }	t_object;
 
 /* Main function*/

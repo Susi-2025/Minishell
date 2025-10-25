@@ -6,15 +6,15 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:27:14 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/24 20:49:15 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 18:32:25 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMMAND_H
 # define COMMAND_H
 
-# include "structs.h"
-# include "limits.h"
+// # include "structs.h"
+// # include "limits.h"
 
 # define PERM_DENIED "Permission denied"
 # define NUM_ARG "numeric argument required"

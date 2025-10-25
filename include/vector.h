@@ -6,17 +6,12 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 14:55:28 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 14:17:47 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 18:43:29 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_H
 # define VECTOR_H
-
-# include "minishell.h"
-# include "structs.h"
-# include <stdbool.h>
-# include <stddef.h>
 
 # define VECTOR_ERROR -1
 # define VECTOR_SUCCESS 0

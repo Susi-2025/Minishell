@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cdohanic <cdohanic@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:29:50 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/16 14:54:28 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 18:30:22 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-# include <sys/types.h>
+// # include <sys/types.h>
 
 /* Character utilities */
 int		is_space(char c);

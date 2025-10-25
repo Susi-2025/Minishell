@@ -67,7 +67,10 @@
     "sstream": "c",
     "system_error": "c",
     "tokenizer.h": "c",
-    "structs.h": "c"
+    "structs.h": "c",
+    "stdio.h": "c",
+    "string.h": "c",
+    "readline.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
