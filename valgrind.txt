@@ -1,0 +1,39 @@
+// for running
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --track-origins=yes ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=./readline.supp ./minishell
+export val="valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=./readline.supp"
+yes | $val ./minishell | head -n 5
+
+==3451440== Process terminating with default action of signal 13 (SIGPIPE)
+==3451440==    at 0x49D98F7: write (write.c:26)
+==3451440==    by 0x494FEEC: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1180)
+==3451440==    by 0x49519E0: new_do_write (fileops.c:448)
+==3451440==    by 0x49519E0: _IO_new_do_write (fileops.c:425)
+==3451440==    by 0x49519E0: _IO_do_write@@GLIBC_2.2.5 (fileops.c:422)
+==3451440==    by 0x494F4D7: _IO_file_sync@@GLIBC_2.2.5 (fileops.c:798)
+==3451440==    by 0x49441A9: fflush (iofflush.c:40)
+==3451440==    by 0x489D4E6: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==3451440==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==3451440==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==3451440==    by 0x4013DE: run_line (in /home/vinguyen/Documents/Minishell/minishell)
+==3451440==    by 0x401369: main (in /home/vinguyen/Documents/Minishell/minishell)
+==3451440== 
+==3451440== FILE DESCRIPTORS: 3 open (3 std) at exit.
+==3451440== 
+==3451440== HEAP SUMMARY:
+==3451440==     in use at exit: 220,078 bytes in 319 blocks
+==3451440==   total heap usage: 590 allocs, 271 frees, 235,734 bytes allocated
+==3451440== 
+==3451440== 456 bytes in 1 blocks are still reachable in loss record 37 of 82
+==3451440==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3451440==    by 0x40B23D: ft_calloc (in /home/vinguyen/Documents/Minishell/minishell)
+==3451440==    by 0x40A611: ft_matrix_dup (in /home/vinguyen/Documents/Minishell/minishell)
+==3451440==    by 0x40133A: main (in /home/vinguyen/Documents/Minishell/minishell)
+==3451440== 
+==3451440== 2,130 bytes in 56 blocks are still reachable in loss record 54 of 82
+==3451440==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3451440==    by 0x40A778: ft_strdup_char (in /home/vinguyen/Documents/Minishell/minishell)
+==3451440==    by 0x40A651: ft_matrix_dup (in /home/vinguyen/Documents/Minishell/minishell)
+==3451440==    by 0x40133A: main (in /home/vinguyen/Documents/Minishell/minishell)
+-> if add signal(SIGPIPE, SIG_IGN) in main, it loop forever
+-> if add signal(SIGPIPE, SIG_DFL) in exec_external, it still error

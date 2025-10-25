@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/23 13:41:27 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 17:12:18 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	ft_is_numeric(char *s)
 		return (0);
 	if (s[i] == '-' || s[i] == '+')
 		i++;
+	if (!s[i])
+		return (0);
 	while (s[i])
 	{
 		if (!(s[i] >= '0' && s[i] <= '9'))

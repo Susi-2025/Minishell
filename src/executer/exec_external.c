@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 16:57:04 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/25 12:33:48 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 17:30:02 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	exec_external(t_cmd *cmds, char **args, char *env[])
 	char	*path;
 
 	path = find_path(cmds, args, env);
+	signal(SIGPIPE, SIG_DFL);
 	execve(path, args, env);
 	if (errno == ENOENT)
 	{

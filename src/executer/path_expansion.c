@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:32:23 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/25 12:33:40 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/10/25 17:05:46 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	*try_current_path(char *cmd)
 	if (access(try_path, F_OK) == 0 && (access(try_path, X_OK) == 0)
 		&& !is_directory(try_path))
 	{
-		printf("why\n");
 		free(get_path);
 		return (try_path);
 	}
