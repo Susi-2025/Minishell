@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "stdarg.h"
 
 static	int	check_string_fd(va_list args, const char *string, int i, int fd);
 static	int	check_format_fd(va_list args, const char *string, int i, int fd);

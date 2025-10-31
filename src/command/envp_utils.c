@@ -78,7 +78,7 @@ static	int	detect_var(char *origin, char *expan)
 	if (!origin || !expan)
 		return (1);
 	len = ft_strlen(expan);
-	if (ft_strncmp(origin, expan, len) == 0 && origin[len] == '=')
+	if (ft_strncmp(origin, expan, len) == 0 && (origin[len] == '=' || origin[len] == '\0'))
 		return (0);
 	return (1);
 }
