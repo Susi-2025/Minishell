@@ -69,7 +69,13 @@ int	handle_io_redirection(t_simple_cmd *cmd, t_object *pipex)
 	pipex->infile_fd = -1;
 	pipex->outfile_fd = -1;
 	if (open_all_redirections(redirs, pipex) == -2)
+	{
+		if (pipex->infile_fd != -1)
+			close(pipex->infile_fd);
+		if (pipex->outfile_fd != -1)
+			close(pipex->outfile_fd);
 		return (-2);
+	}
 	if (pipex->infile_fd != -1)
 	{
 		dup2(pipex->infile_fd, STDIN_FILENO);
