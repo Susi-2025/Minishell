@@ -81,7 +81,7 @@ int	var_expansion_helper(char *env_value, t_expansion_state *st,
 	free(var_name);
 	st->i += var_len;
 	if (!st->final_str)
-		return (MEM_ERROR);
+		return (ERROR);
 	return (SUCCESS);
 }
 
@@ -114,7 +114,9 @@ int	handle_dollar_expansion(t_expansion_state *st, char *str,
 		t_expansion_context *ctx)
 {
 	char	*tmp;
+	int		exp_status;
 
+	exp_status = SUCCESS;
 	tmp = ft_substr(str, st->start, st->i - st->start);
 	st->final_str = ft_strjoin_and_free(st->final_str, tmp);
 	if (!st->final_str)
@@ -128,8 +130,8 @@ int	handle_dollar_expansion(t_expansion_state *st, char *str,
 			return (MEM_ERROR);
 		st->i++;
 	}
-	else if (handle_regular_var(st, str, ctx) == MEM_ERROR)
-		return (MEM_ERROR);
+	else
+		exp_status = handle_regular_var(st, str, ctx);
 	st->start = st->i;
-	return (SUCCESS);
+	return (exp_status);
 }

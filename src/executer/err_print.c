@@ -17,7 +17,7 @@ char	*error_redir(char *argv)
 	ft_putstr_fd("bash: $", 2);
 	ft_putstr_fd(argv, 2);
 	ft_putstr_fd(": ambiguous redirect", 2);
-	ft_putstr_fd("'\n", 2);
+	ft_putstr_fd("\n", 2);
 	return (NULL);
 }
 

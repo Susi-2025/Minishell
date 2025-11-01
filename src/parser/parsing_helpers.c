@@ -41,6 +41,13 @@ int	handle_redirection(t_token *tokens, int token_count, int *i,
 	return (0);
 }
 
+static int	free_and_return(char **result)
+{
+	if (*result)
+		free(*result);
+	return (-1);
+}
+
 int	append_literal(char **result, char *line, int start, int end)
 {
 	char	*literal;
@@ -50,11 +57,11 @@ int	append_literal(char **result, char *line, int start, int end)
 		return (0);
 	literal = ft_substr(line, start, end - start);
 	if (!literal)
-		return (free(*result), -1);
+		return (free_and_return(result));
 	temp = ft_strjoin(*result, literal);
 	free(literal);
 	if (!temp)
-		return (free(*result), -1);
+		return (free_and_return(result));
 	free(*result);
 	*result = temp;
 	return (0);
@@ -78,11 +85,11 @@ int	append_variable(char **result, char *line, int *i, char *env[])
 	}
 	var_value = expand_single_var(line + *i, env);
 	if (!var_value)
-		return (free(*result), -1);
+		return (free_and_return(result));
 	temp = ft_strjoin(*result, var_value);
 	free(var_value);
 	if (!temp)
-		return (free(*result), -1);
+		return (free_and_return(result));
 	free(*result);
 	*result = temp;
 	*i += var_len;

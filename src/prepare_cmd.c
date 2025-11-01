@@ -90,9 +90,15 @@ t_cmd	*ft_prepare_command(char *line, char *env[], int *e_code)
 	if (!tokens)
 		return (NULL);
 	if (handle_syntax_checking(tokens, token_count, cmds, e_code) == ERROR)
+	{
+		*e_code = 2;
 		return (NULL);
+	}
 	if (handle_parsing(cmds, tokens, token_count, env) == ERROR)
+	{
+		*e_code = 1;
 		return (NULL);
+	}
 	free_tokens(tokens, token_count);
 	return (cmds);
 }

@@ -96,7 +96,7 @@ int	process_word_expansion(t_token *token, t_simple_cmd **current_cmd,
 	st.start = 0;
 	st.final_str = ft_strdup("");
 	if (!st.final_str)
-		return (ERROR);
+		return (MEM_ERROR);
 	ctx.env = env;
 	ctx.exit_code = exit_code;
 	ctx.current_cmd = current_cmd;

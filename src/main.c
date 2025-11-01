@@ -14,8 +14,7 @@
 
 static int	run_line(char ***temp_env, int *code);
 static int	valid_len(char *rl);
-static int	error_sigpipe(char *rl, char ***temp_env);
-// static int	err_rl(int *code);
+static int	error_rl(char *rl, char ***temp_env, int code);
 
 volatile sig_atomic_t	g_signal;
 
@@ -51,7 +50,7 @@ static int	run_line(char ***temp_env, int *code)
 
 	rl = readline("Prompt: ");
 	if (g_signal == SIGPIPE)
-		return (error_sigpipe(rl, temp_env));
+		return (error_rl(rl, temp_env, -1));
 	if (!rl)
 		return (-1);
 	add_history(rl);
@@ -59,7 +58,7 @@ static int	run_line(char ***temp_env, int *code)
 		*code = 130;
 	g_signal = 0;
 	if (!valid_len(rl) || ft_strcmp(rl, "") == 0)
-		return (0);
+		return (error_rl(rl, NULL, 0));
 	cmds = ft_prepare_command(rl, *temp_env, code);
 	free(rl);
 	if (cmds)
@@ -68,8 +67,6 @@ static int	run_line(char ***temp_env, int *code)
 		if (cmds)
 			free_cmd(cmds);
 	}
-	if (!cmds && *code != 130)
-		*code = 2;
 	return (0);
 }
 
@@ -78,29 +75,16 @@ static int	valid_len(char *rl)
 	if (ft_strlen(rl) > 4096)
 	{
 		printf("ARG_MAX exceeded\n");
-		free(rl);
 		return (0);
 	}
 	return (1);
 }
 
-static int	error_sigpipe(char *rl, char ***temp_env)
+static int	error_rl(char *rl, char ***temp_env, int code)
 {
 	if (rl)
 		free(rl);
 	if (temp_env)
 		ft_free_triptr(temp_env);
-	return (-1);
+	return (code);
 }
-
-// static int	err_rl(int *code)
-// {
-// 	if (g_signal == SIGINT)
-// 	{
-// 		printf("\n");
-// 		*code = 130;
-// 		g_signal = 0;
-// 		return (-1);
-// 	}
-// 	return (-1);
-// }

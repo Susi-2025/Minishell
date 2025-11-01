@@ -21,11 +21,6 @@ void	handle_sigint(int sig)
 	g_signal = sig;
 }
 
-void	handle_sigquit(int sig)
-{
-	(void)sig;
-}
-
 void	setup_signals(void)
 {
 	struct sigaction	sa_int;
@@ -36,7 +31,7 @@ void	setup_signals(void)
 	sa_int.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
 		perror("sigaction");
-	sa_quit.sa_handler = handle_sigquit;
+	sa_quit.sa_handler = SIG_IGN;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = SA_RESTART;
 	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
