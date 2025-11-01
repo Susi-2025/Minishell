@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 20:07:55 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/24 20:15:47 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:02:53 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ void	reset_signals(void)
 	setup_signals();
 }
 
-int	free_return(char **str, int code)
+void	sigpipe_handler(int sig)
 {
-	if (*str)
-		free(*str);
-	return (code);
+	if (sig == SIGPIPE)
+		g_signal = SIGPIPE;
 }
