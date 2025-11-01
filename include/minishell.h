@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 16:25:20 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/10/25 18:42:25 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/11/01 14:53:44 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ extern volatile sig_atomic_t	g_signal;
 void	handle_sigint(int sig);
 void	handle_sigquit(int sig);
 void	setup_signals(void);
+void	sigpipe_handler(int sig);
 
 t_cmd	*ft_prepare_command(char *line, char *env[], int *e_code);
 #endif

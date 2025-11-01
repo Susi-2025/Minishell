@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp_utility.c                                     :+:      :+:    :+:   */
+/*   envp_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/20 10:27:01 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:04:10 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ static	int	detect_var(char *origin, char *expan)
 	if (!origin || !expan)
 		return (1);
 	len = ft_strlen(expan);
-	if (ft_strncmp(origin, expan, len) == 0 && (origin[len] == '=' || origin[len] == '\0'))
+	if (ft_strncmp(origin, expan, len) == 0
+		&& (origin[len] == '=' || origin[len] == '\0'))
 		return (0);
 	return (1);
 }

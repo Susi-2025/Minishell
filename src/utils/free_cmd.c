@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:59:25 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 21:49:45 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:01:44 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,11 @@ static	void	free_simple_cmds(t_cmd *cmds)
 		}
 		i++;
 	}
+}
+
+int	free_return(char **str, int code)
+{
+	if (*str)
+		free(*str);
+	return (code);
 }
