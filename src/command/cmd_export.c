@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 12:15:12 by vinguyen          #+#    #+#             */
-/*   Updated: 2025/10/22 17:03:56 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/11/01 16:53:41 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	exec_export(t_cmd *cmds, char **args, char ***temp_env)
 	{
 		if (invalid_args(args[i]))
 		{
-			error_cmd_fd(2, "export", args[i], ":not a valid identifier");
+			error_cmd_fd(2, "export", args[i], "not a valid identifier");
 			i++;
 			status++;
 		}
