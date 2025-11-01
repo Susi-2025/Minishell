@@ -6,7 +6,7 @@
 /*   By: vinguyen <vinguyen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 18:58:03 by cdohanic          #+#    #+#             */
-/*   Updated: 2025/11/01 15:05:32 by vinguyen         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:32:40 by vinguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	run_line(char ***temp_env, int *code);
 static int	valid_len(char *rl);
 static int	error_sigpipe(char *rl, char ***temp_env);
-static int	err_rl(int *code);
+// static int	err_rl(int *code);
 
 volatile sig_atomic_t	g_signal;
 
@@ -49,13 +49,14 @@ static int	run_line(char ***temp_env, int *code)
 	char	*rl;
 	t_cmd	*cmds;
 
-	clearerr(stdout);
 	rl = readline("Prompt: ");
 	if (g_signal == SIGPIPE)
 		return (error_sigpipe(rl, temp_env));
 	if (!rl)
-		return (err_rl(code));
+		return (-1);
 	add_history(rl);
+	if (g_signal == SIGINT)
+		*code = 130;
 	g_signal = 0;
 	if (!valid_len(rl) || ft_strcmp(rl, "") == 0)
 		return (0);
@@ -92,14 +93,14 @@ static int	error_sigpipe(char *rl, char ***temp_env)
 	return (-1);
 }
 
-static int	err_rl(int *code)
-{
-	if (g_signal == SIGINT)
-	{
-		printf("\n");
-		*code = 130;
-		g_signal = 0;
-		return (0);
-	}
-	return (-1);
-}
+// static int	err_rl(int *code)
+// {
+// 	if (g_signal == SIGINT)
+// 	{
+// 		printf("\n");
+// 		*code = 130;
+// 		g_signal = 0;
+// 		return (-1);
+// 	}
+// 	return (-1);
+// }
