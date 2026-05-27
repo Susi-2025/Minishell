@@ -6,12 +6,9 @@ A minimal Unix shell implementation written in C, replicating basic features of 
 - [Overview](#overview)
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Examples](#examples)
-- [Built-in Commands](#built-in-commands)
-- [Signal Handling](#signal-handling)
-- [Code Structure](#code-structure)
-- [Acknowledgments](#acknowledgments)
+- [Run](#Run)
+- [Built-ins](#Built-ins)
+- [Author](#Author)
 
 ## Overview
 
@@ -58,12 +55,6 @@ export [VAR=val]	Set environment variable (or list all sorted)
 unset [VAR]	      Remove variable
 env	              Print all variables
 exit [n]	        Exit shell
-
-## Features
-| pipes, < > >> redirections, << heredoc (with/without expansion)
-$VAR and $? expansion
-Ctrl+C → new prompt, Ctrl+\ ignored, Ctrl+D exits
-Signal handling during heredoc
 
 ## Author
 Made by cdohanic(https://github.com/cristichitz) and vinguyen
