@@ -65,4 +65,5 @@ $VAR and $? expansion
 Ctrl+C → new prompt, Ctrl+\ ignored, Ctrl+D exits
 Signal handling during heredoc
 
-Made by cdohanic and vinguyen
+## Author
+Made by cdohanic(https://github.com/cristichitz) and vinguyen
